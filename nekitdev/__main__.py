@@ -3,7 +3,7 @@ import click
 import gd
 import nekitdev
 
-HOST = "localhost"
+HOST = "0.0.0.0"
 PORT = 8080
 
 
