@@ -1,33 +1,32 @@
-from setuptools import setup
-import re
+from pathlib import Path
+from setuptools import setup  # type: ignore
+ 
+root = Path(__file__).parent
 
-requirements = []
-with open("requirements.txt") as f:
-    requirements = [line for line in f if not line.startswith("-e")]
-
+requirements = (root / "requirements.txt").read_text("utf-8").strip().splitlines()
 
 setup(
-    name="nekit.site",
-    author="NeKitDS",
-    author_email="gdpy13@gmail.com",
-    url="https://github.com/NeKitDS/nekit.site",
-    project_urls={"Issue tracker": "https://github.com/NeKitDS/nekit.site/issues",},
-    version="0.4.0",
-    packages=["nekit_site", "nekit_site.routes"],
+    name="nekit.dev",
+    author="nekitdev",
+    author_email="nekitdevofficial@gmail.com",
+    url="https://github.com/nekitdev/nekit.dev",
+    project_urls={"Issue tracker": "https://github.com/nekitdev/nekit.dev/issues"},
+    version="1.0.0a0",
+    packages=["nekitdev", "nekitdev.routes"],
     license="MIT",
-    description="NeKit's Site",
+    description="nekit.dev - Web Application written in Python with Bulma.",
     include_package_data=True,
     install_requires=requirements,
     python_requires=">=3.6",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "License :: OSI Approved :: MIT License",
-        "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
         "Natural Language :: English",
         "Operating System :: OS Independent",
     ],
-    entry_points={"console_scripts": ["run_site = nekit_site.__main__:main",]},
+    entry_points={"console_scripts": ["nekit.dev = nekitdev.__main__:main",]},
 )

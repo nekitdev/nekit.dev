@@ -1,0 +1,71 @@
+import os
+from pathlib import Path
+
+import bulma
+import gd
+
+from aiohttp import web
+from jinja2 import Environment, FileSystemLoader
+
+__all__ = (
+    "html_response",
+    "env",
+    "setup_app",
+    "web",
+)
+
+root = Path(__file__).parent
+
+static = "/static"
+static_path = root / "static"
+templates = root / "templates"
+
+compiler = bulma.Compiler(
+    bulma.Settings(
+        # custom files
+        custom=[],
+        # extensions to use
+        extensions=[],
+        # variables
+        variables={
+            # set default font to monospace
+            "family-primary": "$family-monospace",
+            # set primary color to something of our choice
+            "primary": "$purple",
+        },
+        # dark theme simple setup
+        themes=["dark"],
+        dark_variables={
+            "scheme-main": "$black",
+            "scheme-invert": "$white",
+        },
+        # compress the output
+        output_style=bulma.COMPRESSED,
+    )
+)
+
+include = compiler.save(static_path).with_static(static)
+
+env = Environment(
+    loader=FileSystemLoader(templates),
+    trim_blocks=True,
+    lstrip_blocks=True,
+    enable_async=True,
+)
+env.globals.update(include=include, gd=gd)
+
+routes = web.RouteTableDef()
+
+routes.static(static, static_path)
+
+
+def html_response(*args, **kwargs) -> web.Response:
+    kwargs.setdefault("content_type", "text/html")
+
+    return web.Response(*args, **kwargs)
+
+
+def setup_app(app: web.Application) -> web.Application:
+    app.add_routes(routes)
+
+    return app

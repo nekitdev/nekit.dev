@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% set title = "Home" %}
+
+{% block body %}
+
+{{ super() }}
+
+<section id="title" class="hero is-small">
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <h1 class="title has-text-weight-bold has-text-primary">nekitdev</h1>
+            <p class="subtitle">Software Developer, Mathematics and Programming Enthusiast.</p>
+        </div>
+    </div>
+</section>
+
+<section id="about" class="section">
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column">
+                <h2 class="subtitle">About</h2>
+                <p>
+                    Nikita Tikhonov, {{ age }}-year-old programmer from Moscow, Russia.<br>
+                    You can call me <i>nekit</i> to be short and concise.<br>
+                    I love open source, and I mostly write in Python and Rust, along with JavaScript.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="projects" class="section">
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column">
+                <h2 class="subtitle">Projects</h2>
+            </div>
+        </div>
+
+        <div class="columns is-centered">
+            {% for project in projects %}
+
+            <div class="column">
+                <div class="box">
+                    <h3><a href="{{ project.link }}" class="has-text-info" target="blank_">{{ project.name }}</a></h3>
+                    <p>{{ project.description }}</p>
+                </div>
+            </div>
+
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

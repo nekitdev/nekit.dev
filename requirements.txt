@@ -1,3 +1,4 @@
--e https://github.com/NeKitDS/gd.py/archive/master.zip
+bulma.py>=0.6.0
+click>=7.1.0
 jinja2>=2.10
-gd.py>=1.0.0a0
+gd.py>=1.0.0rc1

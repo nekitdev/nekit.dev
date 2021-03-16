@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% block head %}
+
+        <title>{{ title }}</title>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Style-Type" content="text/css">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1">
+
+        <meta author="nekitdev">
+        <meta name="description" content="{{ description }}">
+
+        <meta property="og:site_name" content="nekit">
+        <meta property="og:title" content="{{ title }}">
+        <meta property="og:description" content="{{ description }}">
+
+        {% endblock %}
+
+        {% block include %}
+
+        {% set jquery_version = "3.6.0" %}
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/{{ jquery_version }}/jquery.min.js"></script>
+
+        {% set fa_version = "5.12.0" %}
+
+        <!-- include fontawesome -->
+
+        <script defer src="https://use.fontawesome.com/releases/v{{ fa_version }}/js/all.js"></script>
+
+        <!-- find themes to include -->
+
+        {% set dark = include.find_theme_as_include("dark") %}
+        {% set light = include.find_theme_as_include() %}
+
+        <!-- preload -->
+
+        <link rel="preload" href="{{ dark }}" as="style">
+        <link rel="preload" href="{{ light }}" as="style">
+
+        <!-- apply theme based on preferences, default to dark -->
+
+        <link rel="stylesheet" href="{{ dark }}" media="(prefers-color-scheme: unspecified)">
+        <link rel="stylesheet" href="{{ dark }}" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="{{ light }}" media="(prefers-color-scheme: light)">
+
+        <!-- include custom styles -->
+
+        {{ include.include_custom() }}
+
+        <!-- include scripts -->
+
+        {{ include.include_script() }}
+
+        {% endblock %}
+    </head>
+    <body>
+        <nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+
+            </div>
+            <div class="navbar-menu">
+                <!-- actual navigation -->
+
+                <div class="navbar-start">
+
+                    {% block navigation %}
+
+                    {% endblock %}
+
+                </div>
+
+                <div class="navbar-end">
+
+                    {# GitHub #}
+                    <a class="navbar-item" href="https://github.com/nekitdev" target="blank_">
+                        <span class="icon is-size-4 is-medium"><i class="fab fa-github"></i></span>
+                    </a>
+
+                    {# Twitter #}
+                    <a class="navbar-item" href="https://twitter.com/nekitdev" target="blank_">
+                        <span class="icon is-size-4 is-medium"><i class="fab fa-twitter"></i></span>
+                    </a>
+
+                    {# YouTube #}
+                    <a class="navbar-item" href="https://youtube.com/nekitdev" target="blank_">
+                        <span class="icon is-size-4 is-medium"><i class="fab fa-youtube"></i></span>
+                    </a>
+
+                    {# Patreon #}
+                    <a class="navbar-item" href="https://patreon.com/nekitdev" target="blank_">
+                        <span class="icon is-size-4 is-medium"><i class="fab fa-patreon"></i></span>
+                    </a>
+
+                </div>
+            </div>
+        </nav>
+
+        <script>
+            $(document).ready(function() {
+                // listen to click events
+                $(".navbar-burger").click(function() {
+                    // toggle active class
+                    $(".navbar-burger").toggleClass("is-active");
+                    $(".navbar-menu").toggleClass("is-active");
+                });
+            });
+        </script>
+
+        {% block body %}
+
+        {% endblock %}
+
+    </body>
+</html>
