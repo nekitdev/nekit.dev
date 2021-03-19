@@ -52,6 +52,7 @@ env = Environment(
     lstrip_blocks=True,
     enable_async=True,
 )
+
 env.globals.update(include=include, gd=gd)
 
 routes = web.RouteTableDef()

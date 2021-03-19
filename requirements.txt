@@ -1,4 +1,4 @@
 bulma.py>=0.6.0
 click>=7.1.0
-jinja2>=2.10
 gd.py>=1.0.0rc1
+jinja2>=2.10
