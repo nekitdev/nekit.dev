@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from typing import Any
 
 import bulma
 import gd
@@ -21,27 +22,25 @@ static_path = root / "static"
 templates = root / "templates"
 
 compiler = bulma.Compiler(
-    bulma.Settings(
-        # custom files
-        custom=[],
-        # extensions to use
-        extensions=[],
-        # variables
-        variables={
-            # set default font to monospace
-            "family-primary": "$family-monospace",
-            # set primary color to something of our choice
-            "primary": "$purple",
-        },
-        # dark theme simple setup
-        themes=["dark"],
-        dark_variables={
-            "scheme-main": "$black",
-            "scheme-invert": "$white",
-        },
-        # compress the output
-        output_style=bulma.COMPRESSED,
-    )
+    # extensions to use
+    extensions=[],
+    # variables
+    variables={
+        # set default font to monospace
+        "family-primary": "menlo, consolas, monospace",
+        # set primary color to something of our choice
+        "primary": "$purple",
+    },
+    # dark theme simple setup
+    themes=["dark"],
+    dark_variables={
+        "scheme-main": "$black",
+        "scheme-invert": "$white",
+    },
+    # compress the output
+    output_style=bulma.COMPRESSED,
+    # custom files
+    custom=[],
 )
 
 include = compiler.save(static_path).with_static(static)
@@ -59,8 +58,7 @@ routes = web.RouteTableDef()
 
 routes.static(static, static_path)
 
-
-def html_response(*args, **kwargs) -> web.Response:
+def html_response(*args: Any, **kwargs: Any) -> web.Response:
     kwargs.setdefault("content_type", "text/html")
 
     return web.Response(*args, **kwargs)
