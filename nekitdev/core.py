@@ -27,6 +27,7 @@ compiler = bulma.Compiler(
     # variables
     variables={
         # set default font to monospace
+        "family-monospace": "menlo, consolas, monospace",
         "family-primary": "$family-monospace",
         # set primary color to something of our choice
         "primary": "$purple",
