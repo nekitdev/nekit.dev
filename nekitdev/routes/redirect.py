@@ -22,16 +22,12 @@ NAME_TO_LINK = {
     YOUTUBE: YOUTUBE_LINK,
 }
 
-NAME = "name"
+
+def create_redirect(name: str, link: str) -> None:
+    @routes.get(f"/{name}")
+    async def handle_redirect(request: web.Request) -> web.Response:
+        raise web.HTTPFound(link)
 
 
-@routes.get("/{name}")
-async def handle_possible_redirect(request: web.Request) -> web.Response:
-    name = request.match_info[NAME]
-
-    link = NAME_TO_LINK.get(name)
-
-    if link is None:
-        raise web.HTTPNotFound()
-
-    raise web.HTTPFound(link)
+for name, link in NAME_TO_LINK.items():
+    create_redirect(name, link)
