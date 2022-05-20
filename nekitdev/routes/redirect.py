@@ -2,7 +2,7 @@ from nekitdev.core import routes, web
 
 DISCORD = "discord"
 
-DISCORD_LINK = "https://discord.gg/KtJkbut"
+DISCORD_LINK = "https://discord.com/invite/KtJkbut"
 
 GITHUB = "github"
 KEYBASE = "keybase"
