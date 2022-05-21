@@ -59,8 +59,11 @@ routes = web.RouteTableDef()
 
 routes.static(static, static_path)
 
+HTML = "text/html"
+
+
 def html_response(*args: Any, **kwargs: Any) -> web.Response:
-    kwargs.setdefault("content_type", "text/html")
+    kwargs.update(content_type=HTML)
 
     return web.Response(*args, **kwargs)
 
