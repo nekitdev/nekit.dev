@@ -11,6 +11,7 @@ from jinja2 import Environment, FileSystemLoader
 __all__ = (
     "html_response",
     "env",
+    "root",
     "setup_app",
     "web",
 )
