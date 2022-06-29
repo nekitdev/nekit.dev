@@ -1,3 +1,2 @@
-from nekitdev.core import *
-
-from nekitdev import routes
+from nekitdev import modules
+from nekitdev.core import setup_app

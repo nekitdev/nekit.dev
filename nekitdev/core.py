@@ -1,75 +1,28 @@
-import os
-from pathlib import Path
-from typing import Any
+from typing import TypeVar
 
-import bulma
-import gd
-
-from aiohttp import web
+from aiohttp.web import Application, RouteTableDef
 from jinja2 import Environment, FileSystemLoader
 
-__all__ = (
-    "html_response",
-    "env",
-    "root",
-    "setup_app",
-    "web",
-)
+from nekitdev.constants import ROOT_ROUTE, STATIC, STATIC_NAME, TEMPLATES
 
-root = Path(__file__).parent
+__all__ = ("environment", "routes", "setup_app")
 
-static = "/static"
-static_path = root / "static"
-templates = root / "templates"
-
-compiler = bulma.Compiler(
-    # extensions to use
-    extensions=[],
-    # variables
-    variables={
-        # set default font to monospace
-        "family-monospace": "menlo, consolas, monospace",
-        "family-primary": "$family-monospace",
-        # set primary color to something of our choice
-        "primary": "$purple",
-    },
-    # dark theme simple setup
-    themes=["dark"],
-    dark_variables={
-        "scheme-main": "$black",
-        "scheme-invert": "$white",
-    },
-    # compress the output
-    output_style=bulma.COMPRESSED,
-    # custom files
-    custom=[],
-)
-
-include = compiler.save(static_path).with_static(static)
-
-env = Environment(
-    loader=FileSystemLoader(templates),
+environment = Environment(
+    loader=FileSystemLoader(TEMPLATES),
     trim_blocks=True,
     lstrip_blocks=True,
     enable_async=True,
 )
 
-env.globals.update(include=include, gd=gd)
+routes = RouteTableDef()
 
-routes = web.RouteTableDef()
-
-routes.static(static, static_path)
-
-HTML = "text/html"
+routes.static(ROOT_ROUTE + STATIC_NAME, STATIC)
 
 
-def html_response(*args: Any, **kwargs: Any) -> web.Response:
-    kwargs.update(content_type=HTML)
-
-    return web.Response(*args, **kwargs)
+A = TypeVar("A", bound=Application)
 
 
-def setup_app(app: web.Application) -> web.Application:
+def setup_app(app: A) -> A:
     app.add_routes(routes)
 
     return app

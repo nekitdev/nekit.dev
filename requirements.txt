@@ -1,6 +1,0 @@
-aiohttp>=3.8.1
-bulma.py>=0.8.0
-click>=8.0.3
-gd.py>=1.0.0rc1
-jinja2>=2.11.3
-markupsafe>=2.0.1,<2.1.0
