@@ -30,6 +30,9 @@ Issues = "https://github.com/nekitdev/nekit.dev/issues"
 [[tool.poetry.packages]]
 include = "nekitdev"
 
+[tool.poetry.scripts]
+"nekit.dev" = "nekitdev.main:nekitdev"
+
 [tool.poetry.dependencies]
 python = ">= 3.7"
 click = ">= 8.1.3"
