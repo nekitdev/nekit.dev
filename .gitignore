@@ -75,5 +75,3 @@ cython_debug/
 
 # remove if lock file should be included
 poetry.lock
-
-# CSS output
