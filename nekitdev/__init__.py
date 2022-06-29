@@ -10,5 +10,6 @@ __version__ = "1.0.0-alpha.1"
 
 from nekitdev import modules
 from nekitdev.core import setup_app
+from nekitdev.main import create_and_run_app
 
-__all__ = ("modules", "setup_app")
+__all__ = ("modules", "create_and_run_app", "setup_app")

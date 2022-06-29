@@ -37,10 +37,10 @@ def nekitdev() -> None:
 @click.option("--port", "-p", type=int, default=DEFAULT_PORT)
 @nekitdev.command()
 def run(host: str, port: int) -> None:
-    create_and_run(host, port)
+    create_and_run_app(host, port)
 
 
-def create_and_run(host: str, port: int) -> None:
+def create_and_run_app(host: str, port: int) -> None:
     app = gd.server.create_app()
 
     gd.server.setup_gd_app_sync(app)
