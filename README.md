@@ -1,3 +1,3 @@
-# [`nekit.dev`][nekit.dev]
+# [`nekit.dev`][Web]
 
-[nekit.dev]: https://nekit.dev/
+[Web]: https://nekit.dev/
