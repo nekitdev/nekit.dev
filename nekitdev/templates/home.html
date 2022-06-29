@@ -2,10 +2,27 @@
 {% set title = "Home" %}
 {% set description = "nekitdev - Software Developer, Mathematics and Programming Enthusiast." %}
 
+{% set email = "nekit" %}
+
 {% block body %}
 
 {{ super() }}
 
-<h1 class="font-mono">Software Developer, Mathematics and Programming Enthusiast.</h1>
+<header>
+  <div class="font-mono">nekitdev</div>
+  <a href="#">Home</a>
+  <a href="#projects">Projects</a>
+  <a href="#contact">Contact</a>
+  <a href="/github"><i class="fab fa-github"></i></a>
+  <a href="/twitter"><i class="fab fa-twitter"></i></a>
+  <a href="/youtube"><i class="fab fa-youtube"></i></a>
+  <a href="/patreon"><i class="fab fa-patreon"></i></a>
+  <a href="/discord"><i class="fab fa-discord"></i></a>
+</header>
+
+<h1>Software Developer, Mathematics and Programming Enthusiast.</h1>
+<h2>Projects</h2>
+<h2>Contact</h2>
+<a href="/email/{{ email }}">Email</a>
 
 {% endblock %}
