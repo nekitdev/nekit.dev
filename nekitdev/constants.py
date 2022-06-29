@@ -28,6 +28,11 @@ DEFAULT_OUTPUT_NAME = "output.css"
 DEFAULT_INPUT = CSS / DEFAULT_INPUT_NAME
 DEFAULT_OUTPUT = CSS / DEFAULT_OUTPUT_NAME
 
+EMAIL_TO = "mailto:"
+DOMAIN = "nekit.dev"
+
+EMAIL = "{}@{}"
+
 DOCS_LINK = "https://nekitdev.github.io/"
 
 DISCORD_NAME = "discord"
