@@ -37,7 +37,11 @@ def nekitdev() -> None:
 @click.option("--port", "-p", type=int, default=DEFAULT_PORT)
 @nekitdev.command()
 def run(host: str, port: int) -> None:
-    create_and_run_app(host, port)
+    try:
+        create_and_run_app(host, port)
+
+    except KeyboardInterrupt:
+        pass
 
 
 def create_and_run_app(host: str, port: int) -> None:
