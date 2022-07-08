@@ -2,9 +2,10 @@ from aiohttp.web import HTTPFound, HTTPNotFound, Request, Response
 from yarl import URL
 
 from nekitdev.core import routes
+from nekitdev.constants import GITHUB_LINK
 from nekitdev.utils import check_back, identifier
 
-GITHUB = URL("https://github.com/nekitdev")
+GITHUB = URL(GITHUB_LINK)
 
 NAME = "name"
 
