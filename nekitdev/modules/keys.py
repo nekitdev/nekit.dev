@@ -1,6 +1,6 @@
 from aiohttp.web import HTTPNotFound, Request, Response
-from nekitdev.constants import KEY_SUFFIX, KEYS, TEXT_PLAIN
 
+from nekitdev.constants import KEY_SUFFIX, KEYS, TEXT_PLAIN
 from nekitdev.core import routes
 from nekitdev.utils import check_back, identifier
 

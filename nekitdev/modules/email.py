@@ -1,6 +1,6 @@
 from aiohttp.web import HTTPFound, Request, Response
 
-from nekitdev.constants import EMAIL_TO, EMAIL, DOMAIN
+from nekitdev.constants import DOMAIN, EMAIL, EMAIL_TO
 from nekitdev.core import routes
 from nekitdev.utils import identifier
 

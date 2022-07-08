@@ -1,8 +1,8 @@
 from datetime import date
 
 from aiohttp.web import Request, Response
-from nekitdev.constants import HOME_NAME, ROOT_ROUTE, TEXT_HTML
 
+from nekitdev.constants import HOME_NAME, ROOT_ROUTE, TEXT_HTML
 from nekitdev.core import environment, routes
 
 template = environment.get_template(HOME_NAME)
@@ -25,6 +25,4 @@ def get_nekit_age() -> int:
 
 @routes.get(ROOT_ROUTE)
 async def home(request: Request) -> Response:
-    return Response(
-        content_type=TEXT_HTML, text=await template.render_async(age=get_nekit_age())
-    )
+    return Response(content_type=TEXT_HTML, text=await template.render_async(age=get_nekit_age()))

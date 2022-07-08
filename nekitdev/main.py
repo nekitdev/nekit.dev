@@ -1,5 +1,5 @@
-from pathlib import Path
 import subprocess
+from pathlib import Path
 from sys import exit
 from typing import Iterable
 
@@ -7,7 +7,12 @@ import click
 import gd
 
 from nekitdev.constants import (
-    DEFAULT_HOST, DEFAULT_INPUT, DEFAULT_NAME, DEFAULT_OUTPUT, DEFAULT_PORT, ROOT
+    DEFAULT_HOST,
+    DEFAULT_INPUT,
+    DEFAULT_NAME,
+    DEFAULT_OUTPUT,
+    DEFAULT_PORT,
+    ROOT,
 )
 from nekitdev.core import setup_app
 

@@ -1,6 +1,1 @@
-from nekitdev.modules import docs
-from nekitdev.modules import email
-from nekitdev.modules import github
-from nekitdev.modules import home
-from nekitdev.modules import keys
-from nekitdev.modules import redirect
+from nekitdev.modules import docs, email, github, home, keys, redirect
