@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% set title = "Home" %}
-{% set description = "nekitdev - Software Developer, Mathematics and Programming Enthusiast." %}
+{% set description = "nekitdev - Building awesome software." %}
 
 {% set email = "nekit" %}
 
@@ -8,21 +8,31 @@
 
 {{ super() }}
 
-<header>
-  <div class="font-mono">nekitdev</div>
-  <a href="#">Home</a>
-  <a href="#projects">Projects</a>
-  <a href="#contact">Contact</a>
-  <a href="/github"><i class="fab fa-github"></i></a>
-  <a href="/twitter"><i class="fab fa-twitter"></i></a>
-  <a href="/youtube"><i class="fab fa-youtube"></i></a>
-  <a href="/patreon"><i class="fab fa-patreon"></i></a>
-  <a href="/discord"><i class="fab fa-discord"></i></a>
-</header>
+<div class="px-4 sm:px-6 md:px-8">
+  <header class="relative pt-6 lg:pt-8 flex items-center justify-between text-neutral-700 leading-6 dark:text-neutral-200">
+    <a class="text-neutral-900 dark:text-white text-2xl lg:text-3xl font-mono" href="#">nekitdev</a>
+    <div class="flex space-x-10">
+      <div class="hidden md:flex space-x-10">
+        <a class="text-patreon" href="/patreon"><i class="fab fa-patreon w-auto h-10"></i></a>
+        <a class="text-youtube" href="/youtube"><i class="fab fa-youtube w-auto h-10"></i></a>
+        <a class="text-twitter" href="/twitter"><i class="fab fa-twitter w-auto h-10"></i></a>
+        <a class="text-discord" href="/discord"><i class="fab fa-discord w-auto h-10"></i></a>
+      </div>
+      <a class="text-keybase" href="/keybase"><i class="fab fa-keybase w-auto h-10"></i></a>
+      <a class="text-neutral-900 dark:text-white" href="/github"><i class="fab fa-github w-auto h-10"></i></a>
+    </div>
+  </header>
 
-<h1>Software Developer, Mathematics and Programming Enthusiast.</h1>
-<h2>Projects</h2>
-<h2>Contact</h2>
-<a href="/email/{{ email }}">Email</a>
+  <section class="relative max-w-5xl pt-16 sm:pt-20 lg:pt-24">
+    <h1 class="text-5xl lg:text-8xl font-mono">
+      Building <span class="text-transparent bg-clip-text bg-gradient-to-b from-melody-purple to-melody-blue">awesome</span> software.
+    </h1>
+    <div class="mt-6 text-xl lg:text-2xl text-neutral-700 dark:text-neutral-500 font-mono">
+      Nikita Tikhonov, {{ age }}-year-old software developer from Moscow, Russia.
+    </div>
+  </section>
+  </section>
+  <footer></footer>
+</div>
 
 {% endblock %}

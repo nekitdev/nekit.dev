@@ -1,7 +1,7 @@
 import subprocess
 from pathlib import Path
 from sys import exit
-from typing import Iterable
+from typing import Sequence
 
 import click
 import gd
@@ -24,7 +24,7 @@ MINIFY = "--minify"
 WATCH = "--watch"
 
 
-def build_command(input: Path, output: Path, watch: bool) -> Iterable[str]:
+def build_command(input: Path, output: Path, watch: bool) -> Sequence[str]:
     arguments = [EXECUTE, TAILWIND, INPUT, input.as_posix(), OUTPUT, output.as_posix(), MINIFY]
 
     if watch:
