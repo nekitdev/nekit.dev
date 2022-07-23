@@ -12,7 +12,8 @@ module.exports = {
                 youtube: "#ff0000",
                 twitter: "#1da1f2",
                 patreon: "#ff424d",
-                keybase: "#ff6f21"
+                keybase: "#ff6f21",
+                reddit: "#ff5700"
             }
         }
     }

@@ -44,12 +44,15 @@ KEYBASE_NAME = "keybase"
 PATREON_NAME = "patreon"
 TWITTER_NAME = "twitter"
 YOUTUBE_NAME = "youtube"
+REDDIT_NAME = "reddit"
 
 GITHUB_LINK = "https://github.com/nekitdev"
 KEYBASE_LINK = "https://keybase.io/nekitdev"
 PATREON_LINK = "https://patreon.com/nekitdev"
 TWITTER_LINK = "https://twitter.com/nekitdev"
 YOUTUBE_LINK = "https://youtube.com/nekitdev"
+REDDIT_LINK = "https://reddit.com/u/nekitdev"
+
 
 NAME_TO_LINK = {
     DISCORD_NAME: DISCORD_LINK,
@@ -58,6 +61,7 @@ NAME_TO_LINK = {
     PATREON_NAME: PATREON_LINK,
     TWITTER_NAME: TWITTER_LINK,
     YOUTUBE_NAME: YOUTUBE_LINK,
+    REDDIT_NAME: REDDIT_LINK,
 }
 
 DEFAULT_HOST = "0.0.0.0"
