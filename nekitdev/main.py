@@ -4,7 +4,7 @@ from sys import exit
 from typing import Sequence
 
 import click
-import gd
+from aiohttp.web import Application, run_app
 
 from nekitdev.constants import (
     DEFAULT_HOST,
@@ -50,13 +50,11 @@ def run(host: str, port: int) -> None:
 
 
 def create_and_run_app(host: str, port: int) -> None:
-    app = gd.server.create_app()
-
-    gd.server.setup_gd_app_sync(app)
+    app = Application()
 
     setup_app(app)
 
-    gd.server.run_app_sync(app, host=host, port=port)
+    run_app(app, host=host, port=port)
 
 
 @click.option("--input", "-i", type=Path, default=DEFAULT_INPUT)
