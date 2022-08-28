@@ -36,7 +36,7 @@ python = ">= 3.7"
 aiohttp = ">= 3.8.1"
 click = ">= 8.1.3"
 jinja2 = ">= 3.1.2"
-entrypoint = ">= 1.2.4"
+entrypoint = ">= 1.3.0"
 
 [tool.poetry.dependencies."gd.py"]
 url = "https://github.com/nekitdev/gd.py/archive/main.zip"
@@ -109,5 +109,5 @@ wrap_size = 100
 display = ["feature", "change", "fix", "security", "deprecation", "removal", "internal"]
 
 [build-system]
-requires = ["poetry-core >= 1.1.0b2"]
+requires = ["poetry-core >= 1.1.0rc3"]
 build-backend = "poetry.core.masonry.api"
