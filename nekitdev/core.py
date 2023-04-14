@@ -6,8 +6,8 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from jinja2 import Environment, FileSystemLoader
 
-from nekitdev.errors import AnyError, Error, ErrorCode, InternalError
 from nekitdev.constants import BREAK, NEW_LINE, STATIC, STATIC_NAME, STATIC_PATH, TEMPLATES
+from nekitdev.errors import AnyError, Error, ErrorCode, InternalError
 
 __all__ = ("app", "environment")
 

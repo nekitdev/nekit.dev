@@ -1,8 +1,8 @@
 from fastapi.responses import PlainTextResponse
 
+from nekitdev.constants import DEFAULT_ENCODING, DEFAULT_ERRORS, KEY_SUFFIX, KEYS
 from nekitdev.core import app
 from nekitdev.errors import NotFound
-from nekitdev.constants import DEFAULT_ENCODING, DEFAULT_ERRORS, KEY_SUFFIX, KEYS
 
 __all__ = ("get_key",)
 

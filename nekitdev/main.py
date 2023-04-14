@@ -6,10 +6,15 @@ from typing import Sequence
 import click
 import uvicorn
 
-from nekitdev.core import app
 from nekitdev.constants import (
-    DEFAULT_HOST, DEFAULT_INPUT, DEFAULT_OUTPUT, DEFAULT_PORT, DEFAULT_WATCH, ROOT
+    DEFAULT_HOST,
+    DEFAULT_INPUT,
+    DEFAULT_OUTPUT,
+    DEFAULT_PORT,
+    DEFAULT_WATCH,
+    ROOT,
 )
+from nekitdev.core import app
 
 EXECUTE = "npx"
 TAILWIND = "tailwindcss"
