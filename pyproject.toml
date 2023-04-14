@@ -60,6 +60,9 @@ optional = true
 [tool.poetry.group.check.dependencies]
 mypy = "1.2.0"
 
+[tool.poetry.group.dev.dependencies]
+changelogging = "1.1.0"
+
 [tool.black]
 line_length = 100
 
