@@ -1,27 +1,22 @@
-import subprocess
 from pathlib import Path
+from subprocess import call
 from sys import exit
 from typing import Sequence
 
 import click
-from aiohttp.web import Application, run_app
+import uvicorn
 
+from nekitdev.core import app
 from nekitdev.constants import (
-    DEFAULT_HOST,
-    DEFAULT_INPUT,
-    DEFAULT_NAME,
-    DEFAULT_OUTPUT,
-    DEFAULT_PORT,
-    ROOT,
+    DEFAULT_HOST, DEFAULT_INPUT, DEFAULT_OUTPUT, DEFAULT_PORT, DEFAULT_WATCH, ROOT
 )
-from nekitdev.core import setup_app
 
 EXECUTE = "npx"
 TAILWIND = "tailwindcss"
 INPUT = "-i"
 OUTPUT = "-o"
-MINIFY = "--minify"
-WATCH = "--watch"
+MINIFY = "-m"
+WATCH = "-w"
 
 
 def build_command(input: Path, output: Path, watch: bool) -> Sequence[str]:
@@ -33,7 +28,7 @@ def build_command(input: Path, output: Path, watch: bool) -> Sequence[str]:
     return arguments
 
 
-@click.group(name=DEFAULT_NAME)
+@click.group()
 def nekitdev() -> None:
     pass
 
@@ -42,26 +37,15 @@ def nekitdev() -> None:
 @click.option("--port", "-p", type=int, default=DEFAULT_PORT)
 @nekitdev.command()
 def run(host: str, port: int) -> None:
-    try:
-        create_and_run_app(host, port)
-
-    except KeyboardInterrupt:
-        pass
+    uvicorn.run(app, host=host, port=port)
 
 
-def create_and_run_app(host: str, port: int) -> None:
-    app = Application()
-
-    setup_app(app)
-
-    run_app(app, host=host, port=port)
+SHELL = True
 
 
 @click.option("--input", "-i", type=Path, default=DEFAULT_INPUT)
 @click.option("--output", "-o", type=Path, default=DEFAULT_OUTPUT)
-@click.option("--watch", "-w", is_flag=True, default=False)
+@click.option("--watch", "-w", is_flag=True, default=DEFAULT_WATCH)
 @nekitdev.command()
 def build(input: Path, output: Path, watch: bool) -> None:
-    exit(
-        subprocess.call(build_command(input, output, watch=watch), cwd=ROOT.as_posix(), shell=True)
-    )
+    exit(call(build_command(input, output, watch=watch), cwd=ROOT, shell=SHELL))

@@ -13,8 +13,9 @@ module.exports = {
                 twitter: "#1da1f2",
                 patreon: "#ff424d",
                 keybase: "#ff6f21",
-                reddit: "#ff5700"
+                reddit: "#ff5700",
+                telegram: "#229ed9",
             }
         }
-    }
-}
+    },
+};

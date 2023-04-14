@@ -1,14 +1,15 @@
 from pathlib import Path
 
+from pendulum import Date
+
+# constants
+
 ROOT = Path(__file__).parent
 
-ROOT_ROUTE = "/"
+NEW_LINE = "\n"
+BREAK = "<br>"
 
-TEXT_HTML = "text/html"
-TEXT_PLAIN = "text/plain"
-
-BASE_NAME = "base.html"
-HOME_NAME = "home.html"
+STATIC_PATH = "/static"
 
 CSS_NAME = "css"
 KEYS_NAME = "keys"
@@ -19,8 +20,14 @@ KEY_SUFFIX = ".key"
 
 KEYS = ROOT / KEYS_NAME
 STATIC = ROOT / STATIC_NAME
-CSS = STATIC / CSS_NAME
 TEMPLATES = ROOT / TEMPLATES_NAME
+
+CSS = STATIC / CSS_NAME
+
+# defaults
+
+DEFAULT_ENCODING = "utf-8"
+DEFAULT_ERRORS = "strict"
 
 DEFAULT_INPUT_NAME = "input.css"
 DEFAULT_OUTPUT_NAME = "output.css"
@@ -28,43 +35,11 @@ DEFAULT_OUTPUT_NAME = "output.css"
 DEFAULT_INPUT = CSS / DEFAULT_INPUT_NAME
 DEFAULT_OUTPUT = CSS / DEFAULT_OUTPUT_NAME
 
-EMAIL_TO = "mailto:"
-DOMAIN = "nekit.dev"
+DEFAULT_WATCH = False
 
-EMAIL = "{}@{}"
+DEFAULT_HOST = "127.0.0.1"
+DEFAULT_PORT = 6942
 
-DOCS_LINK = "https://nekitdev.github.io/"
+# birthday
 
-DISCORD_NAME = "discord"
-
-DISCORD_LINK = "https://discord.com/invite/KtJkbut"
-
-GITHUB_NAME = "github"
-KEYBASE_NAME = "keybase"
-PATREON_NAME = "patreon"
-TWITTER_NAME = "twitter"
-YOUTUBE_NAME = "youtube"
-REDDIT_NAME = "reddit"
-
-GITHUB_LINK = "https://github.com/nekitdev"
-KEYBASE_LINK = "https://keybase.io/nekitdev"
-PATREON_LINK = "https://patreon.com/nekitdev"
-TWITTER_LINK = "https://twitter.com/nekitdev"
-YOUTUBE_LINK = "https://youtube.com/nekitdev"
-REDDIT_LINK = "https://reddit.com/u/nekitdev"
-
-
-NAME_TO_LINK = {
-    DISCORD_NAME: DISCORD_LINK,
-    GITHUB_NAME: GITHUB_LINK,
-    KEYBASE_NAME: KEYBASE_LINK,
-    PATREON_NAME: PATREON_LINK,
-    TWITTER_NAME: TWITTER_LINK,
-    YOUTUBE_NAME: YOUTUBE_LINK,
-    REDDIT_NAME: REDDIT_LINK,
-}
-
-DEFAULT_HOST = "0.0.0.0"
-DEFAULT_PORT = 1342
-
-DEFAULT_NAME = "nekitdev"
+NEKIT_BIRTHDAY = Date(2005, 1, 13)
