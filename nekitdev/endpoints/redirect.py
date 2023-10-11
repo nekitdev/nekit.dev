@@ -11,16 +11,14 @@ DISCORD_LINK = "https://discord.com/invite/KtJkbut"
 
 GITHUB_NAME = "github"
 KEYBASE_NAME = "keybase"
-PATREON_NAME = "patreon"
-TWITTER_NAME = "twitter"
+X_NAME = "x"
 YOUTUBE_NAME = "youtube"
 REDDIT_NAME = "reddit"
 TELEGRAM_NAME = "telegram"
 
 GITHUB_LINK = "https://github.com/nekitdev"
 KEYBASE_LINK = "https://keybase.io/nekitdev"
-PATREON_LINK = "https://patreon.com/nekitdev"
-TWITTER_LINK = "https://twitter.com/nekitdev"
+X_LINK = "https://x.com/nekitdev"
 YOUTUBE_LINK = "https://youtube.com/nekitdev"
 REDDIT_LINK = "https://reddit.com/u/nekitdev"
 TELEGRAM_LINK = "https://t.me/nekitdev"
@@ -29,8 +27,7 @@ NAME_TO_LINK = {
     DISCORD_NAME: DISCORD_LINK,
     GITHUB_NAME: GITHUB_LINK,
     KEYBASE_NAME: KEYBASE_LINK,
-    PATREON_NAME: PATREON_LINK,
-    TWITTER_NAME: TWITTER_LINK,
+    X_NAME: X_LINK,
     YOUTUBE_NAME: YOUTUBE_LINK,
     REDDIT_NAME: REDDIT_LINK,
     TELEGRAM_NAME: TELEGRAM_LINK,
