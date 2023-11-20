@@ -16,8 +16,8 @@ environment = Environment(
     loader=FileSystemLoader(TEMPLATES),
     trim_blocks=True,
     lstrip_blocks=True,
-    enable_async=True,
     autoescape=True,
+    enable_async=True,
 )
 
 ERROR_TEMPLATE = environment.get_template("error.html")
