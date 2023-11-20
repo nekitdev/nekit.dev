@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from enum import Enum
 from typing import TypedDict as Data
-from typing import TypeVar
 
 from attrs import frozen
 from fastapi import status
@@ -51,9 +50,6 @@ class ErrorCode(Enum):
 
         except ValueError:
             return default
-
-
-T = TypeVar("T")
 
 
 class ErrorData(Data):
