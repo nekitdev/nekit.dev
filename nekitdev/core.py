@@ -16,6 +16,7 @@ environment = Environment(
     trim_blocks=True,
     lstrip_blocks=True,
     enable_async=True,
+    autoescape=True,
 )
 
 ERROR_TEMPLATE = environment.get_template("error.html")

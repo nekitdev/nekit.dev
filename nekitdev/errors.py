@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Any, Generic, TypeVar
+from typing import Any, Generic
+from typing import TypedDict as Data
+from typing import TypeVar
 
 from attrs import frozen
 from fastapi import status
-from typing_extensions import TypedDict as Data
+from typing_aliases import NormalError
 
 __all__ = (
     "AnyError",
@@ -62,7 +64,7 @@ class ErrorData(Data, Generic[T]):
 
 
 @frozen()
-class Error(Exception, Generic[T]):
+class Error(NormalError, Generic[T]):
     detail: T
     code: ErrorCode = ErrorCode.DEFAULT
     status_code: int = status.HTTP_500_INTERNAL_SERVER_ERROR
