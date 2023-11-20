@@ -5,9 +5,10 @@ from fastapi.requests import Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from jinja2 import Environment, FileSystemLoader
+from typing_aliases import NormalError
 
 from nekitdev.constants import BREAK, NEW_LINE, STATIC, STATIC_NAME, STATIC_PATH, TEMPLATES
-from nekitdev.errors import AnyError, Error, ErrorCode, InternalError
+from nekitdev.errors import Error, ErrorCode, InternalError
 
 __all__ = ("app", "environment")
 
@@ -28,7 +29,7 @@ app.mount(STATIC_PATH, StaticFiles(directory=STATIC), name=STATIC_NAME)
 
 def register_error_handlers(app: FastAPI) -> None:
     @app.exception_handler(Error)  # type: ignore
-    async def error_handler(request: Request, error: AnyError) -> HTMLResponse:
+    async def error_handler(request: Request, error: Error) -> HTMLResponse:
         return HTMLResponse(
             await ERROR_TEMPLATE.render_async(detail=error.detail, code=error.code.value),
             status_code=error.status_code,
@@ -46,8 +47,8 @@ def register_error_handlers(app: FastAPI) -> None:
 
         return await error_handler(request, converted_error)  # type: ignore
 
-    @app.exception_handler(Exception)  # type: ignore
-    async def internal_error_handler(request: Request, error: Exception) -> HTMLResponse:
+    @app.exception_handler(NormalError)  # type: ignore
+    async def internal_error_handler(request: Request, error: NormalError) -> HTMLResponse:
         internal_error = InternalError()
 
         return await error_handler(request, internal_error)  # type: ignore

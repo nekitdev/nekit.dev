@@ -1,16 +1,14 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Any, Generic
 from typing import TypedDict as Data
 from typing import TypeVar
 
 from attrs import frozen
 from fastapi import status
-from typing_aliases import NormalError
+from typing_aliases import NormalError, Payload
 
 __all__ = (
-    "AnyError",
     "Error",
     "ErrorCode",
     "ErrorData",
@@ -58,26 +56,23 @@ class ErrorCode(Enum):
 T = TypeVar("T")
 
 
-class ErrorData(Data, Generic[T]):
-    detail: T
+class ErrorData(Data):
+    detail: Payload
     code: int
 
 
 @frozen()
-class Error(NormalError, Generic[T]):
-    detail: T
+class Error(NormalError):
+    detail: Payload
     code: ErrorCode = ErrorCode.DEFAULT
     status_code: int = status.HTTP_500_INTERNAL_SERVER_ERROR
 
-    def into_data(self) -> ErrorData[T]:
+    def into_data(self) -> ErrorData:
         return ErrorData(code=self.code.value, detail=self.detail)
 
 
-AnyError = Error[Any]
-
-
 @frozen()
-class ValidationError(Error[T]):
+class ValidationError(Error):
     """Validation has failed."""
 
     code: ErrorCode = ErrorCode.UNPROCESSABLE_ENTITY
@@ -85,7 +80,7 @@ class ValidationError(Error[T]):
 
 
 @frozen()
-class BadRequest(Error[T]):
+class BadRequest(Error):
     """Bad request."""
 
     code: ErrorCode = ErrorCode.BAD_REQUEST
@@ -93,7 +88,7 @@ class BadRequest(Error[T]):
 
 
 @frozen()
-class Unauthorized(Error[T]):
+class Unauthorized(Error):
     """User is unauthorized."""
 
     code: ErrorCode = ErrorCode.UNAUTHORIZED
@@ -101,7 +96,7 @@ class Unauthorized(Error[T]):
 
 
 @frozen()
-class Forbidden(Error[T]):
+class Forbidden(Error):
     """Access is forbidden."""
 
     code: ErrorCode = ErrorCode.FORBIDDEN
@@ -109,7 +104,7 @@ class Forbidden(Error[T]):
 
 
 @frozen()
-class NotFound(Error[T]):
+class NotFound(Error):
     """Item was not found."""
 
     code: ErrorCode = ErrorCode.NOT_FOUND
@@ -117,7 +112,7 @@ class NotFound(Error[T]):
 
 
 @frozen()
-class MethodNotAllowed(Error[T]):
+class MethodNotAllowed(Error):
     """Method is not allowed."""
 
     code: ErrorCode = ErrorCode.METHOD_NOT_ALLOWED
@@ -125,7 +120,7 @@ class MethodNotAllowed(Error[T]):
 
 
 @frozen()
-class Conflict(Error[T]):
+class Conflict(Error):
     """Conflict has occured."""
 
     code: ErrorCode = ErrorCode.CONFLICT
@@ -133,7 +128,7 @@ class Conflict(Error[T]):
 
 
 @frozen()
-class Gone(Error[T]):
+class Gone(Error):
     """Item is gone."""
 
     code: ErrorCode = ErrorCode.GONE
@@ -141,7 +136,7 @@ class Gone(Error[T]):
 
 
 @frozen()
-class PayloadTooLarge(Error[T]):
+class PayloadTooLarge(Error):
     """Payload is too large."""
 
     code: ErrorCode = ErrorCode.PAYLOAD_TOO_LARGE
@@ -149,7 +144,7 @@ class PayloadTooLarge(Error[T]):
 
 
 @frozen()
-class RateLimited(Error[T]):
+class RateLimited(Error):
     """Rate limit has occured."""
 
     code: ErrorCode = ErrorCode.TOO_MANY_REQUESTS
@@ -160,7 +155,7 @@ INTERNAL_ERROR = "internal error"
 
 
 @frozen()
-class InternalError(Error[str]):
+class InternalError(Error):
     """Internal error has occured."""
 
     detail: str = INTERNAL_ERROR

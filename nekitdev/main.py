@@ -45,7 +45,7 @@ def run(host: str, port: int) -> None:
     uvicorn.run(app, host=host, port=port)
 
 
-SHELL = True
+SHELL = False
 
 
 @click.option("--input", "-i", type=Path, default=DEFAULT_INPUT)
