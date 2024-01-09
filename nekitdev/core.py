@@ -5,6 +5,7 @@ from fastapi.requests import Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from jinja2 import Environment, FileSystemLoader
+from starlette.exceptions import HTTPException as HTTPError
 from typing_aliases import NormalError
 
 from nekitdev.constants import BREAK, NEW_LINE, STATIC, STATIC_NAME, STATIC_PATH, TEMPLATES
@@ -28,14 +29,14 @@ app.mount(STATIC_PATH, StaticFiles(directory=STATIC), name=STATIC_NAME)
 
 
 def register_error_handlers(app: FastAPI) -> None:
-    @app.exception_handler(Error)  # type: ignore
+    @app.exception_handler(Error)
     async def error_handler(request: Request, error: Error) -> HTMLResponse:
         return HTMLResponse(
             await ERROR_TEMPLATE.render_async(detail=error.detail, code=error.code.value),
             status_code=error.status_code,
         )
 
-    @app.exception_handler(RequestValidationError)  # type: ignore
+    @app.exception_handler(RequestValidationError)
     async def validation_error_handler(
         request: Request, error: RequestValidationError
     ) -> HTMLResponse:
@@ -45,13 +46,23 @@ def register_error_handlers(app: FastAPI) -> None:
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
         )
 
-        return await error_handler(request, converted_error)  # type: ignore
+        return await error_handler(request, converted_error)
 
-    @app.exception_handler(NormalError)  # type: ignore
+    @app.exception_handler(HTTPError)
+    async def http_error_handler(request: Request, error: HTTPError) -> HTMLResponse:
+        converted_error = Error(
+            str(error).replace(NEW_LINE, BREAK),
+            code=ErrorCode.from_status_code(error.status_code),
+            status_code=error.status_code,
+        )
+
+        return await error_handler(request, converted_error)
+
+    @app.exception_handler(NormalError)
     async def internal_error_handler(request: Request, error: NormalError) -> HTMLResponse:
         internal_error = InternalError()
 
-        return await error_handler(request, internal_error)  # type: ignore
+        return await error_handler(request, internal_error)
 
 
 register_error_handlers(app)

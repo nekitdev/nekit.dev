@@ -10,11 +10,11 @@ def utc_now() -> DateTime:
 
 
 def utc_today() -> Date:
-    return utc_now().date()  # type: ignore
+    return utc_now().date()
 
 
 def get_age(birthday: Date) -> int:
-    return utc_today().diff(birthday).in_years()  # type: ignore
+    return utc_today().diff(birthday).in_years()
 
 
 def get_nekit_age() -> int:

@@ -7,6 +7,8 @@ module.exports = {
                 // melody
                 "melody-purple": "#cc55ff",
                 "melody-blue": "#55ccff",
+                // errors
+                error: "#ff0000",
                 // brands
                 discord: "#5865f2",
                 youtube: "#ff0000",

@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 from enum import Enum
+from typing import ClassVar, Optional
 
-from attrs import frozen
 from fastapi import status
 from typing_aliases import NormalError, Payload
 from typing_extensions import TypedDict as Data
@@ -57,103 +57,118 @@ class ErrorData(Data):
     code: int
 
 
-@frozen()
+ERROR = "error"
+
+
 class Error(NormalError):
-    detail: Payload
-    code: ErrorCode = ErrorCode.DEFAULT
-    status_code: int = status.HTTP_500_INTERNAL_SERVER_ERROR
+    CODE: ClassVar[ErrorCode] = ErrorCode.DEFAULT
+    STATUS_CODE: ClassVar[int] = status.HTTP_500_INTERNAL_SERVER_ERROR
+
+    def __init__(
+        self,
+        detail: Payload = None,
+        code: Optional[ErrorCode] = None,
+        status_code: Optional[int] = None,
+    ) -> None:
+        self._detail = detail
+
+        if code is None:
+            code = self.CODE
+
+        if status_code is None:
+            status_code = self.STATUS_CODE
+
+        self._code = code
+        self._status_code = status_code
+
+    @property
+    def detail(self) -> Payload:
+        return self._detail
+
+    @property
+    def code(self) -> ErrorCode:
+        return self._code
+
+    @property
+    def status_code(self) -> int:
+        return self._status_code
 
     def into_data(self) -> ErrorData:
         return ErrorData(code=self.code.value, detail=self.detail)
 
 
-@frozen()
 class ValidationError(Error):
     """Validation has failed."""
 
-    code: ErrorCode = ErrorCode.UNPROCESSABLE_ENTITY
-    status_code: int = status.HTTP_422_UNPROCESSABLE_ENTITY
+    CODE: ClassVar[ErrorCode] = ErrorCode.UNPROCESSABLE_ENTITY
+    STATUS_CODE: ClassVar[int] = status.HTTP_422_UNPROCESSABLE_ENTITY
 
 
-@frozen()
 class BadRequest(Error):
     """Bad request."""
 
-    code: ErrorCode = ErrorCode.BAD_REQUEST
-    status_code: int = status.HTTP_400_BAD_REQUEST
+    CODE: ClassVar[ErrorCode] = ErrorCode.BAD_REQUEST
+    STATUS_CODE: ClassVar[int] = status.HTTP_400_BAD_REQUEST
 
 
-@frozen()
 class Unauthorized(Error):
     """User is unauthorized."""
 
-    code: ErrorCode = ErrorCode.UNAUTHORIZED
-    status_code: int = status.HTTP_401_UNAUTHORIZED
+    CODE: ClassVar[ErrorCode] = ErrorCode.UNAUTHORIZED
+    STATUS_CODE: ClassVar[int] = status.HTTP_401_UNAUTHORIZED
 
 
-@frozen()
 class Forbidden(Error):
     """Access is forbidden."""
 
-    code: ErrorCode = ErrorCode.FORBIDDEN
-    status_code: int = status.HTTP_403_FORBIDDEN
+    CODE: ClassVar[ErrorCode] = ErrorCode.FORBIDDEN
+    STATUS_CODE: ClassVar[int] = status.HTTP_403_FORBIDDEN
 
 
-@frozen()
 class NotFound(Error):
     """Item was not found."""
 
-    code: ErrorCode = ErrorCode.NOT_FOUND
-    status_code: int = status.HTTP_404_NOT_FOUND
+    CODE: ClassVar[ErrorCode] = ErrorCode.NOT_FOUND
+    STATUS_CODE: ClassVar[int] = status.HTTP_404_NOT_FOUND
 
 
-@frozen()
 class MethodNotAllowed(Error):
     """Method is not allowed."""
 
-    code: ErrorCode = ErrorCode.METHOD_NOT_ALLOWED
-    status_code: int = status.HTTP_405_METHOD_NOT_ALLOWED
+    CODE: ClassVar[ErrorCode] = ErrorCode.METHOD_NOT_ALLOWED
+    STATUS_CODE: ClassVar[int] = status.HTTP_405_METHOD_NOT_ALLOWED
 
 
-@frozen()
 class Conflict(Error):
     """Conflict has occured."""
 
-    code: ErrorCode = ErrorCode.CONFLICT
-    status_code: int = status.HTTP_409_CONFLICT
+    CODE: ClassVar[ErrorCode] = ErrorCode.CONFLICT
+    STATUS_CODE: ClassVar[int] = status.HTTP_409_CONFLICT
 
 
-@frozen()
 class Gone(Error):
     """Item is gone."""
 
-    code: ErrorCode = ErrorCode.GONE
-    status_code: int = status.HTTP_410_GONE
+    CODE: ClassVar[ErrorCode] = ErrorCode.GONE
+    STATUS_CODE: ClassVar[int] = status.HTTP_410_GONE
 
 
-@frozen()
 class PayloadTooLarge(Error):
     """Payload is too large."""
 
-    code: ErrorCode = ErrorCode.PAYLOAD_TOO_LARGE
-    status_code: int = status.HTTP_413_REQUEST_ENTITY_TOO_LARGE
+    CODE: ClassVar[ErrorCode] = ErrorCode.PAYLOAD_TOO_LARGE
+    STATUS_CODE: ClassVar[int] = status.HTTP_413_REQUEST_ENTITY_TOO_LARGE
 
 
-@frozen()
 class RateLimited(Error):
     """Rate limit has occured."""
 
-    code: ErrorCode = ErrorCode.TOO_MANY_REQUESTS
-    status_code: int = status.HTTP_429_TOO_MANY_REQUESTS
+    CODE: ClassVar[ErrorCode] = ErrorCode.TOO_MANY_REQUESTS
+    STATUS_CODE: ClassVar[int] = status.HTTP_429_TOO_MANY_REQUESTS
 
 
-INTERNAL_ERROR = "internal error"
-
-
-@frozen()
 class InternalError(Error):
     """Internal error has occured."""
 
-    detail: str = INTERNAL_ERROR
-    code: ErrorCode = ErrorCode.INTERNAL_SERVER_ERROR
-    status_code: int = status.HTTP_500_INTERNAL_SERVER_ERROR
+    CODE: ClassVar[ErrorCode] = ErrorCode.INTERNAL_SERVER_ERROR
+    STATUS_CODE: ClassVar[int] = status.HTTP_500_INTERNAL_SERVER_ERROR
