@@ -55,7 +55,8 @@ def register_error_handlers(app: FastAPI) -> None:
         code = ErrorCode.from_status_code(status_code)
 
         return HTMLResponse(
-            await ERROR_TEMPLATE.render_async(message=message, code=code), status_code=status_code
+            await ERROR_TEMPLATE.render_async(message=message, code=code.value),
+            status_code=status_code,
         )
 
     @app.exception_handler(NormalError)
