@@ -15,6 +15,7 @@ X_NAME = "x"
 YOUTUBE_NAME = "youtube"
 REDDIT_NAME = "reddit"
 TELEGRAM_NAME = "telegram"
+FUNDING_NAME = "funding"
 
 GITHUB_LINK = "https://github.com/nekitdev"
 KEYBASE_LINK = "https://keybase.io/nekitdev"
@@ -22,6 +23,7 @@ X_LINK = "https://x.com/nekitdev"
 YOUTUBE_LINK = "https://youtube.com/nekitdev"
 REDDIT_LINK = "https://reddit.com/u/nekitdev"
 TELEGRAM_LINK = "https://t.me/nekitdev"
+FUNDING_LINK = "https://boosty.to/nekitdev"
 
 NAME_TO_LINK = {
     DISCORD_NAME: DISCORD_LINK,
@@ -31,6 +33,7 @@ NAME_TO_LINK = {
     YOUTUBE_NAME: YOUTUBE_LINK,
     REDDIT_NAME: REDDIT_LINK,
     TELEGRAM_NAME: TELEGRAM_LINK,
+    FUNDING_NAME: FUNDING_LINK,
 }
 
 

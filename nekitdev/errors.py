@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import ClassVar, Optional
+from typing import ClassVar
 
 from fastapi import status
-from typing_aliases import NormalError, Payload
+from typing_aliases import NormalError
 from typing_extensions import TypedDict as Data
 
 __all__ = (
@@ -53,8 +53,8 @@ class ErrorCode(Enum):
 
 
 class ErrorData(Data):
-    detail: Payload
     code: int
+    message: str
 
 
 ERROR = "error"
@@ -64,37 +64,17 @@ class Error(NormalError):
     CODE: ClassVar[ErrorCode] = ErrorCode.DEFAULT
     STATUS_CODE: ClassVar[int] = status.HTTP_500_INTERNAL_SERVER_ERROR
 
-    def __init__(
-        self,
-        detail: Payload = None,
-        code: Optional[ErrorCode] = None,
-        status_code: Optional[int] = None,
-    ) -> None:
-        self._detail = detail
+    def __init__(self, message: str) -> None:
+        super().__init__(message)
 
-        if code is None:
-            code = self.CODE
-
-        if status_code is None:
-            status_code = self.STATUS_CODE
-
-        self._code = code
-        self._status_code = status_code
+        self._message = message
 
     @property
-    def detail(self) -> Payload:
-        return self._detail
-
-    @property
-    def code(self) -> ErrorCode:
-        return self._code
-
-    @property
-    def status_code(self) -> int:
-        return self._status_code
+    def message(self) -> str:
+        return self._message
 
     def into_data(self) -> ErrorData:
-        return ErrorData(code=self.code.value, detail=self.detail)
+        return ErrorData(message=self.message, code=self.CODE.value)
 
 
 class ValidationError(Error):

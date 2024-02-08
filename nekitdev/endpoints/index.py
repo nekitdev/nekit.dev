@@ -1,7 +1,7 @@
 from fastapi.responses import HTMLResponse
 
 from nekitdev.core import app, environment
-from nekitdev.utils import get_nekit_age
+from nekitdev.time import get_nekit_age
 
 __all__ = ("get_index",)
 
