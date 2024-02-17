@@ -1,28 +1,14 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import ClassVar
+from typing import ClassVar, Optional, Type, TypeVar, final
 
+from attrs import frozen
 from fastapi import status
 from typing_aliases import NormalError
 from typing_extensions import TypedDict as Data
 
-__all__ = (
-    "Error",
-    "ErrorCode",
-    "ErrorData",
-    "ValidationError",
-    "BadRequest",
-    "Unauthorized",
-    "Forbidden",
-    "NotFound",
-    "MethodNotAllowed",
-    "Conflict",
-    "Gone",
-    "PayloadTooLarge",
-    "RateLimited",
-    "InternalError",
-)
+__all__ = ("Error", "ErrorCode", "ErrorData", "ErrorType", "ValidationError", "InternalError")
 
 
 class ErrorCode(Enum):
@@ -61,94 +47,92 @@ ERROR = "error"
 
 
 class Error(NormalError):
-    CODE: ClassVar[ErrorCode] = ErrorCode.DEFAULT
-    STATUS_CODE: ClassVar[int] = status.HTTP_500_INTERNAL_SERVER_ERROR
+    DEFAULT_CODE: ClassVar[ErrorCode]
+    DEFAULT_STATUS_CODE: ClassVar[int]
 
-    def __init__(self, message: str) -> None:
+    def __init__(
+        self,
+        message: str,
+        code: Optional[ErrorCode] = None,
+        status_code: Optional[int] = None,
+    ) -> None:
         super().__init__(message)
 
+        if code is None:
+            code = self.DEFAULT_CODE
+
+        if status_code is None:
+            status_code = self.DEFAULT_STATUS_CODE
+
         self._message = message
+        self._code = code
+        self._status_code = status_code
 
     @property
     def message(self) -> str:
         return self._message
 
+    @property
+    def code(self) -> ErrorCode:
+        return self._code
+
+    @property
+    def status_code(self) -> int:
+        return self._status_code
+
     def into_data(self) -> ErrorData:
-        return ErrorData(message=self.message, code=self.CODE.value)
+        return ErrorData(code=self.code.value, message=self.message)
 
 
+ErrorType = Type[Error]
+
+
+ET = TypeVar("ET", bound=ErrorType)
+
+
+@final
+@frozen()
+class DefaultCode:
+    code: ErrorCode
+
+    def __call__(self, error_type: ET) -> ET:
+        error_type.DEFAULT_CODE = self.code
+
+        return error_type
+
+
+def default_code(code: ErrorCode) -> DefaultCode:
+    return DefaultCode(code)
+
+
+@final
+@frozen()
+class DefaultStatusCode:
+    status_code: int
+
+    def __call__(self, error_type: ET) -> ET:
+        error_type.DEFAULT_STATUS_CODE = self.status_code
+
+        return error_type
+
+
+def default_status_code(status_code: int) -> DefaultStatusCode:
+    return DefaultStatusCode(status_code)
+
+
+@default_code(ErrorCode.UNPROCESSABLE_ENTITY)
+@default_status_code(status.HTTP_422_UNPROCESSABLE_ENTITY)
 class ValidationError(Error):
     """Validation has failed."""
 
-    CODE: ClassVar[ErrorCode] = ErrorCode.UNPROCESSABLE_ENTITY
-    STATUS_CODE: ClassVar[int] = status.HTTP_422_UNPROCESSABLE_ENTITY
+
+INTERNAL_ERROR = "internal error"
 
 
-class BadRequest(Error):
-    """Bad request."""
-
-    CODE: ClassVar[ErrorCode] = ErrorCode.BAD_REQUEST
-    STATUS_CODE: ClassVar[int] = status.HTTP_400_BAD_REQUEST
-
-
-class Unauthorized(Error):
-    """User is unauthorized."""
-
-    CODE: ClassVar[ErrorCode] = ErrorCode.UNAUTHORIZED
-    STATUS_CODE: ClassVar[int] = status.HTTP_401_UNAUTHORIZED
-
-
-class Forbidden(Error):
-    """Access is forbidden."""
-
-    CODE: ClassVar[ErrorCode] = ErrorCode.FORBIDDEN
-    STATUS_CODE: ClassVar[int] = status.HTTP_403_FORBIDDEN
-
-
-class NotFound(Error):
-    """Item was not found."""
-
-    CODE: ClassVar[ErrorCode] = ErrorCode.NOT_FOUND
-    STATUS_CODE: ClassVar[int] = status.HTTP_404_NOT_FOUND
-
-
-class MethodNotAllowed(Error):
-    """Method is not allowed."""
-
-    CODE: ClassVar[ErrorCode] = ErrorCode.METHOD_NOT_ALLOWED
-    STATUS_CODE: ClassVar[int] = status.HTTP_405_METHOD_NOT_ALLOWED
-
-
-class Conflict(Error):
-    """Conflict has occured."""
-
-    CODE: ClassVar[ErrorCode] = ErrorCode.CONFLICT
-    STATUS_CODE: ClassVar[int] = status.HTTP_409_CONFLICT
-
-
-class Gone(Error):
-    """Item is gone."""
-
-    CODE: ClassVar[ErrorCode] = ErrorCode.GONE
-    STATUS_CODE: ClassVar[int] = status.HTTP_410_GONE
-
-
-class PayloadTooLarge(Error):
-    """Payload is too large."""
-
-    CODE: ClassVar[ErrorCode] = ErrorCode.PAYLOAD_TOO_LARGE
-    STATUS_CODE: ClassVar[int] = status.HTTP_413_REQUEST_ENTITY_TOO_LARGE
-
-
-class RateLimited(Error):
-    """Rate limit has occured."""
-
-    CODE: ClassVar[ErrorCode] = ErrorCode.TOO_MANY_REQUESTS
-    STATUS_CODE: ClassVar[int] = status.HTTP_429_TOO_MANY_REQUESTS
-
-
+@default_code(ErrorCode.INTERNAL_SERVER_ERROR)
+@default_status_code(status.HTTP_500_INTERNAL_SERVER_ERROR)
 class InternalError(Error):
     """Internal error has occured."""
 
-    CODE: ClassVar[ErrorCode] = ErrorCode.INTERNAL_SERVER_ERROR
-    STATUS_CODE: ClassVar[int] = status.HTTP_500_INTERNAL_SERVER_ERROR
+    def __init__(self) -> None:
+        super().__init__(INTERNAL_ERROR)

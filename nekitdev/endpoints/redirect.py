@@ -5,9 +5,13 @@ from nekitdev.core import app
 
 ROOT = "/"
 
+CHAT_NAME = "chat"
+
+CHAT_LINK = "https://discord.com/invite/KtJkbut"
+
 DISCORD_NAME = "discord"
 
-DISCORD_LINK = "https://discord.com/invite/KtJkbut"
+DISCORD_LINK = "https://discord.com/users/292448864944783360"
 
 GITHUB_NAME = "github"
 KEYBASE_NAME = "keybase"
@@ -26,6 +30,7 @@ TELEGRAM_LINK = "https://t.me/nekitdev"
 FUNDING_LINK = "https://boosty.to/nekitdev"
 
 NAME_TO_LINK = {
+    CHAT_NAME: CHAT_LINK,
     DISCORD_NAME: DISCORD_LINK,
     GITHUB_NAME: GITHUB_LINK,
     KEYBASE_NAME: KEYBASE_LINK,

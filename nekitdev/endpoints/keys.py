@@ -1,12 +1,13 @@
+from fastapi import status
 from fastapi.responses import PlainTextResponse
 
 from nekitdev.constants import DEFAULT_ENCODING, DEFAULT_ERRORS, KEY_SUFFIX, KEYS
 from nekitdev.core import app
-from nekitdev.errors import NotFound
 
 __all__ = ("get_key",)
 
 CAN_NOT_FIND_KEY = "can not find `{}` key"
+can_not_find_key = CAN_NOT_FIND_KEY.format
 
 
 @app.get("/keys/{name}")
@@ -16,4 +17,4 @@ async def get_key(name: str) -> PlainTextResponse:
     if path.exists():
         return PlainTextResponse(path.read_text(DEFAULT_ENCODING, DEFAULT_ERRORS))
 
-    raise NotFound(CAN_NOT_FIND_KEY.format(name))
+    return PlainTextResponse(can_not_find_key(name), status_code=status.HTTP_404_NOT_FOUND)

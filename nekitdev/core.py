@@ -26,42 +26,43 @@ app = FastAPI()
 
 app.mount(STATIC_PATH, StaticFiles(directory=STATIC), name=STATIC_NAME)
 
-UNHANDLED_ERROR = "unhandled error"
+case_fold = str.casefold
 
 
 def register_error_handlers(app: FastAPI) -> None:
     @app.exception_handler(Error)
     async def error_handler(request: Request, error: Error) -> HTMLResponse:
         return HTMLResponse(
-            await ERROR_TEMPLATE.render_async(message=error.message, code=error.CODE.value),
-            status_code=error.STATUS_CODE,
+            await ERROR_TEMPLATE.render_async(code=error.code.value, message=error.message),
+            status_code=error.status_code,
         )
 
-    def error_to_message(error: NormalError) -> str:
-        return str(error).replace(NEW_LINE, BREAK)
+    def validation_error_to_message(validation_error: RequestValidationError) -> str:
+        return str(validation_error).replace(NEW_LINE, BREAK)
 
     @app.exception_handler(RequestValidationError)
     async def validation_error_handler(
         request: Request, error: RequestValidationError
     ) -> HTMLResponse:
-        converted_error = ValidationError(error_to_message(error))
+        converted_error = ValidationError(validation_error_to_message(error))
 
         return await error_handler(request, converted_error)
 
     @app.exception_handler(HTTPError)
     async def http_error_handler(request: Request, error: HTTPError) -> HTMLResponse:
-        message = error_to_message(error)
+        message = case_fold(error.detail)
+
         status_code = error.status_code
+
         code = ErrorCode.from_status_code(status_code)
 
-        return HTMLResponse(
-            await ERROR_TEMPLATE.render_async(message=message, code=code.value),
-            status_code=status_code,
-        )
+        converted_error = Error(message, code, status_code)
+
+        return await error_handler(request, converted_error)
 
     @app.exception_handler(NormalError)
     async def internal_error_handler(request: Request, error: NormalError) -> HTMLResponse:
-        internal_error = InternalError(UNHANDLED_ERROR)
+        internal_error = InternalError()
 
         return await error_handler(request, internal_error)
 

@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "nekit.dev"
 version = "1.0.0"
-description = "nekit.dev - Personal website written in Python."
+description = "Personal website written in Python."
 authors = ["nekitdev"]
 license = "MIT"
 
@@ -22,7 +22,7 @@ classifiers = [
 
 [tool.poetry.urls]
 Funding = "https://nekit.dev/funding"
-Discord = "https://nekit.dev/discord"
+Chat = "https://nekit.dev/chat"
 Issues = "https://github.com/nekitdev/nekit.dev/issues"
 
 [[tool.poetry.packages]]
@@ -43,7 +43,7 @@ typing-aliases = "^1.6.0"
 typing-extensions = "^4.9.0"
 
 [tool.poetry.dependencies.uvicorn]
-version = "^0.27.0"
+version = "^0.27.1"
 extras = ["standard"]
 
 [tool.poetry.group.format.dependencies]

@@ -1,6 +1,6 @@
-"""nekit.dev - Personal website written in Python."""
+"""Personal website written in Python."""
 
-__description__ = "nekit.dev - Personal website written in Python."
+__description__ = "Personal website written in Python."
 __url__ = "https://github.com/nekitdev/nekit.dev"
 
 __title__ = "nekitdev"
