@@ -1,0 +1,21 @@
+{
+  "short_name": "nekitdev",
+  "name": "nekitdev",
+  "description": "Building awesome software.",
+  "categories": ["utilities"],
+  "start_url": "/",
+  "display": "minimal-ui",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/static/images/icon.png",
+      "sizes": "any",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/images/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+[package]
+name = "nekit-dev"
+version = "0.1.0"
+authors = ["nekitdev <nekit@nekit.dev>"]
+edition = "2021"
+readme = "README.md"
+repository = "https://github.com/nekitdev/nekit.dev"
+license = "MIT"
+publish = false
+
+[dependencies.axum]
+version = "0.7.5"
+
+[dependencies.clap]
+version = "4.5.17"
+features = ["derive"]
+
+[dependencies.maud]
+version = "0.26.0"
+features = ["axum"]
+
+[dependencies.log]
+version = "0.4.22"
+
+[dependencies.miette]
+version = "7.2.0"
+features = ["fancy"]
+
+[dependencies.serde]
+version = "1.0.210"
+features = ["derive"]
+
+[dependencies.thiserror]
+version = "1.0.63"
+
+[dependencies.time]
+version = "0.3.36"
+features = ["serde"]
+
+[dependencies.tokio]
+version = "1.40.0"
+features = ["full"]
+
+[dependencies.toml]
+version = "0.8.19"
+features = ["parse"]
+
+[dependencies.tower]
+version = "0.5.1"
+features = ["full"]
+
+[dependencies.tower-http]
+version = "0.5.2"
+features = ["full"]
