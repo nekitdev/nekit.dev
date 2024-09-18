@@ -44,10 +44,13 @@ pub fn head(context: &HeadContext<'_>) -> Markup {
 
             link rel="apple-touch-icon" href=(IMAGE_PNG);
 
+            link rel="manifest" href=(MANIFEST);
+
+            script defer src=(ICONS) {}
+
             link rel="preload" href=(STYLE) as="style";
             link rel="stylesheet" href=(STYLE);
 
-            script defer src=(ICONS) {}
 
             title { (context.title) }
         }
