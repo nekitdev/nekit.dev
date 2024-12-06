@@ -46,7 +46,7 @@ pub fn head(context: &HeadContext<'_>) -> Markup {
 
             link rel="manifest" href=(MANIFEST);
 
-            script defer src=(ICONS) {}
+            script async src=(ICONS) {}
 
             link rel="preload" href=(STYLE) as="style";
             link rel="stylesheet" href=(STYLE);
