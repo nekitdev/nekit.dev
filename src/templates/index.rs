@@ -30,26 +30,26 @@ pub fn content() -> Markup {
 
                 div class="flex space-x-8" {
                     div class="hidden md:flex space-x-8" {
-                        a class="text-youtube" href="/youtube" {
+                        a class="text-youtube" href="/youtube" aria-label="YouTube" {
                             i class="fa-brands fa-youtube w-auto h-10" {}
                         }
-                        a class="text-reddit" href="/reddit" {
+                        a class="text-reddit" href="/reddit" aria-label="Reddit" {
                             i class="fa-brands fa-reddit-alien w-auto h-10" {}
                         }
-                        a class="text-neutral-900 dark:text-white" href="/x" {
+                        a class="text-neutral-900 dark:text-white" href="/x" aria-label="X" {
                             i class="fa-brands fa-x-twitter w-auto h-10" {}
                         }
-                        a class="text-telegram" href="/telegram" {
+                        a class="text-telegram" href="/telegram" aria-label="Telegram" {
                             i class="fa-brands fa-telegram w-auto h-10" {}
                         }
-                        a class="text-discord" href="/discord" {
+                        a class="text-discord" href="/discord" aria-label="Discord" {
                             i class="fa-brands fa-discord w-auto h-10" {}
                         }
-                        a class="text-keybase" href="/keybase" {
+                        a class="text-keybase" href="/keybase" aria-label="Keybase" {
                             i class="fa-brands fa-keybase w-auto h-10" {}
                         }
                     }
-                    a class="text-netural-900 dark:text-white" href="/github" {
+                    a class="text-netural-900 dark:text-white" href="/github" aria-label="GitHub" {
                         i class="fa-brands fa-github w-auto h-10" {}
                     }
                     a class="

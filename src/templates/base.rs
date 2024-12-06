@@ -77,7 +77,7 @@ pub fn wrap(body: Markup) -> Markup {
 pub fn base(head: Markup, body: Markup) -> Markup {
     html! {
         (DOCTYPE)
-        html {
+        html lang="en" {
             (head)
             (wrap(body))
         }
