@@ -2,7 +2,10 @@ use std::borrow::Cow;
 
 use maud::{html, Markup};
 
-use crate::templates::base::{base, head, HeadContext};
+use crate::{
+    age,
+    templates::base::{base, head, HeadContext},
+};
 
 pub const TITLE: &str = "Home";
 pub const DESCRIPTION: &str = "Building awesome software.";
@@ -94,7 +97,7 @@ pub fn content() -> Markup {
                 }
 
                 div class="mt-6 text-xl lg:text-2xl text-neutral-700 dark:text-neutral-500 font-mono" {
-                    b { "Nikita Tikhonov" } ", software developer from Moscow, Russia."
+                    b { "Nikita Tikhonov" } ", " (age::nekit()) "-year-old software developer from Moscow, Russia."
                 }
             }
         }

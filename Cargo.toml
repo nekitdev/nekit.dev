@@ -11,6 +11,9 @@ publish = false
 [dependencies.axum]
 version = "0.7.5"
 
+[dependencies.chrono]
+version = "0.4.38"
+
 [dependencies.clap]
 version = "4.5.17"
 features = ["derive"]
@@ -33,17 +36,9 @@ features = ["derive"]
 [dependencies.thiserror]
 version = "1.0.63"
 
-[dependencies.time]
-version = "0.3.36"
-features = ["serde"]
-
 [dependencies.tokio]
 version = "1.40.0"
 features = ["full"]
-
-[dependencies.toml]
-version = "0.8.19"
-features = ["parse"]
 
 [dependencies.tower]
 version = "0.5.1"
