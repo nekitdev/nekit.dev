@@ -15,11 +15,8 @@ pub fn content() -> Markup {
         div class="px-4 sm:px-6 md:px-8" {
             header class="
                 relative
-                pt-6
-                lg:pt-8
-                flex
-                items-center
-                justify-between
+                pt-6 lg:pt-8
+                flex items-center justify-between
                 text-neutral-700
                 dark:text-neutral-200
                 leading-6
@@ -96,7 +93,12 @@ pub fn content() -> Markup {
                     } " software."
                 }
 
-                div class="mt-6 text-xl lg:text-2xl text-neutral-700 dark:text-neutral-500 font-mono" {
+                div class="
+                    mt-6
+                    text-xl lg:text-2xl
+                    text-neutral-700 dark:text-neutral-500
+                    font-mono
+                " {
                     b { "Nikita Tikhonov" } ", " (age::nekit()) "-year-old software developer from Moscow, Russia."
                 }
             }

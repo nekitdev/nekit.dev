@@ -12,7 +12,7 @@ publish = false
 version = "0.7.9"
 
 [dependencies.chrono]
-version = "0.4.38"
+version = "0.4.39"
 
 [dependencies.clap]
 version = "4.5.23"
@@ -27,11 +27,11 @@ version = "7.4.0"
 features = ["fancy"]
 
 [dependencies.serde]
-version = "1.0.215"
+version = "1.0.216"
 features = ["derive"]
 
 [dependencies.thiserror]
-version = "2.0.4"
+version = "2.0.9"
 
 [dependencies.tokio]
 version = "1.42.0"
