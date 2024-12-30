@@ -21,7 +21,7 @@ pub fn content() -> Markup {
                 dark:text-neutral-200
                 leading-6
             " {
-                a class="text-neutral-900 dark:text-white text-2xl lg:text-3xl font-mono" href="#" {
+                a class="text-neutral-900 dark:text-white text-2xl lg:text-3xl font-mono" href="/" {
                     "nekitdev"
                 }
 
