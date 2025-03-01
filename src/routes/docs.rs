@@ -7,5 +7,5 @@ async fn redirect_docs(Path(name): Path<String>) -> Redirect {
 }
 
 pub fn router() -> Router<()> {
-    Router::new().route("/:name", get(redirect_docs))
+    Router::new().route("/{name}", get(redirect_docs))
 }
