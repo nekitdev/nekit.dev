@@ -3,7 +3,7 @@ use std::borrow::Cow;
 use maud::{html, Markup, DOCTYPE};
 use serde::{Deserialize, Serialize};
 
-pub const ICONS: &str = "https://use.fontawesome.com/releases/v6.7.2/js/all.js";
+pub const ICONS: &str = "https://kit.fontawesome.com/c7493dda5d.js";
 
 pub const IMAGE: &str = "https://nekit.dev/static/images/icon.png";
 
@@ -46,11 +46,10 @@ pub fn head(context: &HeadContext<'_>) -> Markup {
 
             link rel="manifest" href=(MANIFEST);
 
-            script async src=(ICONS) {}
+            script async src=(ICONS) crossorigin="anonymous" {}
 
             link rel="preload" href=(STYLE) as="style";
             link rel="stylesheet" href=(STYLE);
-
 
             title { (context.title) }
         }

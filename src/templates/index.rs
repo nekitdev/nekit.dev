@@ -27,25 +27,27 @@ pub fn content() -> Markup {
 
                 div class="flex space-x-8" {
                     div class="hidden md:flex space-x-8" {
-                        a class="text-youtube" href="/youtube" aria-label="YouTube" {
-                            i class="fa-brands fa-youtube w-auto h-10" {}
+                        a class="flex flex-col" href="/youtube" aria-label="YouTube" {
+                            i class="fa-brands fa-youtube text-youtube text-4xl" {}
                         }
-                        a class="text-reddit" href="/reddit" aria-label="Reddit" {
-                            i class="fa-brands fa-reddit-alien w-auto h-10" {}
+                        a class="flex flex-col" href="/reddit" aria-label="Reddit" {
+                            span class="fa-brands fa-reddit-alien text-reddit text-4xl" {}
                         }
-                        a class="text-telegram" href="/telegram" aria-label="Telegram" {
-                            i class="fa-brands fa-telegram w-auto h-10" {}
+                        a class="flex flex-col" href="/telegram" aria-label="Telegram" {
+                            span class="fa-brands fa-telegram text-telegram text-4xl" {}
                         }
-                        a class="text-discord" href="/discord" aria-label="Discord" {
-                            i class="fa-brands fa-discord w-auto h-10" {}
+                        a class="flex flex-col" href="/discord" aria-label="Discord" {
+                            span class="fa-brands fa-discord text-discord text-4xl" {}
                         }
-                        a class="text-bluesky" href="/bluesky" aria-label="Bluesky" {
-                            i class="fa-brands fa-bluesky w-auto h-10" {}
+                        a class="flex flex-col" href="/bluesky" aria-label="Bluesky" {
+                            span class="fa-brands fa-bluesky text-bluesky text-4xl" {}
                         }
                     }
-                    a class="text-netural-900 dark:text-white" href="/github" aria-label="GitHub" {
-                        i class="fa-brands fa-github w-auto h-10" {}
+
+                    a class="flex flex-col" href="/github" aria-label="GitHub" {
+                        span class="fa-brands fa-github text-4xl" {}
                     }
+
                     a class="
                         transition
                         ease-in-out
