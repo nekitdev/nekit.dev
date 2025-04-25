@@ -1,8 +1,3 @@
-pub mod docs;
-pub mod email;
-pub mod keys;
-pub mod projects;
-
 use axum::{response::Redirect, routing::get, Router};
 use maud::Markup;
 
@@ -67,8 +62,4 @@ pub fn router() -> Router<()> {
         .route("/reddit", get(redirect_reddit))
         .route("/telegram", get(redirect_telegram))
         .route("/funding", get(redirect_funding))
-        .nest("/keys", keys::router())
-        .nest("/docs", docs::router())
-        .nest("/email", email::router())
-        .nest("/projects", projects::router())
 }

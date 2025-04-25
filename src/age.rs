@@ -2,6 +2,7 @@ use chrono::{Datelike, NaiveDate, Utc};
 
 pub type Date = NaiveDate;
 
+/// 13th January, 2005
 pub const NEKIT_BIRTHDAY: Date = Date::from_ymd_opt(2005, 1, 13).unwrap();
 
 pub fn get(birthday: Date) -> i32 {

@@ -107,6 +107,6 @@ pbmAGLbBB2TBok4=
 This Security Policy is adapted from [Rust's Security Policy][Rust Security Policy].
 
 [Security Email]: mailto:security@nekit.dev
-[Security Key]: https://nekit.dev/keys/security
+[Security Key]: https://nekit.dev/static/keys/security.key
 [MIT Key Server]: https://pgp.mit.edu/pks/lookup?op=index&search=0x6AF9DDF87B37BBE6E83F5DF2B8F5B86F98F12F5E
 [Rust Security Policy]: https://rust-lang.org/policies/security
