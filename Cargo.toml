@@ -9,13 +9,13 @@ license = "MIT"
 publish = false
 
 [dependencies.axum]
-version = "0.8.3"
+version = "0.8.4"
 
 [dependencies.chrono]
-version = "0.4.40"
+version = "0.4.41"
 
 [dependencies.clap]
-version = "4.5.37"
+version = "4.5.40"
 features = ["derive"]
 
 [dependencies.maud]
@@ -23,7 +23,7 @@ version = "0.27.0"
 features = ["axum"]
 
 [dependencies.miette]
-version = "7.5.0"
+version = "7.6.0"
 features = ["fancy"]
 
 [dependencies.serde]
@@ -34,9 +34,9 @@ features = ["derive"]
 version = "2.0.12"
 
 [dependencies.tokio]
-version = "1.44.2"
+version = "1.46.1"
 features = ["full"]
 
 [dependencies.tower-http]
-version = "0.6.2"
+version = "0.6.6"
 features = ["full"]
