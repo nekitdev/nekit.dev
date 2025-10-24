@@ -1,4 +1,6 @@
 pub mod age;
-pub mod app;
+pub mod components;
+pub mod links;
+pub mod redirects;
 pub mod routes;
-pub mod templates;
+pub mod views;

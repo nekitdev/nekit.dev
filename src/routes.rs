@@ -1,65 +1,29 @@
-use axum::{response::Redirect, routing::get, Router};
-use maud::Markup;
+// use axum::response::Redirect;
+use dioxus::prelude::*;
 
-use crate::templates::index::index;
+use crate::views::home::Home;
 
-async fn get_index() -> Markup {
-    index()
+#[derive(Clone, Routable)]
+#[rustfmt::skip]
+pub enum Route {
+    #[route("/")]
+    Home {},
 }
 
-pub const CHAT: &str = "https://discord.com/invite/KtJkbut";
-
-pub const DISCORD: &str = "https://discord.com/users/292448864944783360";
-
-pub const GITHUB: &str = "https://github.com/nekitdev";
-pub const BLUESKY: &str = "https://bsky.app/profile/nekit.dev";
-pub const YOUTUBE: &str = "https://youtube.com/nekitdev";
-pub const REDDIT: &str = "https://reddit.com/u/nekitdev";
-pub const TELEGRAM: &str = "https://t.me/nekitdev";
-
-pub const FUNDING: &str = "https://boosty.to/nekitdev";
-
-async fn redirect_chat() -> Redirect {
-    Redirect::to(CHAT)
-}
-
-async fn redirect_discord() -> Redirect {
-    Redirect::to(DISCORD)
-}
-
-async fn redirect_github() -> Redirect {
-    Redirect::to(GITHUB)
-}
-
-async fn redirect_bluesky() -> Redirect {
-    Redirect::to(BLUESKY)
-}
-
-async fn redirect_youtube() -> Redirect {
-    Redirect::to(YOUTUBE)
-}
-
-async fn redirect_reddit() -> Redirect {
-    Redirect::to(REDDIT)
-}
-
-async fn redirect_telegram() -> Redirect {
-    Redirect::to(TELEGRAM)
-}
-
-async fn redirect_funding() -> Redirect {
-    Redirect::to(FUNDING)
-}
-
-pub fn router() -> Router<()> {
-    Router::new()
-        .route("/", get(get_index))
-        .route("/chat", get(redirect_chat))
-        .route("/discord", get(redirect_discord))
-        .route("/github", get(redirect_github))
-        .route("/bluesky", get(redirect_bluesky))
-        .route("/youtube", get(redirect_youtube))
-        .route("/reddit", get(redirect_reddit))
-        .route("/telegram", get(redirect_telegram))
-        .route("/funding", get(redirect_funding))
+#[component]
+pub fn App() -> Element {
+    rsx! {
+        body {
+            class: "
+                antialiased
+                transition
+                ease-in-out
+                min-h-screen
+                bg-neutral-50 dark:bg-neutral-900
+                text-neutral-900 dark:text-neutral-50
+                font-mono
+            ",
+            Router::<Route> {}
+        }
+    }
 }

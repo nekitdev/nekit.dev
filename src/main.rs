@@ -1,9 +1,9 @@
-use clap::Parser;
-use miette::Result;
-use nekit_dev::app::App;
+use dioxus::prelude::*;
+
+use nekit_dev::routes::App;
 
 fn main() -> Result<()> {
-    App::parse().run()?;
+    dioxus::launch(App);
 
     Ok(())
 }

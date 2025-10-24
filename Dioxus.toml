@@ -1,0 +1,11 @@
+[application]
+name = "nekit.dev"
+out_dir = "build"
+asset_dir = "assets"
+
+[web.app]
+title = "nekit.dev"
+
+[web.watcher]
+reload_html = true
+watch_path = ["src", "assets"]

@@ -2,41 +2,46 @@
 name = "nekit-dev"
 version = "0.1.0"
 authors = ["nekitdev <nekit@nekit.dev>"]
-edition = "2021"
+edition = "2024"
+rust-version = "1.90"
 readme = "README.md"
 repository = "https://github.com/nekitdev/nekit.dev"
 license = "MIT"
 publish = false
 
-[dependencies.axum]
-version = "0.8.4"
-
 [dependencies.chrono]
-version = "0.4.41"
+version = "0.4.42"
 
-[dependencies.clap]
-version = "4.5.40"
-features = ["derive"]
+[dependencies.dioxus]
+version = "0.7.0-rc.3"
+features = ["fullstack", "router"]
 
-[dependencies.maud]
-version = "0.27.0"
-features = ["axum"]
-
-[dependencies.miette]
-version = "7.6.0"
-features = ["fancy"]
+[dependencies.non-empty-str]
+version = "0.11.3"
+features = ["serde"]
 
 [dependencies.serde]
-version = "1.0.219"
+version = "1.0.228"
 features = ["derive"]
 
 [dependencies.thiserror]
-version = "2.0.12"
+version = "2.0.17"
 
-[dependencies.tokio]
-version = "1.46.1"
-features = ["full"]
+[features]
+default = ["web"]
+web = ["dioxus/web"]
+desktop = ["dioxus/desktop"]
+mobile = ["dioxus/mobile"]
+server = ["dioxus/server"]
 
-[dependencies.tower-http]
-version = "0.6.6"
-features = ["full"]
+[profile]
+
+[profile.wasm-dev]
+inherits = "dev"
+opt-level = 1
+
+[profile.server-dev]
+inherits = "dev"
+
+[profile.android-dev]
+inherits = "dev"
