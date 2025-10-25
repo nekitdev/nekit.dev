@@ -10,7 +10,6 @@ pub const IMAGE_SVG: Asset = asset!("/assets/images/icon.svg");
 pub const MANIFEST: Asset = asset!("/assets/manifest.json");
 
 pub const ICONS: &NonEmptyStr = const_non_empty_str!("https://kit.fontawesome.com/c7493dda5d.js");
-pub const IMAGE: &NonEmptyStr = const_non_empty_str!("https://nekit.dev/assets/images/icon.png");
 
 pub const NAME: &NonEmptyStr = const_non_empty_str!("nekitdev");
 pub const LANG: &NonEmptyStr = const_non_empty_str!("en_US");
@@ -18,13 +17,15 @@ pub const TYPE: &NonEmptyStr = const_non_empty_str!("website");
 
 #[component]
 pub fn Head(title: NonEmptyString, description: NonEmptyString, url: NonEmptyString) -> Element {
+    let image = format!("https://nekit.dev{IMAGE_PNG}");
+
     rsx! {
         document::Meta { name: "viewport", content: "width=device-width, initial-scale=1" }
 
         document::Meta { property: "og:title", content: title.as_str() }
         document::Meta { property: "og:type", content: TYPE.as_str() }
         document::Meta { property: "og:url", content: url.as_str() }
-        document::Meta { property: "og:image", content: IMAGE.as_str() }
+        document::Meta { property: "og:image", content: image }
         document::Meta { property: "og:description", content: description.as_str() }
         document::Meta { property: "og:site_name", content: NAME.as_str() }
         document::Meta { property: "og:locale", content: LANG.as_str() }

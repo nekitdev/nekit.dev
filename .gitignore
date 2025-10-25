@@ -6,7 +6,3 @@ build/
 # remove if lock file should be included
 
 Cargo.lock
-
-# compiled css
-
-assets/tailwind.css
