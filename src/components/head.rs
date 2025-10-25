@@ -42,8 +42,6 @@ pub fn Head(title: NonEmptyString, description: NonEmptyString, url: NonEmptyStr
         document::Link { rel: "icon", href: IMAGE_SVG }
         document::Link { rel: "apple-touch-icon", href: IMAGE_PNG }
 
-        document::Link { rel: "manifest", href: MANIFEST }
-
         document::Script {
             async: true,
             crossorigin: "anonymous",
