@@ -9,6 +9,7 @@ pub const IMAGE_PNG: Asset = asset!("/assets/images/icon.png");
 pub const IMAGE_SVG: Asset = asset!("/assets/images/icon.svg");
 pub const MANIFEST: Asset = asset!("/assets/manifest.json");
 
+pub const ICONS: &NonEmptyStr = const_non_empty_str!("https://kit.fontawesome.com/c7493dda5d.js");
 pub const IMAGE: &NonEmptyStr = const_non_empty_str!("https://nekit.dev/assets/images/icon.png");
 
 pub const NAME: &NonEmptyStr = const_non_empty_str!("nekitdev");
@@ -18,8 +19,6 @@ pub const TYPE: &NonEmptyStr = const_non_empty_str!("website");
 #[component]
 pub fn Head(title: NonEmptyString, description: NonEmptyString, url: NonEmptyString) -> Element {
     rsx! {
-        document::Meta { charset: "utf-8" }
-
         document::Meta { name: "viewport", content: "width=device-width, initial-scale=1" }
 
         document::Meta { property: "og:title", content: title.as_str() }
@@ -43,5 +42,11 @@ pub fn Head(title: NonEmptyString, description: NonEmptyString, url: NonEmptyStr
         document::Link { rel: "apple-touch-icon", href: IMAGE_PNG }
 
         document::Link { rel: "manifest", href: MANIFEST }
+
+        document::Script {
+            async: true,
+            crossorigin: "anonymous",
+            src: ICONS.as_str(),
+        }
     }
 }

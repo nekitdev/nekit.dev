@@ -2,6 +2,7 @@ use dioxus::prelude::*;
 use non_empty_str::{NonEmptyStr, const_non_empty_str};
 
 use crate::{
+    age::nekit,
     components::head::{Head, NAME},
     links::root,
     routes::Route,
@@ -12,6 +13,8 @@ pub const DESCRIPTION: &NonEmptyStr = const_non_empty_str!("Building awesome sof
 
 #[component]
 pub fn Home() -> Element {
+    let age = nekit();
+
     rsx! {
         Head {
             title: TITLE.to_non_empty_string(),
@@ -19,116 +22,151 @@ pub fn Home() -> Element {
             url: root(),
         }
 
-        div {
-            class: "px-4 sm:px-6 md:px-8",
-            header {
+        nav {
+            class: "absolute flex w-full",
+            div {
                 class: "
-                    relative
-                    pt-6 lg:pt-8
-                    flex items-center justify-between
-                    text-neutral-700 dark:text-neutral-200
-                    leading-6
+                    mx-auto
+                    max-w-md sm:max-w-3xl lg:max-w-7xl
+                    px-4 sm:px-6 lg:px-8
+                    flex items-center
+                    w-full
+                    py-4
                 ",
-
                 Link {
                     to: Route::Home {},
-                    class: "text-neutral-900 dark:text-white text-2xl lg:text-3xl font-mono",
+                    class: "mr-auto text-2xl lg:text-3xl",
                     { NAME.as_str() }
+                }
+                div {
+                    class: "hidden lg:flex lg:space-x-8 text-xl",
+                    Link {
+                        to: Route::Blog {},
+                        class: "hover:text-melody-blue dark:hover:text-melody-purple",
+                        "Blog"
+                    },
+                    Link {
+                        to: Route::Projects {},
+                        class: "hover:text-melody-blue dark:hover:text-melody-purple",
+                        "Projects"
+                    }
+                }
+                div {
+                    class: "relative ml-auto flex space-x-8",
+                    div {
+                        class: "hidden md:flex space-x-8",
+                        a {
+                            href: "/youtube",
+                            aria_label: "YouTube",
+                            i {
+                                class: "fa-brands fa-youtube text-youtube text-4xl"
+                            }
+                        }
+                        a {
+                            href: "/reddit",
+                            aria_label: "Reddit",
+                            i {
+                                class: "fa-brands fa-reddit-alien text-reddit text-4xl"
+                            }
+                        }
+                        a {
+                            href: "/telegram",
+                            aria_label: "Telegram",
+                            i {
+                                class: "fa-brands fa-telegram text-telegram text-4xl"
+                            }
+                        }
+                        a {
+                            href: "/chat",
+                            aria_label: "Discord",
+                            i {
+                                class: "fa-brands fa-discord text-discord text-4xl"
+                            }
+                        }
+                        a {
+                            href: "/bluesky",
+                            aria_label: "Bluesky",
+                            i {
+                                class: "fa-brands fa-bluesky text-bluesky text-4xl"
+                            }
+                        }
+                    }
+                    a {
+                        href: "/github",
+                        aria_label: "GitHub",
+                        i {
+                            class: "fa-brands fa-github text-4xl"
+                        }
+                    }
+                    a {
+                        class: "
+                            text-xl
+                            focus:outline-none
+                            border-neutral-900 dark:border-white
+                            hover:border-melody-blue hover:text-melody-blue
+                            dark:hover:border-melody-purple dark:hover:text-melody-purple
+                            border-2
+                            h-10 px-4
+                            rounded-lg
+                            w-full sm:w-auto
+                            flex items-center justify-center
+                        ",
+                        href: "/funding",
+                        "Funding"
+                    }
+                }
+            }
+        }
+
+        section {
+            class: "
+                mx-auto
+                max-w-md sm:max-w-3xl lg:max-w-7xl
+                px-4 sm:px-6 lg:px-8
+                flex flex-col lg:flex-row
+                justify-between
+                gap-5
+                pt-16 sm:pt-20 lg:pt-24
+            ",
+            div {
+                class: "my-12 lg:my-24 w-full lg:w-1/2",
+                h1 {
+                    class: "text-5xl lg:text-7xl",
+                    span {
+                        class: "hover:text-melody-blue dark:hover:text-melody-purple",
+                        "Building",
+                    }
+                    " "
+                    span {
+                        class: "hover:text-melody-blue dark:hover:text-melody-purple",
+                        "awesome",
+                    }
+                    " "
+                    span {
+                        class: "hover:text-melody-blue dark:hover:text-melody-purple",
+                        "software"
+                    }
+                    span {
+                        class: "hover:text-melody-blue dark:hover:text-melody-purple",
+                        "."
+                    }
+                }
+                div {
+                    class: "
+                        mt-6
+                        text-xl lg:text-2xl
+                        text-neutral-700 dark:text-neutral-500
+                    ",
+                    b {
+                        "Nikita Tikhonov"
+                    }
+                    ", "
+                    span {
+                        class: "hover:text-melody-blue dark:hover:text-melody-purple",
+                        { age.to_string() }
+                    } "-year-old software developer from Moscow, Russia."
                 }
             }
         }
     }
 }
-
-//         div class="px-4 sm:px-6 md:px-8" {
-//             header class="
-//                 relative
-//                 pt-6 lg:pt-8
-//                 flex items-center justify-between
-//                 text-neutral-700
-//                 dark:text-neutral-200
-//                 leading-6
-//             " {
-//                 a class="text-neutral-900 dark:text-white text-2xl lg:text-3xl font-mono" href="/" {
-//                     "nekitdev"
-//                 }
-
-//                 div class="flex space-x-8" {
-//                     div class="hidden md:flex space-x-8" {
-//                         a class="flex flex-col" href="/youtube" aria-label="YouTube" {
-//                             i class="fa-brands fa-youtube text-youtube text-4xl" {}
-//                         }
-//                         a class="flex flex-col" href="/reddit" aria-label="Reddit" {
-//                             span class="fa-brands fa-reddit-alien text-reddit text-4xl" {}
-//                         }
-//                         a class="flex flex-col" href="/telegram" aria-label="Telegram" {
-//                             span class="fa-brands fa-telegram text-telegram text-4xl" {}
-//                         }
-//                         a class="flex flex-col" href="/discord" aria-label="Discord" {
-//                             span class="fa-brands fa-discord text-discord text-4xl" {}
-//                         }
-//                         a class="flex flex-col" href="/bluesky" aria-label="Bluesky" {
-//                             span class="fa-brands fa-bluesky text-bluesky text-4xl" {}
-//                         }
-//                     }
-
-//                     a class="flex flex-col" href="/github" aria-label="GitHub" {
-//                         span class="fa-brands fa-github text-4xl" {}
-//                     }
-
-//                     a class="
-//                         transition
-//                         ease-in-out
-//                         text-neutral-900
-//                         dark:text-white
-//                         text-xl
-//                         font-mono
-//                         bg-white
-//                         dark:bg-neutral-900
-//                         focus:outline-none
-//                         border-neutral-900
-//                         dark:border-white
-//                         hover:border-melody-blue
-//                         hover:text-melody-blue
-//                         dark:hover:border-melody-purple
-//                         dark:hover:text-melody-purple
-//                         border-2
-//                         h-10
-//                         px-4
-//                         rounded-lg
-//                         w-full
-//                         sm:w-auto
-//                         flex
-//                         items-center
-//                         justify-center
-//                     " href="/funding" {
-//                         "Funding"
-//                     }
-//                 }
-//             }
-
-//             section class="relative max-w-5xl pt-16 sm:pt-20 lg:pt-24" {
-//                 h1 class="text-5xl lg:text-8xl font-mono" {
-//                     "Building " span class="
-//                         text-transparent
-//                         bg-clip-text
-//                         bg-gradient-to-b
-//                         from-melody-purple
-//                         to-melody-blue
-//                     " {
-//                         "awesome"
-//                     } " software."
-//                 }
-
-//                 div class="
-//                     mt-6
-//                     text-xl lg:text-2xl
-//                     text-neutral-700 dark:text-neutral-500
-//                     font-mono
-//                 " {
-//                     b { "Nikita Tikhonov" } ", " (age::nekit()) "-year-old software developer from Moscow, Russia."
-//                 }
-//             }
-//         }
-//     }
-// }

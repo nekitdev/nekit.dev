@@ -1,9 +1,5 @@
-use dioxus::prelude::*;
-
 use nekit_dev::routes::App;
 
-fn main() -> Result<()> {
+fn main() {
     dioxus::launch(App);
-
-    Ok(())
 }

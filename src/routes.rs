@@ -1,13 +1,20 @@
-// use axum::response::Redirect;
 use dioxus::prelude::*;
 
-use crate::views::home::Home;
+use crate::views::{blog::Blog, home::Home, not_found::NotFound, projects::Projects};
 
 #[derive(Clone, Routable)]
 #[rustfmt::skip]
 pub enum Route {
     #[route("/")]
     Home {},
+    #[route("/blog")]
+    Blog {},
+    #[route("/projects")]
+    Projects {},
+    #[route("/:..route")]
+    NotFound {
+        route: Vec<String>,
+    },
 }
 
 #[component]
