@@ -7,7 +7,6 @@ pub const STYLE: Asset = asset!(
 );
 pub const IMAGE_PNG: Asset = asset!("/assets/images/icon.png");
 pub const IMAGE_SVG: Asset = asset!("/assets/images/icon.svg");
-pub const MANIFEST: Asset = asset!("/assets/manifest.json");
 
 pub const ICONS: &NonEmptyStr = const_non_empty_str!("https://kit.fontawesome.com/c7493dda5d.js");
 
