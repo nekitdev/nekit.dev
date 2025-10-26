@@ -2,10 +2,10 @@ use dioxus::prelude::*;
 use non_empty_str::{NonEmptyStr, const_non_empty_str};
 
 use crate::{
-    age::nekit,
+    chrono,
     components::head::{Head, NAME},
-    links::root,
     routes::Route,
+    urls,
 };
 
 pub const TITLE: &NonEmptyStr = const_non_empty_str!("Home");
@@ -13,13 +13,14 @@ pub const DESCRIPTION: &NonEmptyStr = const_non_empty_str!("Building awesome sof
 
 #[component]
 pub fn Home() -> Element {
-    let age = nekit();
+    let age = chrono::age();
+    let year = chrono::year();
 
     rsx! {
         Head {
             title: TITLE.to_non_empty_string(),
             description: DESCRIPTION.to_non_empty_string(),
-            url: root(),
+            url: urls::root(),
         }
 
         nav {
@@ -36,7 +37,7 @@ pub fn Home() -> Element {
                 Link {
                     to: Route::Home {},
                     class: "mr-auto text-2xl lg:text-3xl",
-                    { NAME.as_str() }
+                    "{NAME}"
                 }
                 div {
                     class: "hidden lg:flex lg:space-x-8 text-xl",
@@ -45,10 +46,10 @@ pub fn Home() -> Element {
                         class: "hover:text-melody-blue dark:hover:text-melody-purple",
                         "Blog"
                     },
-                    Link {
-                        to: Route::Projects {},
+                    a {
+                        href: "/funding",
                         class: "hover:text-melody-blue dark:hover:text-melody-purple",
-                        "Projects"
+                        "Funding"
                     }
                 }
                 div {
@@ -58,35 +59,35 @@ pub fn Home() -> Element {
                         a {
                             href: "/youtube",
                             aria_label: "YouTube",
-                            i {
+                            span {
                                 class: "fa-brands fa-youtube text-youtube text-4xl"
                             }
                         }
                         a {
                             href: "/reddit",
                             aria_label: "Reddit",
-                            i {
+                            span {
                                 class: "fa-brands fa-reddit-alien text-reddit text-4xl"
                             }
                         }
                         a {
                             href: "/telegram",
                             aria_label: "Telegram",
-                            i {
+                            span {
                                 class: "fa-brands fa-telegram text-telegram text-4xl"
                             }
                         }
                         a {
                             href: "/chat",
                             aria_label: "Discord",
-                            i {
+                            span {
                                 class: "fa-brands fa-discord text-discord text-4xl"
                             }
                         }
                         a {
                             href: "/bluesky",
                             aria_label: "Bluesky",
-                            i {
+                            span {
                                 class: "fa-brands fa-bluesky text-bluesky text-4xl"
                             }
                         }
@@ -94,11 +95,12 @@ pub fn Home() -> Element {
                     a {
                         href: "/github",
                         aria_label: "GitHub",
-                        i {
+                        span {
                             class: "fa-brands fa-github text-4xl"
                         }
                     }
-                    a {
+                    Link {
+                        to: Route::Projects {},
                         class: "
                             text-xl
                             focus:outline-none
@@ -111,8 +113,7 @@ pub fn Home() -> Element {
                             w-full sm:w-auto
                             flex items-center justify-center
                         ",
-                        href: "/funding",
-                        "Funding"
+                        "Projects"
                     }
                 }
             }
@@ -165,6 +166,20 @@ pub fn Home() -> Element {
                         class: "hover:text-melody-blue dark:hover:text-melody-purple",
                         { age.to_string() }
                     } "-year-old software developer from Moscow, Russia."
+                }
+            }
+        }
+
+        footer {
+            class: "mx-auto max-w-md sm:max-w-3xl lg:max-w-7xl px-4 sm:px-6 lg:px-8 py-16",
+            p {
+                class: "min-w-full text-neutral-600 dark:text-neutral-400 text-center text-xl mt-8",
+                span {
+                    class: "fa-regular fa-copyright hover:text-melody-blue dark:hover:text-melody-purple mr-2"
+                }
+                "{year} {NAME}"
+                span {
+                    class: "fa-solid fa-heart hover:text-melody-blue dark:hover:text-melody-purple ml-2"
                 }
             }
         }
