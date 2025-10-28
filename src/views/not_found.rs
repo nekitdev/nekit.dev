@@ -1,27 +1,28 @@
-use dioxus::prelude::*;
-use non_empty_str::{NonEmptyStr, const_non_empty_str};
+use dioxus::{fullstack::*, prelude::*};
 
 use crate::{components::head::Head, urls};
 
-pub const TITLE: &NonEmptyStr = const_non_empty_str!("Not Found");
-pub const DESCRIPTION: &NonEmptyStr = const_non_empty_str!("This page does not exist.");
-pub const SLASH: &NonEmptyStr = const_non_empty_str!("/");
+pub const TITLE: &str = "Not Found";
+pub const DESCRIPTION: &str = "This page does not exist.";
+pub const SLASH: &str = "/";
 
 #[component]
 pub fn NotFound(route: Vec<String>) -> Element {
+    FullstackContext::commit_http_status(StatusCode::NOT_FOUND, None);
+
     rsx! {
         Head {
-            title: TITLE.to_non_empty_string(),
-            description: DESCRIPTION.to_non_empty_string(),
+            title: TITLE,
+            description: DESCRIPTION,
             url: urls::route(route.join(SLASH)),
         }
 
         h1 {
-            "{TITLE}"
+            { TITLE }
         }
 
         p {
-            "{DESCRIPTION}"
+            { DESCRIPTION }
         }
     }
 }

@@ -14,7 +14,7 @@ pub enum Route {
     #[route("/:..route")]
     NotFound {
         route: Vec<String>,
-    },
+    }
 }
 
 #[component]

@@ -1,13 +1,12 @@
 use dioxus::prelude::*;
-use non_empty_str::{NonEmptyStr, NonEmptyString, const_non_empty_str};
 
-pub const ROOT: &NonEmptyStr = const_non_empty_str!("https://nekit.dev");
+pub const ROOT: &str = "https://nekit.dev";
 
 pub const SLASH: char = '/';
 pub const EMPTY: &str = "";
 
-pub fn route<R: AsRef<str>>(route: R) -> NonEmptyString {
-    let mut output = ROOT.to_non_empty_string();
+pub fn route<R: AsRef<str>>(route: R) -> String {
+    let mut output = ROOT.to_owned();
 
     let string = route.as_ref();
 
@@ -20,10 +19,10 @@ pub fn route<R: AsRef<str>>(route: R) -> NonEmptyString {
     output
 }
 
-pub fn root() -> NonEmptyString {
+pub fn root() -> String {
     route(EMPTY)
 }
 
-pub fn asset(asset: Asset) -> NonEmptyString {
+pub fn asset(asset: Asset) -> String {
     route(asset.resolve().to_string_lossy())
 }

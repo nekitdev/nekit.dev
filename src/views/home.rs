@@ -1,5 +1,4 @@
 use dioxus::prelude::*;
-use non_empty_str::{NonEmptyStr, const_non_empty_str};
 
 use crate::{
     chrono,
@@ -8,8 +7,8 @@ use crate::{
     urls,
 };
 
-pub const TITLE: &NonEmptyStr = const_non_empty_str!("Home");
-pub const DESCRIPTION: &NonEmptyStr = const_non_empty_str!("Building awesome software.");
+pub const TITLE: &str = "Home";
+pub const DESCRIPTION: &str = "Building awesome software.";
 
 #[component]
 pub fn Home() -> Element {
@@ -18,8 +17,8 @@ pub fn Home() -> Element {
 
     rsx! {
         Head {
-            title: TITLE.to_non_empty_string(),
-            description: DESCRIPTION.to_non_empty_string(),
+            title: TITLE,
+            description: DESCRIPTION,
             url: urls::root(),
         }
 
@@ -37,7 +36,7 @@ pub fn Home() -> Element {
                 Link {
                     to: Route::Home {},
                     class: "mr-auto text-2xl lg:text-3xl",
-                    "{NAME}"
+                    { NAME }
                 }
                 div {
                     class: "hidden lg:flex lg:space-x-8 text-xl",
@@ -108,7 +107,7 @@ pub fn Home() -> Element {
                             hover:border-melody-blue hover:text-melody-blue
                             dark:hover:border-melody-purple dark:hover:text-melody-purple
                             border-2
-                            h-10 px-4
+                            h-auto px-4
                             rounded-lg
                             w-full sm:w-auto
                             flex items-center justify-center
@@ -119,7 +118,7 @@ pub fn Home() -> Element {
             }
         }
 
-        section {
+        div {
             class: "
                 mx-auto
                 max-w-md sm:max-w-3xl lg:max-w-7xl
@@ -129,7 +128,7 @@ pub fn Home() -> Element {
                 gap-5
                 pt-16 sm:pt-20 lg:pt-24
             ",
-            div {
+            section {
                 class: "my-12 lg:my-24 w-full lg:w-1/2",
                 h1 {
                     class: "text-5xl lg:text-7xl",
