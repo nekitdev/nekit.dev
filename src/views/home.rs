@@ -166,7 +166,7 @@ pub fn Home() -> Element {
                     class: "
                         mt-6
                         text-xl lg:text-2xl
-                        text-neutral-700 dark:text-neutral-500
+                        text-neutral-600 dark:text-neutral-400
                     ",
                     b {
                         "Nikita Tikhonov"
@@ -346,23 +346,6 @@ pub fn Home() -> Element {
                         }
                     }
                 }
-                // div class="ml-4 flex flex-col lg:ml-0" {
-                //     h4 class="mb-2 text-neutral-600 dark:text-neutral-400" { "Resources" }
-                //     ul class="grid gap-2" {
-                //         li {
-                //             a href="/download" class="hover:text-melody-blue dark:hover:text-melody-purple" { "Download" }
-                //         }
-                //         li {
-                //             a href="/support" class="hover:text-melody-blue dark:hover:text-melody-purple" { "Support" }
-                //         }
-                //         li {
-                //             a href="/premium" class="hover:text-melody-blue dark:hover:text-melody-purple" { "Premium" }
-                //         }
-                //         li {
-                //             a href="/dev" class="hover:text-melody-blue dark:hover:text-melody-purple" { "Developers" }
-                //         }
-                //     }
-                // }
             }
             p {
                 class: "min-w-full text-neutral-600 dark:text-neutral-400 text-center text-xl mt-8",
