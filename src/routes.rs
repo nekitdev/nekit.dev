@@ -1,6 +1,8 @@
 use dioxus::prelude::*;
 
-use crate::views::{blog::Blog, home::Home, not_found::NotFound, projects::Projects};
+use crate::views::{
+    blog::Blog, home::Home, not_found::NotFound, projects::Projects, security::Security,
+};
 
 #[derive(Clone, Routable)]
 #[rustfmt::skip]
@@ -11,6 +13,8 @@ pub enum Route {
     Blog {},
     #[route("/projects")]
     Projects {},
+    #[route("/security")]
+    Security {},
     #[route("/:..route")]
     NotFound {
         route: Vec<String>,
@@ -20,7 +24,7 @@ pub enum Route {
 #[component]
 pub fn App() -> Element {
     rsx! {
-        body {
+        main {
             class: "
                 antialiased
                 transition

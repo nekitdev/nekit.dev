@@ -12,6 +12,13 @@ pub const TELEGRAM: &str = "https://t.me/nekitdev";
 
 pub const FUNDING: &str = "https://boosty.to/nekitdev";
 
+#[get("/email/{name}")]
+pub async fn redirect_email(name: String) -> Result<Redirect> {
+    let email = format!("mailto:{name}@nekit.dev");
+
+    Ok(Redirect::to(email.as_str()))
+}
+
 #[get("/chat")]
 pub async fn redirect_chat() -> Result<Redirect> {
     Ok(Redirect::to(CHAT))

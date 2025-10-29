@@ -20,9 +20,6 @@ features = ["fullstack", "router"]
 version = "1.0.228"
 features = ["derive"]
 
-[dependencies.thiserror]
-version = "2.0.17"
-
 [features]
 default = ["web"]
 web = ["dioxus/web"]

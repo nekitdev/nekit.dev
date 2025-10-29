@@ -1,29 +1,21 @@
 use dioxus::prelude::*;
 
 #[component]
-pub fn Skill(display: String, detail: String, name: String, color: String) -> Element {
+pub fn Skill(display: String, color: String, dot: String) -> Element {
     rsx! {
         li {
-            class: "px-4 rounded-md {color}",
+            class: "w-auto px-4 rounded-md {color}",
 
             div {
                 class: "flex items-center justify-center gap-4",
 
                 span {
-                    class: "fa-brands fa-{name} text-4xl"
+                    class: "h-4 w-4 rounded-full {dot}"
                 }
 
-                div {
-                    class: "flex flex-col",
-
-                    h2 {
-                        class: "text-xl",
-                        { display }
-                    }
-
-                    p {
-                        { detail }
-                    }
+                h2 {
+                    class: "text-xl",
+                    { display }
                 }
             }
         }

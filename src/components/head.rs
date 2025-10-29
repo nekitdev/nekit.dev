@@ -43,7 +43,7 @@ pub fn Head(title: String, description: String, url: String) -> Element {
         document::Link { rel: "apple-touch-icon", href: IMAGE_PNG }
 
         document::Script {
-            async: true,
+            defer: true,
             crossorigin: "anonymous",
             src: ICONS,
         }
