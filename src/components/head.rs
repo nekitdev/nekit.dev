@@ -22,6 +22,8 @@ pub fn Head(title: String, description: String, url: String) -> Element {
     rsx! {
         document::Meta { name: "viewport", content: "width=device-width, initial-scale=1" }
 
+        document::Meta { charset: "utf-8" }
+
         document::Meta { property: "og:title", content: title.clone() }
         document::Meta { property: "og:type", content: TYPE }
         document::Meta { property: "og:url", content: url.clone() }

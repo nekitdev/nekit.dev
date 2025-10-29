@@ -25,15 +25,6 @@ pub enum Route {
 pub fn App() -> Element {
     rsx! {
         main {
-            class: "
-                antialiased
-                transition
-                ease-in-out
-                min-h-screen
-                bg-neutral-50 dark:bg-neutral-900
-                text-neutral-900 dark:text-neutral-50
-                font-mono
-            ",
             Router::<Route> {}
         }
     }
