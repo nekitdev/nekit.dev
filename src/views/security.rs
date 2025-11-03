@@ -193,7 +193,7 @@ pub fn Security() -> Element {
                     "Key"
                 }
                 div {
-                    class: "mt-6 p-1 bg-gradient-to-b from-melody-blue to-melody-purple rounded-lg",
+                    class: "mt-6 p-1 bg-gradient-to-b from-melody-purple to-melody-blue rounded-lg",
                     pre {
                         class: "p-4 overflow-auto rounded-lg bg-neutral-50 dark:bg-neutral-900",
                         r"-----BEGIN PGP PUBLIC KEY BLOCK-----
