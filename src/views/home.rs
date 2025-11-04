@@ -106,7 +106,11 @@ pub fn Home() -> Element {
                         href: "/github",
                         aria_label: "GitHub",
                         span {
-                            class: "fa-brands fa-github text-4xl"
+                            class: "
+                                fa-brands fa-github
+                                hover:text-melody-blue dark:hover:text-melody-purple
+                                text-4xl
+                            "
                         }
                     }
                     Link {

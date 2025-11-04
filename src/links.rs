@@ -34,6 +34,13 @@ pub async fn redirect_github() -> Result<Redirect> {
     Ok(Redirect::to(GITHUB))
 }
 
+#[get("/github/{name}")]
+pub async fn redirect_github_for(name: String) -> Result<Redirect> {
+    let url = format!("{GITHUB}/{name}");
+
+    Ok(Redirect::to(url.as_str()))
+}
+
 #[get("/bluesky")]
 pub async fn redirect_bluesky() -> Result<Redirect> {
     Ok(Redirect::to(BLUESKY))

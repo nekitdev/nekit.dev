@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 
 #[component]
-pub fn Project(title: String, description: String, name: String) -> Element {
+pub fn Project(title: String, description: String, name: String, documentation: String) -> Element {
     rsx! {
         li {
             class: "
@@ -22,11 +22,31 @@ pub fn Project(title: String, description: String, name: String) -> Element {
                     class: "mb-2 flex items-center justify-center gap-4",
                     h3 {
                         class: "mr-auto font-bold text-xl",
-                        { title }
+                        "{title}"
                     }
-                    a {
-                        span {
-                            class: "ml-auto fa-brands fa-github text-4xl",
+                    div {
+                        class: "ml-auto flex gap-4",
+                        a {
+                            href: "/github/{name}",
+                            aria_label: "{title} GitHub",
+                            span {
+                                class: "
+                                    fa-brands fa-github
+                                    hover:text-melody-blue dark:hover:text-melody-purple
+                                    text-4xl
+                                ",
+                            }
+                        }
+                        a {
+                            href: documentation,
+                            aria_label: "{title} Documentation",
+                            span {
+                                class: "
+                                    fa-solid fa-book
+                                    hover:text-melody-blue dark:hover:text-melody-purple
+                                    text-4xl
+                                ",
+                            }
                         }
                     }
                 }

@@ -41,12 +41,14 @@ pub fn Security() -> Element {
                     class: "relative ml-auto flex space-x-8",
                     a {
                         href: "/email/security",
+                        aria_label: "Security Report",
                         span {
                             class: "fa-solid fa-envelope hover:text-melody-blue dark:hover:text-melody-purple text-4xl",
                         }
                     }
                     a {
                         href: "/keys/security",
+                        aria_label: "Security Key",
                         span {
                             class: "fa-solid fa-key hover:text-melody-blue dark:hover:text-melody-purple text-4xl",
                         }

@@ -23,21 +23,25 @@ pub fn Projects() -> Element {
                 title: "gd",
                 description: "Geometry Dash API wrapper written in Rust.",
                 name: "gd",
+                documentation: "https://docs.rs/gd",
             }
             Project {
                 title: "graphs",
                 description: "Graph data structures and algorithms.",
                 name: "graphs",
+                documentation: "https://docs.rs/graphs"
             }
             Project {
                 title: "refinement-types",
                 description: "Refinement types.",
                 name: "refinement-types",
+                documentation: "https://docs.rs/refinement-types"
             }
             Project {
                 title: "changelogging",
                 description: "Building changelogs from fragments.",
                 name: "changelogging",
+                documentation: "https://docs.rs/changelogging"
             }
         }
     }
