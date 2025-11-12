@@ -22,25 +22,25 @@ pub fn Projects() -> Element {
             Project {
                 title: "gd",
                 description: "Geometry Dash API wrapper written in Rust.",
-                name: "gd",
+                repository: "https://github.com/gdpsapp/gd",
                 documentation: "https://docs.rs/gd",
             }
             Project {
                 title: "graphs",
                 description: "Graph data structures and algorithms.",
-                name: "graphs",
+                repository: "https://github.com/nekitdev/graphs",
                 documentation: "https://docs.rs/graphs"
             }
             Project {
                 title: "refinement-types",
                 description: "Refinement types.",
-                name: "refinement-types",
+                repository: "https://github.com/nekitdev/refinement-types",
                 documentation: "https://docs.rs/refinement-types"
             }
             Project {
                 title: "changelogging",
                 description: "Building changelogs from fragments.",
-                name: "changelogging",
+                repository: "https://github.com/nekitdev/changelogging",
                 documentation: "https://docs.rs/changelogging"
             }
         }
