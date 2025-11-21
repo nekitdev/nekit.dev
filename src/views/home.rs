@@ -201,26 +201,24 @@ pub fn Home() -> Element {
                     }
                     Skill {
                         display: "Web (HTML/CSS/TS)",
-                        color: "bg-typescript/20",
-                        dot: "bg-typescript",
+                        color: "bg-web/20",
+                        dot: "bg-web",
                     },
                     Skill {
                         display: "SQL",
-                        color: "bg-postgresql/20",
-                        dot: "bg-postgresql",
+                        color: "bg-sql/20",
+                        dot: "bg-sql",
                     },
                 }
             }
-            div {
-                class: "mb-10 hidden lg:flex w-full lg:w-1/2",
-                img {
-                    class: "object-contain",
-                    loading: "lazy",
-                    width: "1024",
-                    height: "1024",
-                    src: NEKO,
-                    alt: "Neko",
-                }
+
+            img {
+                class: "mb-10 w-full lg:w-1/2 object-contain",
+                loading: "lazy",
+                width: "1024",
+                height: "1024",
+                src: NEKO,
+                alt: "Neko",
             }
         }
 
