@@ -5,7 +5,7 @@ use crate::{components::head::Head, urls};
 pub const NOT_FOUND: Asset = asset!("/assets/images/not-found.png");
 
 pub const TITLE: &str = "Not Found";
-pub const DESCRIPTION: &str = "This page does not exist.";
+pub const DESCRIPTION: &str = "This route was not found.";
 pub const SLASH: &str = "/";
 
 #[component]

@@ -6,6 +6,7 @@ pub const STYLE: Asset = asset!(
     "/assets/tailwind.css",
     CssAssetOptions::new().with_preload(true)
 );
+
 pub const ICON_PNG: Asset = asset!("/assets/images/icon.png");
 pub const ICON_SVG: Asset = asset!("/assets/images/icon.svg");
 
