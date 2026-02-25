@@ -10,10 +10,10 @@ license = "MIT"
 publish = false
 
 [dependencies.chrono]
-version = "0.4.42"
+version = "0.4.44"
 
 [dependencies.dioxus]
-version = "0.7.2"
+version = "0.7.3"
 features = ["fullstack", "router"]
 
 [dependencies.serde]
