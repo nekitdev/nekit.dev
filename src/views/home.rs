@@ -3,6 +3,7 @@ use dioxus::prelude::*;
 use crate::{
     chrono,
     components::{
+        battery::Battery,
         head::{Head, NAME},
         skill::Skill,
     },
@@ -209,6 +210,16 @@ pub fn Home() -> Element {
                         color: "bg-sql/20",
                         dot: "bg-sql",
                     },
+                }
+
+                div {
+                    class: "mt-6 flex",
+
+                    div {
+                        class: "w-auto px-4 py-2 rounded-md bg-linear-to-r from-melody-purple/20 to-melody-blue/20",
+
+                        Battery { }
+                    }
                 }
             }
 

@@ -1,3 +1,4 @@
+pub mod battery;
 pub mod chrono;
 pub mod components;
 pub mod keys;
