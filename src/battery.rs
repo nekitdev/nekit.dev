@@ -6,6 +6,14 @@ use thiserror::Error;
 
 pub const BATTERY: &str = "https://battery.nekit.dev/";
 
+pub const FULL_NAME: &str = "fa-battery-full";
+pub const THREE_QUARTERS_NAME: &str = "fa-battery-three-quarters";
+pub const HALF_NAME: &str = "fa-battery-half";
+pub const QUARTER_NAME: &str = "fa-battery-quarter";
+pub const EMPTY_NAME: &str = "fa-battery-empty";
+
+pub type StaticStr = &'static str;
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Level {
     value: u8,
@@ -47,17 +55,20 @@ impl LevelError {
 
 impl Default for Level {
     fn default() -> Self {
-        Self::MAX
+        Self::FULL
     }
 }
 
-pub const MIN: u8 = 0;
-pub const MAX: u8 = 100;
+pub const EMPTY: u8 = 0;
+pub const QUARTER: u8 = 25;
+pub const HALF: u8 = 50;
+pub const THREE_QUARTERS: u8 = 75;
+pub const FULL: u8 = 100;
 
 impl Level {
     pub const fn of(value: u8) -> Option<Self> {
         #[allow(clippy::absurd_extreme_comparisons)]
-        if value < MIN || value > MAX {
+        if value < EMPTY || value > FULL {
             return None;
         }
 
@@ -78,8 +89,23 @@ impl Level {
         self.value
     }
 
-    pub const MIN: Self = Self::of(MIN).unwrap();
-    pub const MAX: Self = Self::of(MAX).unwrap();
+    pub const fn name(self) -> StaticStr {
+        match self.get() {
+            EMPTY..QUARTER => EMPTY_NAME,
+            QUARTER..HALF => QUARTER_NAME,
+            HALF..THREE_QUARTERS => HALF_NAME,
+            THREE_QUARTERS..FULL => THREE_QUARTERS_NAME,
+            FULL => FULL_NAME,
+            // NOTE: this should never happen since the type guarantees the `EMPTY..=FULL` range
+            _ => unreachable!(),
+        }
+    }
+
+    pub const EMPTY: Self = Self::of(EMPTY).unwrap();
+    pub const QUARTER: Self = Self::of(QUARTER).unwrap();
+    pub const HALF: Self = Self::of(HALF).unwrap();
+    pub const THREE_QUARTERS: Self = Self::of(THREE_QUARTERS).unwrap();
+    pub const FULL: Self = Self::of(FULL).unwrap();
 }
 
 pub async fn get_level() -> Result<Level, Error> {

@@ -12,13 +12,13 @@ pub fn Battery() -> Element {
     rsx! {
         match &*resource.read_unchecked() {
             Some(Ok(level)) => rsx! {
-                    div {
-                        class: "flex items-center justify-center gap-2",
+                div {
+                    class: "flex items-center justify-center gap-2",
                     span {
-                        class: "fa-solid fa-battery-full hover:text-melody-blue dark:hover:text-melody-blue h-4 w-4"
+                        class: "fa-solid {level.name()} hover:text-melody-blue dark:hover:text-melody-blue h-4 w-4"
                     }
                     h3 {
-                        class: "text-xl",
+                        class: "text-xl hover:text-melody-blue dark:hover:text-melody-blue",
                         "{level}"
                     }
                 }
@@ -30,7 +30,7 @@ pub fn Battery() -> Element {
                         class: "fa-solid fa-exclamation hover:text-melody-blue dark:hover:text-melody-purple h-4 w-4"
                     }
                     h3 {
-                        class: "text-xl",
+                        class: "text-xl hover:text-melody-blue dark:hover:text-melody-blue",
                         { ERROR }
                     }
                 }
@@ -42,7 +42,7 @@ pub fn Battery() -> Element {
                         class: "fa-solid fa-circle-notch hover:text-melody-blue dark:hover:text-melody-purple h-4 w-4"
                     }
                     h3 {
-                        class: "text-xl",
+                        class: "text-xl hover:text-melody-blue dark:hover:text-melody-blue",
                         { LOADING }
                     }
                 }
