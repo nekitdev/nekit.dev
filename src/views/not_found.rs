@@ -29,7 +29,7 @@ pub fn NotFound(route: Vec<String>) -> Element {
                 flex flex-col lg:flex-row
                 justify-between
                 gap-5
-                py-16 sm:pt-20 lg:pt-24
+                pt-16 sm:pt-20 lg:pt-24
             ",
             section {
                 class: "w-full lg:w-1/2",

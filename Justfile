@@ -7,5 +7,5 @@ run: (run-on PORT)
 run-on port:
     dx run --release --port {{ port }}
 
-resume:
-    typst compile assets/resume.typ
+resume language:
+    typst compile assets/resume/{{ language }}.typ

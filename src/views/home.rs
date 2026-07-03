@@ -119,7 +119,7 @@ pub fn Home() -> Element {
                         class: "
                             text-xl
                             focus:outline-none
-                            border-neutral-900 dark:border-white
+                            border-neutral-900 dark:border-neutral-50
                             hover:border-melody-blue hover:text-melody-blue
                             dark:hover:border-melody-purple dark:hover:text-melody-purple
                             border-2

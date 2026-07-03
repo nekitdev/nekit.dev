@@ -23,6 +23,10 @@ pub fn root() -> String {
     route(EMPTY)
 }
 
-pub fn asset(asset: Asset) -> String {
-    route(asset.resolve().to_string_lossy())
+pub fn resolve(asset: Asset) -> String {
+    asset.resolve().to_string_lossy().into_owned()
+}
+
+pub fn asset(value: Asset) -> String {
+    route(resolve(value))
 }
