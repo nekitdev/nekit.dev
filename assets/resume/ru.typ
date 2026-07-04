@@ -95,7 +95,7 @@
   - Написание документации и тестов, публикация инструмента на crates.io.
 ]
 
-= Skills
+= Навыки
 
 #resume-skill-grid(
   categories-with-values: (
@@ -113,7 +113,7 @@
   ),
 )
 
-= Education
+= Образование
 
 #resume-entry(
   date: "2024 - Настоящее время",
