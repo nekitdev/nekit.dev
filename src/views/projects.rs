@@ -20,10 +20,21 @@ pub fn Projects() -> Element {
         ul {
             class: "flex flex-row flex-wrap gap-5",
             Project {
+                title: "lyrichar",
+                description: "Lyrics at the speed of thought.",
+                repository: "https://github.com/lyrichar/lyrichar",
+                documentation: "https://docs.rs/lyrichar",
+            }
+            Project {
                 title: "gd",
                 description: "Geometry Dash API wrapper written in Rust.",
                 repository: "https://github.com/gdpsapp/gd",
                 documentation: "https://docs.rs/gd",
+            }
+            Project {
+                title: "nixos-config",
+                description: "NixOS configuration.",
+                repository: "https://github.com/nekitdev/nixos-config",
             }
             Project {
                 title: "graphs",
@@ -32,10 +43,22 @@ pub fn Projects() -> Element {
                 documentation: "https://docs.rs/graphs"
             }
             Project {
-                title: "refinement-types",
+                title: "refining",
                 description: "Refinement types.",
-                repository: "https://github.com/nekitdev/refinement-types",
-                documentation: "https://docs.rs/refinement-types"
+                repository: "https://github.com/nekitdev/refining",
+                documentation: "https://docs.rs/refining"
+            }
+            Project {
+                title: "ownership",
+                description: "Obtaining ownership.",
+                repository: "https://github.com/nekitdev/ownership",
+                documentation: "https://docs.rs/ownership"
+            }
+            Project {
+                title: "trait-aliases",
+                description: "Trait aliases.",
+                repository: "https://github.com/nekitdev/trait-aliases",
+                documentation: "https://docs.rs/trait-aliases"
             }
             Project {
                 title: "changelogging",

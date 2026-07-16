@@ -5,7 +5,7 @@ pub fn Project(
     title: String,
     description: String,
     repository: String,
-    documentation: String,
+    documentation: Option<String>,
 ) -> Element {
     rsx! {
         li {
@@ -42,15 +42,17 @@ pub fn Project(
                                 ",
                             }
                         }
-                        a {
-                            href: documentation,
-                            aria_label: "{title} Documentation",
-                            span {
-                                class: "
-                                    fa-solid fa-book
-                                    hover:text-melody-blue dark:hover:text-melody-purple
-                                    text-4xl
-                                ",
+                        if documentation.is_some() {
+                            a {
+                                href: documentation,
+                                aria_label: "{title} Documentation",
+                                span {
+                                    class: "
+                                        fa-solid fa-book
+                                        hover:text-melody-blue dark:hover:text-melody-purple
+                                        text-4xl
+                                    ",
+                                }
                             }
                         }
                     }
