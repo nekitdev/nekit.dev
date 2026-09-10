@@ -12,7 +12,7 @@ pub fn Project(
             class: "
                 max-w-sm
                 p-1
-                hover:bg-gradient-to-b hover:from-melody-purple hover:to-melody-blue
+                hover:bg-linear-to-b hover:from-melody-purple hover:to-melody-blue
                 bg-neutral-200 dark:bg-neutral-700
                 rounded-lg
             ",
@@ -59,7 +59,7 @@ pub fn Project(
                 }
 
                 div {
-                    class: "h-px bg-gradient-to-r from-melody-purple to-melody-blue",
+                    class: "h-px bg-linear-to-r from-melody-purple to-melody-blue",
                     role: "separator",
                 }
 
