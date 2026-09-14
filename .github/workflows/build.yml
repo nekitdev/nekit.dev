@@ -30,9 +30,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
-      - name: Setup QEMU
-        uses: docker/setup-qemu-action@v4
-
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v4
 
@@ -49,7 +46,7 @@ jobs:
           context: .
           file: ${{ matrix.dockerfile }}
           push: true
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           tags: |
             ${{ env.IMAGE_PREFIX }}/${{ matrix.service }}:latest
             ${{ env.IMAGE_PREFIX }}/${{ matrix.service }}:${{ github.sha }}
