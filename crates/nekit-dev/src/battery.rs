@@ -1,4 +1,4 @@
-use std::fmt;
+use std::{env, fmt};
 
 use dioxus::prelude::*;
 use refining::prelude::{Refinement, u8};
@@ -6,6 +6,11 @@ use reqwest::{Error, get};
 use serde::{Deserialize, Serialize};
 
 pub const BATTERY: &str = "https://battery.nekit.dev/";
+pub const NEKIT_BATTERY_URL: &str = "NEKIT_BATTERY_URL";
+
+fn battery_url() -> String {
+    env::var(NEKIT_BATTERY_URL).unwrap_or_else(|_| BATTERY.to_owned())
+}
 
 pub const EMPTY: u8 = 0;
 pub const QUARTER: u8 = 25;
@@ -59,7 +64,7 @@ impl Battery {
 }
 
 pub async fn get_battery() -> Result<Battery, Error> {
-    get(BATTERY).await?.json().await
+    get(battery_url()).await?.json().await
 }
 
 #[get("/battery")]
