@@ -1,0 +1,39 @@
+[package]
+name = "nekit-battery"
+version.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+edition.workspace = true
+description = "Battery reports."
+readme = "README.md"
+repository.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies.anyhow]
+workspace = true
+features = ["std"]
+
+[dependencies.axum]
+workspace = true
+features = ["default", "macros"]
+
+[dependencies.clap]
+workspace = true
+features = ["default", "derive", "env"]
+
+[dependencies.refining]
+workspace = true
+features = ["default"]
+
+[dependencies.serde]
+workspace = true
+features = ["std", "derive"]
+
+[dependencies.thiserror]
+workspace = true
+features = ["std"]
+
+[dependencies.tokio]
+workspace = true
+features = ["full"]

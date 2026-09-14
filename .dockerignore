@@ -1,0 +1,8 @@
+# do not include built artifacts
+
+target/
+build/
+
+# ignore lock files
+
+Cargo.lock

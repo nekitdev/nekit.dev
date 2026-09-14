@@ -1,35 +1,71 @@
-[package]
-name = "nekit-dev"
+[workspace]
+members = ["crates/*"]
+resolver = "3"
+
+[workspace.package]
 version = "0.1.0"
 authors = ["nekitdev <nekit@nekit.dev>"]
+rust-version = "1.98"
 edition = "2024"
-rust-version = "1.96"
-readme = "README.md"
 repository = "https://github.com/nekitdev/nekit.dev"
 license = "MIT"
 publish = false
 
-[dependencies.chrono]
-version = "0.4.45"
+[workspace.dependencies.anyhow]
+version = "1.0.104"
+default-features = false
 
-[dependencies.dioxus]
+[workspace.dependencies.axum]
+version = "0.8.9"
+default-features = false
+
+[workspace.dependencies.clap]
+version = "4.6.6"
+default-features = false
+
+[workspace.dependencies.dioxus]
 version = "0.7.10"
-features = ["fullstack", "router"]
+default-features = false
 
-[dependencies.refining]
+[workspace.dependencies.jiff]
+version = "0.2.37"
+default-features = false
+
+[workspace.dependencies.refining]
 version = "0.3.0"
+default-features = false
 
-[dependencies.reqwest]
+[workspace.dependencies.reqwest]
 version = "0.13.5"
-features = ["json"]
+default-features = false
 
-[dependencies.serde]
+[workspace.dependencies.serde]
 version = "1.0.229"
-features = ["derive"]
+default-features = false
 
-[features]
-default = ["web"]
-web = ["dioxus/web"]
-desktop = ["dioxus/desktop"]
-mobile = ["dioxus/mobile"]
-server = ["dioxus/server"]
+[workspace.dependencies.thiserror]
+version = "2.0.20"
+default-features = false
+
+[workspace.dependencies.tokio]
+version = "1.53.1"
+default-features = false
+
+[workspace.dependencies.tower-http]
+version = "0.7.1"
+default-features = false
+
+[workspace.dependencies.nekit-battery]
+version = "0.1.0"
+default-features = false
+path = "crates/nekit-battery"
+
+[workspace.dependencies.nekit-dev]
+version = "0.1.0"
+default-features = false
+path = "crates/nekit-dev"
+
+[workspace.dependencies.nekit-serve]
+version = "0.1.0"
+default-features = false
+path = "crates/nekit-serve"
