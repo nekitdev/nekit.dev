@@ -22,6 +22,9 @@ features = ["default", "macros"]
 workspace = true
 features = ["default", "derive", "env"]
 
+[dependencies.pid1]
+workspace = true
+
 [dependencies.refining]
 workspace = true
 features = ["default"]

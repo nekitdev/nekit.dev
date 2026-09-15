@@ -18,6 +18,10 @@ features = ["default", "fullstack", "router"]
 workspace = true
 features = ["default"]
 
+[dependencies.pid1]
+workspace = true
+optional = true
+
 [dependencies.refining]
 workspace = true
 features = ["default"]
@@ -33,4 +37,4 @@ features = ["std", "derive"]
 [features]
 default = ["web"]
 web = ["dioxus/web"]
-server = ["dioxus/server"]
+server = ["dioxus/server", "pid1"]
