@@ -13,11 +13,12 @@ jobs:
     strategy:
       matrix:
         service: [dev, battery, serve]
+        arch: [amd64, arm64]
         include:
-          - version: "26.04"
-            arch: amd64
-          - version: "26.04-arm"
-            arch: arm64
+          - arch: amd64
+            version: "26.04"
+          - arch: arm64
+            version: "26.04-arm"
 
     runs-on: ubuntu-${{ matrix.version }}
 
