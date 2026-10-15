@@ -22,12 +22,23 @@ pub fn Fetch() -> Element {
             div { class: "flex flex-col gap-1 min-w-0",
                 div { class: "font-bold border-b-2 border-light-line dark:border-line",
                     span { class: "text-light-accent dark:text-accent", "nekit" }
-                    "@dev"
+                    "@"
+                    span { class: "text-light-other dark:text-other", "dev" }
                 }
                 dl { class: "grid grid-cols-[max-content_1fr] gap-x-[3ch]",
                     for fact in Fact::all(age) {
                         dt { class: "text-light-accent dark:text-accent", "{fact.title}" }
                         dd { "{fact.value}" }
+                    }
+                    dt { class: "text-light-accent dark:text-accent", "Resume" }
+                    dd {
+                        a { class: "text-light-other dark:text-other hover:underline",
+                            href: "/resume/en", "en"
+                        }
+                        "/"
+                        a { class: "text-light-other dark:text-other hover:underline",
+                            href: "/resume/ru", "ru"
+                        }
                     }
                 }
             }

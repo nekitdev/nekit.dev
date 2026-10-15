@@ -1,5 +1,129 @@
 use non_empty_str::{NonEmptyStr, NonEmptyString, const_non_empty_str, non_empty_string};
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct Link {
+    pub name: NonEmptyString,
+    pub path: NonEmptyString,
+}
+
+impl Link {
+    pub const fn new(name: NonEmptyString, path: NonEmptyString) -> Self {
+        Self { name, path }
+    }
+
+    pub fn channel() -> Self {
+        Self::new(non_empty_string!("channel"), non_empty_string!("/channel"))
+    }
+
+    pub fn bluesky() -> Self {
+        Self::new(non_empty_string!("bluesky"), non_empty_string!("/bluesky"))
+    }
+
+    pub fn reddit() -> Self {
+        Self::new(non_empty_string!("reddit"), non_empty_string!("/reddit"))
+    }
+
+    pub fn youtube() -> Self {
+        Self::new(non_empty_string!("youtube"), non_empty_string!("/youtube"))
+    }
+
+    pub fn telegram() -> Self {
+        Self::new(
+            non_empty_string!("telegram"),
+            non_empty_string!("/telegram"),
+        )
+    }
+
+    pub fn discord() -> Self {
+        Self::new(non_empty_string!("discord"), non_empty_string!("/discord"))
+    }
+
+    pub fn email() -> Self {
+        Self::new(
+            non_empty_string!("email"),
+            non_empty_string!("/email/nekit"),
+        )
+    }
+
+    pub fn chat() -> Self {
+        Self::new(non_empty_string!("chat"), non_empty_string!("/chat"))
+    }
+
+    pub fn github() -> Self {
+        Self::new(non_empty_string!("github"), non_empty_string!("/github"))
+    }
+
+    pub fn dualizzzm() -> Self {
+        Self::new(
+            non_empty_string!("dualizzzm"),
+            non_empty_string!("/dualizzzm"),
+        )
+    }
+
+    pub fn lyrichar() -> Self {
+        Self::new(
+            non_empty_string!("lyrichar"),
+            non_empty_string!("/lyrichar"),
+        )
+    }
+
+    pub fn jiyu() -> Self {
+        Self::new(non_empty_string!("jiyu"), non_empty_string!("/jiyu"))
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct Group {
+    pub name: NonEmptyString,
+    pub links: Vec<Link>,
+}
+
+impl Group {
+    pub const fn new(name: NonEmptyString, links: Vec<Link>) -> Self {
+        Self { name, links }
+    }
+
+    pub fn social() -> Self {
+        Self::new(
+            non_empty_string!("social"),
+            vec![
+                Link::channel(),
+                Link::bluesky(),
+                Link::reddit(),
+                Link::youtube(),
+            ],
+        )
+    }
+
+    pub fn contact() -> Self {
+        Self::new(
+            non_empty_string!("contact"),
+            vec![
+                Link::telegram(),
+                Link::discord(),
+                Link::email(),
+                Link::chat(),
+            ],
+        )
+    }
+
+    pub fn code() -> Self {
+        Self::new(
+            non_empty_string!("code"),
+            vec![
+                Link::github(),
+                Link::dualizzzm(),
+                Link::lyrichar(),
+                Link::jiyu(),
+            ],
+        )
+    }
+
+    pub fn all() -> Vec<Self> {
+        vec![Self::social(), Self::contact(), Self::code()]
+    }
+}
+
 pub const ALPHA: char = 'α';
 pub const BETA: char = 'β';
 pub const OMEGA: char = 'ω';
@@ -10,7 +134,7 @@ pub const STABLE: &NonEmptyStr = const_non_empty_str!("stable");
 
 pub type StaticNonEmptyStr = &'static NonEmptyStr;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum Status {
     Progress,
     Unstable,
@@ -156,7 +280,7 @@ impl Project {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Fact {
     pub title: NonEmptyString,
     pub value: NonEmptyString,
@@ -194,13 +318,6 @@ impl Fact {
         )
     }
 
-    pub fn spoken() -> Self {
-        Self::new(
-            non_empty_string!("Spoken"),
-            non_empty_string!("Russian, English"),
-        )
-    }
-
     pub fn system() -> Self {
         Self::new(non_empty_string!("System"), non_empty_string!("NixOS"))
     }
@@ -215,7 +332,6 @@ impl Fact {
             Self::pronouns(),
             Self::age(age),
             Self::location(),
-            Self::spoken(),
             Self::system(),
             Self::tag(),
         ]

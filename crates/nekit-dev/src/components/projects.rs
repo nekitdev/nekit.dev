@@ -28,7 +28,7 @@ pub fn Projects() -> Element {
                             tr {
                                 td { class: "py-1 pr-[3ch] whitespace-nowrap",
                                     a {
-                                        class: "text-light-accent dark:text-accent",
+                                        class: "text-light-accent dark:text-accent hover:underline",
                                         href: "{project.repository}",
                                         "{project.name}"
                                     }

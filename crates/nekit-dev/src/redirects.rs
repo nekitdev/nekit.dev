@@ -15,7 +15,9 @@ pub const REDDIT: &str = "https://reddit.com/u/nekitdev";
 pub const CHANNEL: &str = "https://t.me/nekitworks";
 pub const TELEGRAM: &str = "https://t.me/nekitdev";
 
-pub const FUNDING: &str = "https://boosty.to/nekitdev";
+pub const DUALIZZZM: &str = "https://dualizzzm.design";
+pub const LYRICHAR: &str = "https://lyrichar.app";
+pub const JIYU: &str = "https://jiyu.sh/";
 
 #[get("/keys/{name}")]
 pub async fn redirect_keys(name: String) -> Result<Redirect> {
@@ -85,7 +87,17 @@ pub async fn redirect_telegram() -> Result<Redirect> {
     Ok(Redirect::to(TELEGRAM))
 }
 
-#[get("/funding")]
-pub async fn redirect_funding() -> Result<Redirect> {
-    Ok(Redirect::to(FUNDING))
+#[get("/dualizzzm")]
+pub async fn redirect_dualizzzm() -> Result<Redirect> {
+    Ok(Redirect::to(DUALIZZZM))
+}
+
+#[get("/lyrichar")]
+pub async fn redirect_lyrichar() -> Result<Redirect> {
+    Ok(Redirect::to(LYRICHAR))
+}
+
+#[get("/jiyu")]
+pub async fn redirect_jiyu() -> Result<Redirect> {
+    Ok(Redirect::to(JIYU))
 }

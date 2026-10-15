@@ -36,6 +36,14 @@ impl Tab {
             Self::Security => "security",
         }
     }
+
+    pub const fn route(self) -> Route {
+        match self {
+            Self::Home => Route::Home {},
+            Self::Blog => Route::Blog {},
+            Self::Security => Route::Security {},
+        }
+    }
 }
 
 #[derive(Clone, Routable)]

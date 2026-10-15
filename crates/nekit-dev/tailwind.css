@@ -10,6 +10,7 @@
     --color-line: #333333;
     --color-bar: #222222;
     --color-accent: #cc88ff;
+    --color-other: #88ccff;
     --color-front: #111111;
     --color-error: #ff5555;
 
@@ -19,6 +20,7 @@
     --color-light-line: #dddddd;
     --color-light-bar: #eeeeee;
     --color-light-accent: #bb77ee;
+    --color-light-other: #77bbee;
     --color-light-front: #ffffff;
     --color-light-error: #ee4444;
 
@@ -27,20 +29,6 @@
 
     --color-light-low: #ee4444;
     --color-light-high: #44ee44;
-
-    /*
-    --color-rust: #d34516;
-    --color-python: #306998;
-    --color-web: #3178c6;
-    --color-sql: #336791;
-    --color-git: #f1502f;
-
-    --color-discord: #5865f2;
-    --color-bluesky: #1185fe;
-    --color-youtube: #ff0000;
-    --color-reddit: #ff5700;
-    --color-telegram: #229ed9;
-    */
 }
 
 @utility battery-light {
