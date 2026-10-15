@@ -14,9 +14,17 @@ publish.workspace = true
 workspace = true
 features = ["default", "fullstack", "router"]
 
+[dependencies.dioxus-sdk]
+workspace = true
+features = ["time"]
+
 [dependencies.jiff]
 workspace = true
-features = ["default"]
+features = ["default", "serde", "js"]
+
+[dependencies.non-empty-str]
+workspace = true
+features = ["std"]
 
 [dependencies.pid1]
 workspace = true
@@ -33,6 +41,10 @@ features = ["default", "json"]
 [dependencies.serde]
 workspace = true
 features = ["std", "derive"]
+
+[dependencies.thiserror]
+workspace = true
+features = ["std"]
 
 [features]
 default = ["web"]

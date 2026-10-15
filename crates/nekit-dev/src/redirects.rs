@@ -19,14 +19,14 @@ pub const FUNDING: &str = "https://boosty.to/nekitdev";
 
 #[get("/keys/{name}")]
 pub async fn redirect_keys(name: String) -> Result<Redirect> {
-    let key = static_route(format!("/keys/{name}.key"));
+    let key = static_route(format!("keys/{name}.key"));
 
     Ok(Redirect::to(key.as_str()))
 }
 
 #[get("/resume/{language}")]
 pub async fn redirect_resume(language: String) -> Result<Redirect> {
-    let resume = static_route(format!("/resume/{language}.pdf"));
+    let resume = static_route(format!("resume/{language}.pdf"));
 
     Ok(Redirect::to(resume.as_str()))
 }

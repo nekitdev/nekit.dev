@@ -1,4 +1,9 @@
 pub mod battery;
+pub mod clock;
+pub mod fetch;
 pub mod head;
-pub mod project;
-pub mod skill;
+pub mod projects;
+pub mod shared;
+pub mod shell;
+pub mod status;
+pub mod tabs;

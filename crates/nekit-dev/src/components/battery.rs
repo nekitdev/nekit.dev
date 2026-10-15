@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 
 use crate::battery::battery;
 
-pub const ERROR: &str = "error";
+pub const NOT_AVAILABLE: &str = "n/a";
 pub const LOADING: &str = "...";
 
 #[component]
@@ -10,24 +10,15 @@ pub fn Battery() -> Element {
     let resource = use_server_future(battery)?;
 
     rsx! {
-        match &*resource.read() {
+        match resource.read().cloned() {
             Some(Ok(battery)) => rsx! {
-                div { class: "flex items-center justify-center gap-2",
-                    span { class: "fa-solid {battery.name()} hover:text-melody-blue dark:hover:text-melody-blue h-4 w-4" }
-                    h3 { class: "text-xl hover:text-melody-blue dark:hover:text-melody-blue", "{battery}" }
-                }
+                span { class: "battery-light dark:battery", style: "--level: {battery}", "{battery}" }
             },
             Some(Err(_)) => rsx! {
-                div { class: "flex items-center justify-center gap-2",
-                    span { class: "fa-solid fa-exclamation hover:text-melody-blue dark:hover:text-melody-purple h-4 w-4" }
-                    h3 { class: "text-xl hover:text-melody-blue dark:hover:text-melody-blue", {ERROR} }
-                }
+                span { class: "text-light-accent dark:text-accent", {NOT_AVAILABLE} }
             },
             None => rsx! {
-                div { class: "flex items-center justify-center gap-2",
-                    span { class: "fa-solid fa-circle-notch animate-spin hover:text-melody-blue dark:hover:text-melody-purple h-4 w-4" }
-                    h3 { class: "text-xl hover:text-melody-blue dark:hover:text-melody-blue", {LOADING} }
-                }
+                span { class: "text-light-muted dark:text-muted", {LOADING} }
             },
         }
     }

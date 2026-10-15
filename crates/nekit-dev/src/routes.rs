@@ -1,29 +1,124 @@
 use dioxus::prelude::*;
 
-use crate::views::{
-    blog::Blog, home::Home, not_found::NotFound, projects::Projects, security::Security,
+use crate::{
+    components::shell::Shell,
+    urls,
+    views::{blog::Blog, home::Home, not_found::NotFound, security::Security},
 };
+
+pub type StaticStr = &'static str;
+
+pub const SLASH: StaticStr = "/";
+
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct Info {
+    pub title: String,
+    pub description: String,
+    pub url: String,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum Tab {
+    Home,
+    Blog,
+    Security,
+}
+
+impl Tab {
+    pub const COUNT: usize = 3;
+
+    pub const ALL: [Self; Self::COUNT] = [Self::Home, Self::Blog, Self::Security];
+
+    pub const fn name(self) -> StaticStr {
+        match self {
+            Self::Home => "nekitdev",
+            Self::Blog => "blog",
+            Self::Security => "security",
+        }
+    }
+}
 
 #[derive(Clone, Routable)]
 #[rustfmt::skip]
 pub enum Route {
-    #[route("/")]
-    Home {},
-    #[route("/blog")]
-    Blog {},
-    #[route("/projects")]
-    Projects {},
-    #[route("/security")]
-    Security {},
-    #[route("/:..route")]
-    NotFound {
-        route: Vec<String>,
+    #[layout(Shell)]
+        #[route("/")]
+        Home {},
+        #[route("/blog")]
+        Blog {},
+        #[route("/security")]
+        Security {},
+        #[route("/:..segments")]
+        NotFound {
+            segments: Vec<String>,
+        }
+}
+
+impl Route {
+    pub const fn tab(&self) -> Option<Tab> {
+        match self {
+            Self::Home {} => Some(Tab::Home),
+            Self::Blog {} => Some(Tab::Blog),
+            Self::Security {} => Some(Tab::Security),
+            Self::NotFound { .. } => None,
+        }
+    }
+
+    pub const fn title_str(&self) -> StaticStr {
+        match self {
+            Self::Home {} => "Home",
+            Self::Blog {} => "Blog",
+            Self::Security {} => "Security Policy",
+            Self::NotFound { .. } => "Not Found",
+        }
+    }
+
+    pub const fn description_str(&self) -> StaticStr {
+        match self {
+            Self::Home {} => "Building awesome software.",
+            Self::Blog {} => "Personal blog.",
+            Self::Security {} => "Reporting security vulnerabilities.",
+            Self::NotFound { .. } => "Nothing here.",
+        }
+    }
+
+    pub fn title(&self) -> String {
+        self.title_str().to_owned()
+    }
+
+    pub fn description(&self) -> String {
+        self.description_str().to_owned()
+    }
+
+    pub fn url(&self) -> String {
+        match self {
+            Self::Home {} => urls::root(),
+            Self::Blog {} => urls::route("blog"),
+            Self::Security {} => urls::route("security"),
+            Self::NotFound { segments } => {
+                let route = segments.join(SLASH);
+
+                urls::route(route)
+            }
+        }
+    }
+
+    pub fn info(&self) -> Info {
+        let title = self.title();
+        let description = self.description();
+        let url = self.url();
+
+        Info {
+            title,
+            description,
+            url,
+        }
     }
 }
 
 #[component]
 pub fn App() -> Element {
     rsx! {
-        main { Router::<Route> {} }
+        Router::<Route> {}
     }
 }

@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-use crate::urls;
+use crate::{routes::Info, urls};
 
 pub const STYLE: Asset = asset!(
     "/assets/tailwind.css",
@@ -10,14 +10,18 @@ pub const STYLE: Asset = asset!(
 pub const ICON_PNG: &str = "/images/icon.png";
 pub const ICON_SVG: &str = "/images/icon.svg";
 
-pub const ICONS: &str = "https://kit.fontawesome.com/c7493dda5d.js";
-
 pub const NAME: &str = "nekitdev";
 pub const LANG: &str = "en_US";
 pub const TYPE: &str = "website";
 
 #[component]
-pub fn Head(title: String, description: String, url: String) -> Element {
+pub fn Head(info: Info) -> Element {
+    let Info {
+        title,
+        description,
+        url,
+    } = info;
+
     let icon_png = urls::static_route(ICON_PNG);
     let icon_svg = urls::static_route(ICON_SVG);
 
@@ -44,7 +48,5 @@ pub fn Head(title: String, description: String, url: String) -> Element {
 
         document::Link { rel: "icon", href: icon_png }
         document::Link { rel: "icon", href: icon_svg }
-
-        document::Script { r#async: "true", crossorigin: "anonymous", src: ICONS }
     }
 }

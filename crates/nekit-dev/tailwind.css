@@ -4,9 +4,31 @@
 @source "index.html";
 
 @theme {
-    --color-melody-purple: #cc55ff;
-    --color-melody-blue: #55ccff;
+    --color-back: #111111;
+    --color-main: #cccccc;
+    --color-muted: #888888;
+    --color-line: #333333;
+    --color-bar: #222222;
+    --color-accent: #cc88ff;
+    --color-front: #111111;
+    --color-error: #ff5555;
 
+    --color-light-back: #ffffff;
+    --color-light-main: #222222;
+    --color-light-muted: #555555;
+    --color-light-line: #dddddd;
+    --color-light-bar: #eeeeee;
+    --color-light-accent: #bb77ee;
+    --color-light-front: #ffffff;
+    --color-light-error: #ee4444;
+
+    --color-low: #ff5555;
+    --color-high: #55ff55;
+
+    --color-light-low: #ee4444;
+    --color-light-high: #44ee44;
+
+    /*
     --color-rust: #d34516;
     --color-python: #306998;
     --color-web: #3178c6;
@@ -18,4 +40,27 @@
     --color-youtube: #ff0000;
     --color-reddit: #ff5700;
     --color-telegram: #229ed9;
+    */
+}
+
+@utility battery-light {
+    color: color-mix(
+        in oklch,
+        var(--color-light-high) var(--level),
+        var(--color-light-low)
+    );
+}
+
+@utility battery {
+    color: color-mix(
+        in oklch,
+        var(--color-high) var(--level),
+        var(--color-low)
+    );
+}
+
+@property --level {
+    syntax: "<percentage>";
+    inherits: true;
+    initial-value: 0%;
 }

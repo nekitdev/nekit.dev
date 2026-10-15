@@ -2,29 +2,28 @@ use std::{env, fmt};
 
 use dioxus::prelude::*;
 use refining::prelude::{Refinement, u8};
-use reqwest::{Error, get};
+use reqwest::{Error as ReqwestError, get};
 use serde::{Deserialize, Serialize};
+use thiserror::Error;
 
 pub const BATTERY: &str = "https://battery.nekit.dev/";
 pub const NEKIT_BATTERY_URL: &str = "NEKIT_BATTERY_URL";
 
-fn battery_url() -> String {
+pub fn battery_url() -> String {
     env::var(NEKIT_BATTERY_URL).unwrap_or_else(|_| BATTERY.to_owned())
 }
 
-pub const EMPTY: u8 = 0;
-pub const QUARTER: u8 = 25;
-pub const HALF: u8 = 50;
-pub const THREE_QUARTERS: u8 = 75;
-pub const FULL: u8 = 100;
+pub type Level = Refinement<u8, u8::Closed<0, 100>>;
 
-pub const FULL_NAME: &str = "fa-battery-full";
-pub const THREE_QUARTERS_NAME: &str = "fa-battery-three-quarters";
-pub const HALF_NAME: &str = "fa-battery-half";
-pub const QUARTER_NAME: &str = "fa-battery-quarter";
-pub const EMPTY_NAME: &str = "fa-battery-empty";
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Error)]
+#[error("failed to get battery")]
+pub struct Error;
 
-pub type Level = Refinement<u8, u8::Closed<EMPTY, FULL>>;
+impl From<ReqwestError> for Error {
+    fn from(_error: ReqwestError) -> Self {
+        Self
+    }
+}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 #[repr(transparent)]
@@ -49,22 +48,10 @@ impl fmt::Display for Battery {
     }
 }
 
-impl Battery {
-    pub fn name(self) -> &'static str {
-        match self.level().get() {
-            EMPTY..QUARTER => EMPTY_NAME,
-            QUARTER..HALF => QUARTER_NAME,
-            HALF..THREE_QUARTERS => HALF_NAME,
-            THREE_QUARTERS..FULL => THREE_QUARTERS_NAME,
-            FULL => FULL_NAME,
-            // NOTE: this should never happen since the type guarantees the `EMPTY..=FULL` range
-            _ => unreachable!(),
-        }
-    }
-}
-
 pub async fn get_battery() -> Result<Battery, Error> {
-    get(battery_url()).await?.json().await
+    let battery = get(battery_url()).await?.json().await?;
+
+    Ok(battery)
 }
 
 #[get("/battery")]

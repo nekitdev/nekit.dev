@@ -1,63 +1,90 @@
 use dioxus::{fullstack::*, prelude::*};
 
-use crate::{components::head::Head, urls};
+use crate::{
+    components::shared::COLUMN,
+    routes::{Route, SLASH},
+    urls,
+};
 
 pub const NOT_FOUND: &str = "/images/not-found.png";
 
-pub const TITLE: &str = "Not Found";
-pub const DESCRIPTION: &str = "This route was not found.";
-pub const SLASH: &str = "/";
+pub const MESSAGE: &str = "Not Found";
+
+pub const NOTHING: &str = "Nothing here.";
+
+pub const CODE: u16 = 404;
+
+pub fn use_not_found_status() {
+    use_hook(|| {
+        if let Some(mut context) = FullstackContext::current() {
+            context.set_current_http_status(HttpError::new(StatusCode::NOT_FOUND, MESSAGE));
+        }
+    })
+}
+
+pub fn diagnostic_code(code: u16) -> String {
+    format!("error[E{code:04}]")
+}
 
 #[component]
-pub fn NotFound(route: Vec<String>) -> Element {
-    let route = route.join(SLASH);
+pub fn NotFound(segments: Vec<String>) -> Element {
+    use_not_found_status();
 
-    FullstackContext::commit_http_status(StatusCode::NOT_FOUND, None);
+    let route = segments.join(SLASH);
 
     let not_found = urls::static_route(NOT_FOUND);
 
     rsx! {
-        Head {
-            title: TITLE,
-            description: DESCRIPTION,
-            url: urls::route(&route),
-        }
-
-        div { class: "
-                mx-auto
-                max-w-md sm:max-w-3xl lg:max-w-5xl
-                px-4 sm:px-6 lg:px-8
-                flex flex-col lg:flex-row
-                justify-between
-                gap-5
-                pt-16 sm:pt-20 lg:pt-24
-            ",
-            section { class: "w-full lg:w-1/2",
-                h1 { class: "text-5xl lg:text-7xl",
-                    span { class: "hover:text-melody-blue dark:hover:text-melody-purple",
-                        "Not"
-                    }
-                    " "
-                    span { class: "hover:text-melody-blue dark:hover:text-melody-purple",
-                        "Found"
-                    }
-                }
-                p { class: "text-xl",
-                    "Route "
-                    span { class: "wrap-break-word text-transparent bg-clip-text bg-linear-to-r from-melody-purple to-melody-blue",
-                        "/{route}"
-                    }
-                    " was not found."
-                }
+        main { class: "{COLUMN} grow px-[4ch] py-24 flex flex-col gap-12",
+            div { class: "flex flex-col gap-2",
+                div { class: "text-light-muted dark:text-muted", "{CODE}" }
+                h1 { class: "text-4xl leading-12 font-bold tracking-tight", {NOTHING} }
             }
-
-            img {
-                class: "w-full lg:w-1/2 object-contain",
-                loading: "lazy",
-                width: "448",
-                height: "448",
-                src: not_found,
-                alt: "Confused Neko",
+            div { class: "flex flex-wrap items-center gap-x-[5ch] gap-y-8",
+                div { class: "flex-1 basis-[22ch] min-w-0",
+                    pre {
+                        class: "whitespace-pre-wrap wrap-anywhere",
+                        aria_label: "Diagnostic",
+                        span { class: "block",
+                            span { class: "text-light-error dark:text-error font-bold",
+                                {diagnostic_code(CODE)}
+                            }
+                            span { class: "font-bold", ": resource not found" }
+                        }
+                        span { class: "block pl-[6ch] -indent-[6ch]",
+                            span { class: "text-light-muted dark:text-muted", "  --> " }
+                            "{SLASH}{route}"
+                        }
+                        span { class: "block text-light-muted dark:text-muted", "   |" }
+                        span { class: "block pl-[5ch] -indent-[5ch]",
+                            span { class: "text-light-muted dark:text-muted", "   = " }
+                            span { class: "font-bold", "note" }
+                            ": it may have been moved, or it never existed at all"
+                        }
+                        span { class: "block pl-[5ch] -indent-[5ch]",
+                            span { class: "text-light-muted dark:text-muted", "   = " }
+                            span { class: "font-bold", "help" }
+                            ": try "
+                            Link {
+                                class: "text-light-accent dark:text-accent hover:underline",
+                                to: Route::Home {},
+                                "home"
+                            }
+                            " or "
+                            Link {
+                                class: "text-light-accent dark:text-accent hover:underline",
+                                to: Route::Blog {},
+                                "blog"
+                            }
+                            " instead"
+                        }
+                    }
+                }
+                img {
+                    class: "w-[22ch] shrink-0 aspect-square object-contain",
+                    src: not_found,
+                    alt: "Confused Neko",
+                }
             }
         }
     }
