@@ -1,5 +1,6 @@
 use dioxus::{fullstack::Redirect, prelude::*};
 
+#[allow(unused_imports)]
 use crate::urls::static_route;
 
 pub const CHAT: &str = "https://discord.com/invite/KtJkbut";

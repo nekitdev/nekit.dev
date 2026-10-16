@@ -1,12 +1,15 @@
 use dioxus::prelude::*;
 
 use crate::{
-    components::{head::Head, status::Status, tabs::Tabs},
+    components::{head::Head, keys::Shortcuts, status::Status, tabs::Tabs},
+    keys::provide_help,
     routes::Route,
 };
 
 #[component]
 pub fn Shell() -> Element {
+    provide_help();
+
     let route = use_route::<Route>();
 
     let info = route.info();
@@ -22,6 +25,8 @@ pub fn Shell() -> Element {
             Outlet::<Route> {}
 
             Status {}
+
+            Shortcuts {}
         }
     }
 }

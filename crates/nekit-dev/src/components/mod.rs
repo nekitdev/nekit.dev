@@ -3,6 +3,7 @@ pub mod clock;
 pub mod elsewhere;
 pub mod fetch;
 pub mod head;
+pub mod keys;
 pub mod projects;
 pub mod shared;
 pub mod shell;

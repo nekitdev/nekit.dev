@@ -18,6 +18,17 @@ features = ["default", "fullstack", "router"]
 workspace = true
 features = ["time"]
 
+[dependencies.futures-channel]
+workspace = true
+features = ["std"]
+
+[dependencies.futures-util]
+workspace = true
+
+[dependencies.gloo-events]
+workspace = true
+optional = true
+
 [dependencies.jiff]
 workspace = true
 features = ["default", "serde", "js"]
@@ -46,7 +57,27 @@ features = ["std", "derive"]
 workspace = true
 features = ["std"]
 
+[dependencies.wasm-bindgen]
+workspace = true
+optional = true
+features = ["std"]
+
+[dependencies.web-sys]
+workspace = true
+optional = true
+features = ["std", "Document", "Element", "EventTarget", "KeyboardEvent", "Window"]
+
 [features]
 default = ["web"]
-web = ["dioxus/web"]
-server = ["dioxus/server", "pid1"]
+web = [
+    "dioxus/web",
+    # keyboard events
+    "dep:gloo-events",
+    "dep:wasm-bindgen",
+    "dep:web-sys",
+]
+server = [
+    "dioxus/server",
+    # docker signals
+    "dep:pid1",
+]
