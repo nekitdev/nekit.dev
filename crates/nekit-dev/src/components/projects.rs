@@ -15,37 +15,28 @@ pub fn Projects() -> Element {
                     {PROJECTS}
                 }
             }
-            div { class: "overflow-x-auto",
-                table { class: "w-full min-w-[60ch] border-collapse",
-                    thead {
-                        tr { class: "text-left text-light-muted dark:text-muted",
-                            th { class: "pb-2 pr-[3ch]", scope: "col", "name" }
-                            th { class: "pb-2", scope: "col", "description" }
+
+            dl { class: "grid grid-cols-1 sm:grid-cols-[max-content_1fr] gap-x-[clamp(2ch,4vw,8ch)] gap-y-1",
+                for project in Project::all() {
+                    dt {
+                        a {
+                            class: "text-light-accent dark:text-accent hover:underline",
+                            href: "{project.repository}",
+                            "{project.name}"
                         }
                     }
-                    tbody {
-                        for project in Project::all() {
-                            tr {
-                                td { class: "py-1 pr-[3ch] whitespace-nowrap",
-                                    a {
-                                        class: "text-light-accent dark:text-accent hover:underline",
-                                        href: "{project.repository}",
-                                        "{project.name}"
-                                    }
-                                }
-                                td { class: "py-1",
-                                    "["
-                                    span {
-                                        class: "text-light-accent dark:text-accent",
-                                        title: "{project.status.label()}",
-                                        "{project.status.symbol()}"
-                                    }
-                                    "]"
-                                    " "
-                                    "{project.description}"
-                                }
+                    dd { class: "flex gap-[1ch] mb-3 sm:mb-0",
+                        span {
+                            class: "shrink-0",
+                            "["
+                            span {
+                                class: "text-light-accent dark:text-accent",
+                                title: "{project.status.label()}",
+                                "{project.status.symbol()}"
                             }
+                            "]"
                         }
+                        span { "{project.description}" }
                     }
                 }
             }

@@ -46,7 +46,7 @@ pub const HALF: usize = 2;
 
 pub const SPACE: &str = " ";
 
-pub fn fingerprint<I: AsRef<str>>(id: I) -> String {
+pub fn fingerprint<I: AsRef<str>>(id: I) -> (String, String) {
     let string = id.as_ref();
 
     let groups: Vec<_> = string
@@ -60,7 +60,7 @@ pub fn fingerprint<I: AsRef<str>>(id: I) -> String {
     let first = groups[..half].join(SPACE);
     let last = groups[half..].join(SPACE);
 
-    format!("{first}  {last}")
+    (first, last)
 }
 
 #[component]
@@ -75,7 +75,7 @@ pub fn Heading(id: String, title: String) -> Element {
 #[component]
 pub fn Security() -> Element {
     let uid = uid(NAME, COMMENT, EMAIL);
-    let fingerprint = fingerprint(ID);
+    let (finger, print) = fingerprint(ID);
 
     rsx! {
         main { class: "{COLUMN} grow px-[4ch] pt-18 pb-24 flex flex-col gap-12",
@@ -182,7 +182,10 @@ pub fn Security() -> Element {
                     dt { class: "text-light-accent dark:text-accent", {UID} }
                     dd { class: "wrap-anywhere", {uid} }
                     dt { class: "text-light-accent dark:text-accent", {FINGERPRINT} }
-                    dd { class: "wrap-anywhere", pre { {fingerprint} } }
+                    dd { class: "flex flex-wrap gap-x-[2ch]",
+                        span { class: "wrap-anywhere", {finger} }
+                        span { class: "wrap-anywhere", {print} }
+                    }
                 }
                 pre {
                     class: "overflow-x-auto border-2 border-light-line dark:border-line px-[2ch] py-4",
