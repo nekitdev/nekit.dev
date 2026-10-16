@@ -26,8 +26,7 @@ pub fn Projects() -> Element {
                         }
                     }
                     dd { class: "flex gap-[1ch] mb-3 sm:mb-0",
-                        span {
-                            class: "shrink-0",
+                        span { class: "shrink-0",
                             "["
                             span {
                                 class: "text-light-accent dark:text-accent",

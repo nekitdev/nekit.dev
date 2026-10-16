@@ -86,12 +86,14 @@ pub fn Security() -> Element {
 
             section { class: "flex flex-col gap-4", aria_labelledby: REPORTING,
                 Heading { id: REPORTING, title: REPORTING }
-                p {
-                    "Thank you for taking the time to responsibly disclose any problems you find."
-                }
+                p { "Thank you for taking the time to responsibly disclose any problems you find." }
                 p {
                     "All security vulnerabilities should be reported by email to "
-                    a { class: "text-light-accent dark:text-accent hover:underline", href: "/email/security", {EMAIL} }
+                    a {
+                        class: "text-light-accent dark:text-accent hover:underline",
+                        href: "/email/security",
+                        {EMAIL}
+                    }
                     "."
                 }
                 p {
@@ -132,9 +134,7 @@ pub fn Security() -> Element {
                     }
                     li { class: "flex gap-[2ch]",
                         span { class: "text-light-muted dark:text-muted shrink-0", "3." }
-                        span {
-                            "Code is audited to find any potential similar problems."
-                        }
+                        span { "Code is audited to find any potential similar problems." }
                     }
                     li { class: "flex gap-[2ch]",
                         span { class: "text-light-muted dark:text-muted shrink-0", "4." }
@@ -198,7 +198,8 @@ pub fn Security() -> Element {
                 Heading { id: ATTRIBUTION, title: ATTRIBUTION }
                 p {
                     "This policy is adapted from "
-                    a { class: "text-light-accent dark:text-accent hover:underline",
+                    a {
+                        class: "text-light-accent dark:text-accent hover:underline",
                         href: "https://rust-lang.org/policies/security",
                         "Rust's Security Policy"
                     }

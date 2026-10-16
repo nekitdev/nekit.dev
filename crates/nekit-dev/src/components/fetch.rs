@@ -32,12 +32,16 @@ pub fn Fetch() -> Element {
                     }
                     dt { class: "text-light-accent dark:text-accent", "Resume" }
                     dd {
-                        a { class: "text-light-other dark:text-other hover:underline",
-                            href: "/resume/en", "en"
+                        a {
+                            class: "text-light-other dark:text-other hover:underline",
+                            href: "/resume/en",
+                            "en"
                         }
                         "/"
-                        a { class: "text-light-other dark:text-other hover:underline",
-                            href: "/resume/ru", "ru"
+                        a {
+                            class: "text-light-other dark:text-other hover:underline",
+                            href: "/resume/ru",
+                            "ru"
                         }
                     }
                 }

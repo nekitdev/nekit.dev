@@ -21,7 +21,11 @@ pub fn Elsewhere() -> Element {
                         div { class: "text-light-muted dark:text-muted", "{group.name}/" }
                         for link in group.links {
                             div { class: "py-1",
-                                a { class: "hover:underline", href: "{link.path}", "{link.name}" }
+                                a {
+                                    class: "hover:underline",
+                                    href: "{link.path}",
+                                    "{link.name}"
+                                }
                             }
                         }
                     }
