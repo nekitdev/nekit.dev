@@ -29,6 +29,14 @@
 
     --color-light-low: #ee4444;
     --color-light-high: #44ee44;
+
+    --animate-spinner: spinner 0.5s steps(4) infinite;
+
+    @keyframes spinner {
+        to {
+            transform: translateX(-4ch);
+        }
+    }
 }
 
 @utility battery-light {

@@ -79,15 +79,33 @@ impl Default for Help {
 }
 
 impl Help {
-    pub fn new() -> Self {
-        let signal = Signal::new(DEFAULT_HELP);
-
+    pub fn construct(signal: Signal<bool>) -> Self {
         Self { signal }
+    }
+
+    pub fn new() -> Self {
+        Self::construct(Signal::new(DEFAULT_HELP))
+    }
+
+    pub fn get(&self) -> bool {
+        (self.signal)()
+    }
+
+    pub fn set(&mut self, value: bool) {
+        self.signal.set(value);
+    }
+
+    pub fn toggle(&mut self) {
+        self.signal.toggle();
     }
 }
 
 pub fn provide_help() -> Help {
     use_context_provider(Help::new)
+}
+
+pub fn use_help() -> Help {
+    use_context()
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]

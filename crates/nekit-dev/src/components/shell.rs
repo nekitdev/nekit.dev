@@ -2,12 +2,15 @@ use dioxus::prelude::*;
 
 use crate::{
     components::{head::Head, keys::Shortcuts, status::Status, tabs::Tabs},
+    hydrated::provide_hydrated,
     keys::provide_help,
     routes::Route,
 };
 
 #[component]
 pub fn Shell() -> Element {
+    provide_hydrated();
+
     provide_help();
 
     let route = use_route::<Route>();

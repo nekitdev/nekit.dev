@@ -7,7 +7,7 @@ use futures_util::StreamExt;
 use crate::browser::listen;
 
 use crate::{
-    keys::{HELP, Help, Key, NEXT, PREVIOUS},
+    keys::{HELP, Key, NEXT, PREVIOUS, use_help},
     routes::Tab,
 };
 
@@ -49,15 +49,15 @@ pub fn HelpPanel() -> Element {
 
 #[component]
 pub fn HelpToggle() -> Element {
-    let Help { mut signal } = use_context();
+    let mut help = use_help();
 
     rsx! {
         button {
             class: "cursor-pointer hover:underline",
             r#type: "button",
             aria_label: SHORTCUTS,
-            aria_expanded: "{signal}",
-            onclick: move |_| signal.toggle(),
+            aria_expanded: "{help.get()}",
+            onclick: move |_| help.toggle(),
             span { class: "text-light-accent dark:text-accent", {HELP} }
         }
     }
@@ -69,7 +69,7 @@ pub fn unbounded_keys() -> (UnboundedSender<Key>, UnboundedReceiver<Key>) {
 
 #[component]
 pub fn Shortcuts() -> Element {
-    let Help { mut signal } = use_context();
+    let mut help = use_help();
 
     let navigator = use_navigator();
 
@@ -93,14 +93,14 @@ pub fn Shortcuts() -> Element {
                 Key::Tab(tab) => {
                     navigator.push(tab.route());
                 }
-                Key::Help => signal.toggle(),
-                Key::Hide => signal.set(false),
+                Key::Help => help.toggle(),
+                Key::Hide => help.set(false),
             }
         }
     });
 
     rsx! {
-        if signal() {
+        if help.get() {
             HelpPanel {}
         }
     }

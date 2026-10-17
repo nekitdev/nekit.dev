@@ -1,6 +1,7 @@
 pub mod battery;
 pub mod components;
 pub mod data;
+pub mod hydrated;
 pub mod keys;
 pub mod redirects;
 pub mod routes;

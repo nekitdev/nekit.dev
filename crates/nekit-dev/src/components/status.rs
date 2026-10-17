@@ -1,13 +1,18 @@
 use dioxus::prelude::*;
 
 use crate::{
-    components::{battery::Battery, clock::Clock, keys::HelpToggle, shared::COLUMN},
+    components::{
+        battery::Battery, clock::Clock, keys::HelpToggle, shared::COLUMN, spinner::Spinner,
+    },
+    hydrated::use_hydrated,
     times,
 };
 
 #[component]
 pub fn Status() -> Element {
     let year = times::year();
+
+    let hydrated = use_hydrated();
 
     rsx! {
         footer { class: "
@@ -17,7 +22,11 @@ pub fn Status() -> Element {
                 div { class: "flex flex-wrap gap-x-[2ch]",
                     span {
                         "["
-                        HelpToggle {}
+                        if hydrated.get() {
+                            HelpToggle {}
+                        } else {
+                            Spinner {}
+                        }
                         "]"
                     }
                     span { class: "text-light-main dark:text-main", "nekit.dev" }

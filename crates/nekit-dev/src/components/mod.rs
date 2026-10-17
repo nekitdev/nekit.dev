@@ -7,5 +7,6 @@ pub mod keys;
 pub mod projects;
 pub mod shared;
 pub mod shell;
+pub mod spinner;
 pub mod status;
 pub mod tabs;
