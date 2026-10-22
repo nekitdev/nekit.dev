@@ -7,7 +7,7 @@ use crate::{
 
 pub const USAGE: &str = "usage";
 
-pub const CELLS: usize = 24;
+pub const CELLS: usize = 20;
 
 pub const NOT_AVAILABLE: &str = "n/a";
 
@@ -53,7 +53,7 @@ pub fn Usage(host: Host) -> Element {
                         content: "{swap}",
                     }
                 }
-                dt { class: "text-light-accent dark:text-accent", "temperature" }
+                dt { class: "text-light-accent dark:text-accent", "temp" }
                 dd { {temperature} }
             }
         }
