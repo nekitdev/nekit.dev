@@ -1,12 +1,16 @@
+pub mod bar;
 pub mod battery;
 pub mod clock;
 pub mod elsewhere;
 pub mod fetch;
 pub mod head;
+pub mod heading;
 pub mod keys;
 pub mod projects;
 pub mod shared;
 pub mod shell;
 pub mod spinner;
 pub mod status;
+pub mod system;
 pub mod tabs;
+pub mod usage;

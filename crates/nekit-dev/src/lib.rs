@@ -1,6 +1,7 @@
 pub mod battery;
 pub mod components;
 pub mod data;
+pub mod host;
 pub mod hydrated;
 pub mod keys;
 pub mod redirects;
@@ -11,3 +12,6 @@ pub mod views;
 
 #[cfg(feature = "web")]
 pub mod browser;
+
+#[cfg(feature = "server")]
+pub mod monitor;

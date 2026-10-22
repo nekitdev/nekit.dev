@@ -2,7 +2,7 @@ use std::fmt;
 
 use dioxus::prelude::*;
 
-use crate::components::shared::COLUMN;
+use crate::components::{heading::Heading, shared::COLUMN};
 
 pub const SECURITY_POLICY: &str = "Security Policy";
 
@@ -61,15 +61,6 @@ pub fn fingerprint<I: AsRef<str>>(id: I) -> (String, String) {
     let last = groups[half..].join(SPACE);
 
     (first, last)
-}
-
-#[component]
-pub fn Heading(id: String, title: String) -> Element {
-    rsx! {
-        div { class: "flex items-center gap-[2ch] border-b-2 border-light-line dark:border-line",
-            h2 { class: "font-bold text-light-muted dark:text-muted", id, {title} }
-        }
-    }
 }
 
 #[component]

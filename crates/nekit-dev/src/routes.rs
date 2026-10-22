@@ -3,7 +3,7 @@ use dioxus::prelude::*;
 use crate::{
     components::shell::Shell,
     urls,
-    views::{blog::Blog, home::Home, not_found::NotFound, security::Security},
+    views::{blog::Blog, home::Home, host::Host, not_found::NotFound, security::Security},
 };
 
 pub type StaticStr = &'static str;
@@ -21,18 +21,20 @@ pub struct Info {
 pub enum Tab {
     Home,
     Blog,
+    Host,
     Security,
 }
 
 impl Tab {
-    pub const COUNT: usize = 3;
+    pub const COUNT: usize = 4;
 
-    pub const ALL: [Self; Self::COUNT] = [Self::Home, Self::Blog, Self::Security];
+    pub const ALL: [Self; Self::COUNT] = [Self::Home, Self::Blog, Self::Host, Self::Security];
 
     pub const fn name(self) -> StaticStr {
         match self {
             Self::Home => "nekitdev",
             Self::Blog => "blog",
+            Self::Host => "host",
             Self::Security => "security",
         }
     }
@@ -41,6 +43,7 @@ impl Tab {
         match self {
             Self::Home => Route::Home {},
             Self::Blog => Route::Blog {},
+            Self::Host => Route::Host {},
             Self::Security => Route::Security {},
         }
     }
@@ -54,6 +57,8 @@ pub enum Route {
         Home {},
         #[route("/blog")]
         Blog {},
+        #[route("/host")]
+        Host {},
         #[route("/security")]
         Security {},
         #[route("/:..segments")]
@@ -67,6 +72,7 @@ impl Route {
         match self {
             Self::Home {} => Some(Tab::Home),
             Self::Blog {} => Some(Tab::Blog),
+            Self::Host {} => Some(Tab::Host),
             Self::Security {} => Some(Tab::Security),
             Self::NotFound { .. } => None,
         }
@@ -76,6 +82,7 @@ impl Route {
         match self {
             Self::Home {} => "Home",
             Self::Blog {} => "Blog",
+            Self::Host {} => "Host",
             Self::Security {} => "Security Policy",
             Self::NotFound { .. } => "Not Found",
         }
@@ -85,6 +92,7 @@ impl Route {
         match self {
             Self::Home {} => "Building awesome software.",
             Self::Blog {} => "Personal blog.",
+            Self::Host {} => "The machine behind the site.",
             Self::Security {} => "Reporting security vulnerabilities.",
             Self::NotFound { .. } => "Nothing here.",
         }
@@ -102,6 +110,7 @@ impl Route {
         match self {
             Self::Home {} => urls::root(),
             Self::Blog {} => urls::route("blog"),
+            Self::Host {} => urls::route("host"),
             Self::Security {} => urls::route("security"),
             Self::NotFound { segments } => {
                 let route = segments.join(SLASH);

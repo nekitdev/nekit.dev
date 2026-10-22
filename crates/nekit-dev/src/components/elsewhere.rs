@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-use crate::data::Group;
+use crate::{components::heading::Heading, data::Group};
 
 pub const ELSEWHERE: &str = "elsewhere";
 
@@ -8,13 +8,8 @@ pub const ELSEWHERE: &str = "elsewhere";
 pub fn Elsewhere() -> Element {
     rsx! {
         section { aria_labelledby: ELSEWHERE,
-            div { class: "flex items-center gap-[2ch] mb-4 border-b-2 border-light-line dark:border-line",
-                h2 {
-                    class: "font-bold text-light-muted dark:text-muted",
-                    id: ELSEWHERE,
-                    {ELSEWHERE}
-                }
-            }
+            Heading { id: ELSEWHERE, title: ELSEWHERE }
+
             div { class: "grid grid-cols-[repeat(auto-fit,minmax(18ch,1fr))] gap-x-[4ch] gap-y-6",
                 for group in Group::all() {
                     div { class: "flex flex-col",

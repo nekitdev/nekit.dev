@@ -2,6 +2,7 @@ use dioxus::prelude::*;
 
 use crate::battery::battery;
 
+pub const BATTERY: &str = "battery";
 pub const NOT_AVAILABLE: &str = "n/a";
 pub const LOADING: &str = "...";
 
@@ -12,13 +13,18 @@ pub fn Battery() -> Element {
     rsx! {
         match resource.read().cloned() {
             Some(Ok(battery)) => rsx! {
-                span { class: "battery-light dark:battery", style: "--level: {battery}", "{battery}" }
+                span {
+                    class: "battery-light dark:battery",
+                    style: "--level: {battery}",
+                    title: BATTERY,
+                    "{battery}"
+                }
             },
             Some(Err(_)) => rsx! {
-                span { class: "text-light-accent dark:text-accent", {NOT_AVAILABLE} }
+                span { class: "text-light-accent dark:text-accent", title: BATTERY, {NOT_AVAILABLE} }
             },
             None => rsx! {
-                span { class: "text-light-muted dark:text-muted", {LOADING} }
+                span { class: "text-light-muted dark:text-muted", title: BATTERY, {LOADING} }
             },
         }
     }

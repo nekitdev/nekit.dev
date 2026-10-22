@@ -10,6 +10,10 @@ repository.workspace = true
 license.workspace = true
 publish.workspace = true
 
+[dependencies.bytesize]
+workspace = true
+features = ["std", "serde"]
+
 [dependencies.dioxus]
 workspace = true
 features = ["default", "fullstack", "router"]
@@ -35,7 +39,7 @@ features = ["default", "serde", "js"]
 
 [dependencies.non-empty-str]
 workspace = true
-features = ["std"]
+features = ["std", "serde"]
 
 [dependencies.pid1]
 workspace = true
@@ -53,6 +57,11 @@ features = ["default", "json"]
 workspace = true
 features = ["std", "derive"]
 
+[dependencies.sysinfo]
+workspace = true
+optional = true
+features = ["component", "system"]
+
 [dependencies.thiserror]
 workspace = true
 features = ["std"]
@@ -65,7 +74,14 @@ features = ["std"]
 [dependencies.web-sys]
 workspace = true
 optional = true
-features = ["std", "Document", "Element", "EventTarget", "KeyboardEvent", "Window"]
+features = [
+    "std",
+    "Document",
+    "Element",
+    "EventTarget",
+    "KeyboardEvent",
+    "Window",
+]
 
 [features]
 default = ["web"]
@@ -80,4 +96,6 @@ server = [
     "dioxus/server",
     # docker signals
     "dep:pid1",
+    # system information
+    "dep:sysinfo",
 ]

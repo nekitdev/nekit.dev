@@ -5,7 +5,7 @@ resolver = "3"
 [workspace.package]
 version = "0.1.0"
 authors = ["nekitdev <nekit@nekit.dev>"]
-rust-version = "1.98"
+rust-version = "1.99"
 edition = "2024"
 repository = "https://github.com/nekitdev/nekit.dev"
 license = "MIT"
@@ -19,8 +19,12 @@ default-features = false
 version = "0.8.9"
 default-features = false
 
+[workspace.dependencies.bytesize]
+version = "2.7.0"
+default-features = false
+
 [workspace.dependencies.clap]
-version = "4.6.6"
+version = "4.6.7"
 default-features = false
 
 [workspace.dependencies.dioxus]
@@ -44,7 +48,7 @@ version = "0.3.0"
 default-features = false
 
 [workspace.dependencies.jiff]
-version = "0.2.37"
+version = "0.2.38"
 default-features = false
 
 [workspace.dependencies.non-empty-str]
@@ -67,12 +71,16 @@ default-features = false
 version = "1.0.229"
 default-features = false
 
+[workspace.dependencies.sysinfo]
+version = "0.39.6"
+default-features = false
+
 [workspace.dependencies.thiserror]
-version = "2.0.20"
+version = "2.0.21"
 default-features = false
 
 [workspace.dependencies.tokio]
-version = "1.53.1"
+version = "1.54.1"
 default-features = false
 
 [workspace.dependencies.tower-http]
