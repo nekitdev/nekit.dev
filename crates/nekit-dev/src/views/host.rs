@@ -1,41 +1,50 @@
 use std::time::Duration;
 
 use dioxus::prelude::*;
-use dioxus_sdk::time::use_interval;
+
+#[cfg(feature = "web")]
+use dioxus_sdk::time::sleep;
+
 use non_empty_str::{NonEmptyStr, const_non_empty_str};
 
 use crate::{
     components::{shared::COLUMN, system::System, usage::Usage},
-    host::status,
+    host,
 };
 
 pub const INTERVAL: Duration = Duration::from_secs(2);
 
 pub const HOST: &str = "host";
 
-pub const UNREACHABLE: &str = "Unfortunately, the host is unreachable at the moment...";
+pub const FETCHING: &str = "Fetching...";
 
 pub const FALLBACK: &NonEmptyStr = const_non_empty_str!("The machine behind the site.");
 
-pub fn schrodinger<T: Clone, E>(resource: Resource<Result<T, E>>) -> Option<T> {
-    resource.read().as_ref()?.as_ref().ok().cloned() // loading or failed? does not exist! ~ nekit
-}
+pub const RECONNECT: Duration = Duration::from_secs(5);
 
 #[component]
 pub fn Host() -> Element {
-    let resource = use_server_future(status)?;
+    let initial = use_server_cached(host::optional);
 
-    let mut latest = use_signal(|| None);
+    #[cfg_attr(feature = "server", allow(unused_mut))]
+    let mut current = use_signal(|| initial);
 
-    use_interval(INTERVAL, move |()| async move {
-        if let Ok(host) = status().await {
-            latest.set(Some(host));
+    #[cfg(feature = "web")]
+    use_future(move || async move {
+        loop {
+            if let Ok(mut events) = host::events().await {
+                while let Some(Ok(host)) = events.recv().await {
+                    current.set(Some(host));
+                }
+            }
+
+            sleep(RECONNECT).await;
         }
     });
 
-    let current = latest().or_else(|| schrodinger(resource));
+    let option = current();
 
-    let name = current
+    let name = option
         .as_ref()
         .and_then(|host| host.name())
         .unwrap_or(FALLBACK);
@@ -46,13 +55,13 @@ pub fn Host() -> Element {
                 div { class: "text-light-muted dark:text-muted", {HOST} }
                 h1 { class: "text-4xl leading-12 font-bold tracking-tight", "{name}" }
             }
-            match current {
+            match option {
                 Some(host) => rsx! {
                     System { host: host.clone() }
                     Usage { host }
                 },
                 None => rsx! {
-                    p { class: "text-light-muted dark:text-muted", {UNREACHABLE} }
+                    p { class: "text-light-muted dark:text-muted", {FETCHING} }
                 },
             }
         }

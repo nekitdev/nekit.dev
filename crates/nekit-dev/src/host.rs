@@ -1,6 +1,6 @@
 use std::{fmt, time::Duration};
 
-use dioxus::prelude::*;
+use dioxus::{fullstack::ServerEvents, prelude::*};
 
 use bytesize::ByteSize as Bytes;
 use jiff::{RoundMode, SignedDuration, Span, SpanRound, Unit};
@@ -8,13 +8,43 @@ use non_empty_str::{NonEmptyStr, NonEmptyString};
 use serde::{Deserialize, Deserializer, Serialize, Serializer, de::Error};
 
 #[cfg(feature = "server")]
-use crate::monitor::snapshot;
+use crate::monitor::{snapshot, subscribe};
 
-#[get("/status")]
-pub async fn status() -> Result<Host> {
-    let host = snapshot();
+pub fn optional() -> Option<Host> {
+    cfg_select! {
+        feature = "server" => {
+            let host = snapshot();
 
-    Ok(host)
+            Some(host)
+        }
+        _ => {
+            None
+        }
+    }
+}
+
+#[get("/host/events")]
+pub async fn events() -> Result<ServerEvents<Host>> {
+    let mut receiver = subscribe();
+
+    let server_events = ServerEvents::new(move |mut sender| async move {
+        loop {
+            // clone out of the borrow before everything else
+            let host = receiver.borrow_and_update().clone();
+
+            // fails once the client has disconnected
+            if sender.send(host).await.is_err() {
+                break;
+            }
+
+            // fails only if the monitor is gone
+            if receiver.changed().await.is_err() {
+                break;
+            }
+        }
+    });
+
+    Ok(server_events)
 }
 
 pub type Name = NonEmptyString;

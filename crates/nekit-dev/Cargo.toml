@@ -66,6 +66,11 @@ features = ["component", "system"]
 workspace = true
 features = ["std"]
 
+[dependencies.tokio]
+workspace = true
+optional = true
+features = ["sync"]
+
 [dependencies.wasm-bindgen]
 workspace = true
 optional = true
@@ -98,4 +103,6 @@ server = [
     "dep:pid1",
     # system information
     "dep:sysinfo",
+    # synchronization
+    "dep:tokio",
 ]

@@ -1,14 +1,11 @@
-use std::{
-    sync::{LazyLock, PoisonError, RwLock},
-    thread,
-    time::Duration,
-};
+use std::{sync::LazyLock, thread, time::Duration};
 
 use bytesize::ByteSize as Bytes;
 use sysinfo::{
     Component, Components, CpuRefreshKind, MINIMUM_CPU_UPDATE_INTERVAL, MemoryRefreshKind,
     RefreshKind, System,
 };
+use tokio::sync::watch;
 
 use crate::host::{Host, Load, Name, Percent, Temperature, Uptime, Usage, uptime_span};
 
@@ -148,14 +145,10 @@ impl Monitor {
     }
 }
 
-fn extract<T>(poison_error: PoisonError<T>) -> T {
-    poison_error.into_inner()
-}
-
-fn setup() -> RwLock<Host> {
+fn setup() -> watch::Sender<Host> {
     let mut monitor = Monitor::new();
 
-    let initial = monitor.snapshot();
+    let (sender, _) = watch::channel(monitor.snapshot());
 
     thread::Builder::new()
         .name(NAME.to_owned())
@@ -165,22 +158,24 @@ fn setup() -> RwLock<Host> {
 
                 let snapshot = monitor.snapshot();
 
-                let mut latest = LATEST.write().unwrap_or_else(extract);
-
-                *latest = snapshot;
+                CHANNEL.send_replace(snapshot);
             }
         })
         .expect(SPAWN);
 
-    RwLock::new(initial)
+    sender
 }
 
-static LATEST: LazyLock<RwLock<Host>> = LazyLock::new(setup);
+static CHANNEL: LazyLock<watch::Sender<Host>> = LazyLock::new(setup);
 
 pub fn snapshot() -> Host {
-    LATEST.read().unwrap_or_else(extract).clone()
+    CHANNEL.borrow().clone()
+}
+
+pub fn subscribe() -> watch::Receiver<Host> {
+    CHANNEL.subscribe()
 }
 
 pub fn start() {
-    LazyLock::force(&LATEST);
+    LazyLock::force(&CHANNEL);
 }
