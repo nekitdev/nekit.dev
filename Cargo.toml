@@ -19,6 +19,10 @@ default-features = false
 version = "0.8.9"
 default-features = false
 
+[workspace.dependencies.bon]
+version = "3.10.3"
+default-features = false
+
 [workspace.dependencies.bytesize]
 version = "2.7.0"
 default-features = false
@@ -59,6 +63,10 @@ default-features = false
 version = "0.1.6"
 default-features = false
 
+[workspace.dependencies.pulldown-cmark]
+version = "0.13.5"
+default-features = false
+
 [workspace.dependencies.refining]
 version = "0.3.0"
 default-features = false
@@ -83,8 +91,28 @@ default-features = false
 version = "1.54.1"
 default-features = false
 
+[workspace.dependencies.toml]
+version = "1.1.8"
+default-features = false
+
 [workspace.dependencies.tower-http]
 version = "0.7.1"
+default-features = false
+
+[workspace.dependencies.typst]
+version = "0.15.1"
+default-features = false
+
+[workspace.dependencies.typst-assets]
+version = "0.15.1"
+default-features = false
+
+[workspace.dependencies.typst-layout]
+version = "0.15.1"
+default-features = false
+
+[workspace.dependencies.typst-svg]
+version = "0.15.1"
 default-features = false
 
 [workspace.dependencies.wasm-bindgen]
@@ -104,6 +132,11 @@ path = "crates/nekit-battery"
 version = "0.1.0"
 default-features = false
 path = "crates/nekit-dev"
+
+[workspace.dependencies.nekit-render]
+version = "0.1.0"
+default-features = false
+path = "crates/nekit-render"
 
 [workspace.dependencies.nekit-serve]
 version = "0.1.0"

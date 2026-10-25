@@ -1,0 +1,63 @@
+[package]
+name = "nekit-render"
+version.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+edition.workspace = true
+description = "Rendering Markdown with Typst math."
+readme = "README.md"
+repository.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies.anyhow]
+workspace = true
+features = ["std"]
+
+[dependencies.bon]
+workspace = true
+features = ["std"]
+
+[dependencies.clap]
+workspace = true
+features = ["default", "derive", "env"]
+
+[dependencies.jiff]
+workspace = true
+features = ["default", "serde"]
+
+[dependencies.non-empty-str]
+workspace = true
+features = ["std", "serde"]
+
+[dependencies.pid1]
+workspace = true
+
+[dependencies.pulldown-cmark]
+workspace = true
+features = ["html"]
+
+[dependencies.serde]
+workspace = true
+features = ["std", "derive"]
+
+[dependencies.thiserror]
+workspace = true
+features = ["std"]
+
+[dependencies.toml]
+workspace = true
+features = ["default"]
+
+[dependencies.typst]
+workspace = true
+
+[dependencies.typst-assets]
+workspace = true
+features = ["fonts"]
+
+[dependencies.typst-layout]
+workspace = true
+
+[dependencies.typst-svg]
+workspace = true
