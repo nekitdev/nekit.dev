@@ -88,6 +88,9 @@ features = [
     "Window",
 ]
 
+[dependencies.nekit-blog]
+workspace = true
+
 [features]
 default = ["web"]
 web = [
@@ -99,6 +102,8 @@ web = [
 ]
 server = [
     "dioxus/server",
+    # blog loading
+    "nekit-blog/load",
     # docker signals
     "dep:pid1",
     # system information

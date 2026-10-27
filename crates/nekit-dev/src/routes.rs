@@ -1,9 +1,12 @@
 use dioxus::prelude::*;
+use nekit_blog::slug::Slug;
 
 use crate::{
     components::shell::Shell,
     urls,
-    views::{blog::Blog, home::Home, host::Host, not_found::NotFound, security::Security},
+    views::{
+        blog::Blog, home::Home, host::Host, not_found::NotFound, post::Post, security::Security,
+    },
 };
 
 pub type StaticStr = &'static str;
@@ -61,6 +64,10 @@ pub enum Route {
         Host {},
         #[route("/security")]
         Security {},
+        #[route("/blog/:slug")]
+        Post {
+            slug: Slug,
+        },
         #[route("/:..segments")]
         NotFound {
             segments: Vec<String>,
@@ -74,6 +81,7 @@ impl Route {
             Self::Blog {} => Some(Tab::Blog),
             Self::Host {} => Some(Tab::Host),
             Self::Security {} => Some(Tab::Security),
+            Self::Post { .. } => Some(Tab::Blog),
             Self::NotFound { .. } => None,
         }
     }
@@ -84,6 +92,7 @@ impl Route {
             Self::Blog {} => "Blog",
             Self::Host {} => "Host",
             Self::Security {} => "Security Policy",
+            Self::Post { .. } => "Blog Post",
             Self::NotFound { .. } => "Not Found",
         }
     }
@@ -94,6 +103,7 @@ impl Route {
             Self::Blog {} => "Personal blog.",
             Self::Host {} => "The machine behind the site.",
             Self::Security {} => "Reporting security vulnerabilities.",
+            Self::Post { .. } => "Read more.",
             Self::NotFound { .. } => "Nothing here.",
         }
     }
@@ -112,6 +122,11 @@ impl Route {
             Self::Blog {} => urls::route("blog"),
             Self::Host {} => urls::route("host"),
             Self::Security {} => urls::route("security"),
+            Self::Post { slug } => {
+                let route = format!("blog/{slug}");
+
+                urls::route(route)
+            }
             Self::NotFound { segments } => {
                 let route = segments.join(SLASH);
 

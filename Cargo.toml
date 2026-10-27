@@ -136,6 +136,11 @@ version = "0.1.0"
 default-features = false
 path = "crates/nekit-battery"
 
+[workspace.dependencies.nekit-blog]
+version = "0.1.0"
+default-features = false
+path = "crates/nekit-blog"
+
 [workspace.dependencies.nekit-dev]
 version = "0.1.0"
 default-features = false

@@ -13,6 +13,7 @@ pub fn required<'de, D: Deserializer<'de>>(deserializer: D) -> Result<Date, D::E
 }
 
 #[derive(Deserialize)]
+#[serde(transparent)]
 struct Wrap {
     #[serde(deserialize_with = "required")]
     date: Date,
