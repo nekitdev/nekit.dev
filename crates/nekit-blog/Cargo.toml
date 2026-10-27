@@ -1,0 +1,46 @@
+[package]
+name = "nekit-blog"
+version.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+edition.workspace = true
+description = "Loading and keeping blog posts."
+readme = "README.md"
+repository.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies.bon]
+workspace = true
+features = ["std"]
+
+[dependencies.jiff]
+workspace = true
+features = ["std", "serde"]
+
+[dependencies.non-empty-str]
+workspace = true
+features = ["std", "serde"]
+
+[dependencies.serde]
+workspace = true
+features = ["std", "derive"]
+
+[dependencies.thiserror]
+workspace = true
+features = ["std"]
+
+[dependencies.tokio]
+workspace = true
+optional = true
+features = ["sync"]
+
+[dependencies.trait-aliases]
+workspace = true
+
+[dependencies.nekit-render]
+workspace = true
+optional = true
+
+[features]
+load = ["dep:nekit-render", "dep:tokio"]

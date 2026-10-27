@@ -98,11 +98,11 @@
         & td {
             @apply px-[1ch] py-1 text-left;
         }
-        & .math {
-            @apply text-2xl;
+        & .math-inline {
+            @apply text-[1.25em];
         }
         & .math-block {
-            @apply overflow-x-auto;
+            @apply overflow-x-auto text-[1.5em];
         }
     }
 }
