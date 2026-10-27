@@ -3,21 +3,21 @@ use std::path::Path;
 use bon::Builder;
 use non_empty_str::NonEmptyStr;
 
-pub type PathRef<'p> = &'p Path;
-pub type Str<'s> = &'s NonEmptyStr;
+pub type Packages<'p> = &'p Path;
+pub type Preamble<'p> = &'p NonEmptyStr;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default, Builder)]
 pub struct Context<'c> {
-    pub packages: Option<PathRef<'c>>,
-    pub preamble: Option<Str<'c>>,
+    packages: Option<Packages<'c>>,
+    preamble: Option<Preamble<'c>>,
 }
 
 impl<'c> Context<'c> {
-    pub const fn packages(self) -> Option<PathRef<'c>> {
+    pub const fn packages(self) -> Option<Packages<'c>> {
         self.packages
     }
 
-    pub const fn preamble(self) -> Option<Str<'c>> {
+    pub const fn preamble(self) -> Option<Preamble<'c>> {
         self.preamble
     }
 }

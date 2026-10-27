@@ -49,6 +49,9 @@ features = ["std"]
 workspace = true
 features = ["default"]
 
+[dependencies.trait-aliases]
+workspace = true
+
 [dependencies.typst]
 workspace = true
 

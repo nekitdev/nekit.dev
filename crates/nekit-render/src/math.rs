@@ -9,7 +9,8 @@ use non_empty_str::{NonEmptyStr, NonEmptyString, const_non_empty_str};
 use thiserror::Error;
 use typst::{
     comemo::Track,
-    layout::{Abs, FrameItem},
+    diag::SourceDiagnostic,
+    layout::{Abs, Frame, FrameItem, Point},
     model::LateLinkResolver,
     syntax::Source,
 };
@@ -29,7 +30,9 @@ pub const PREAMBLE: &str = include_str!("preamble.typ");
 
 pub const NON_EMPTY_PREAMBLE: &NonEmptyStr = const_non_empty_str!(PREAMBLE);
 
-pub const SIZE: f64 = 16.0;
+pub const SEPARATOR: &str = "; ";
+
+pub const SIZE: f64 = 13.0;
 
 pub const DEFAULT_COLOR: &str = "#000000";
 pub const CURRENT_COLOR: &str = "currentColor";
@@ -43,14 +46,33 @@ pub fn text_size() -> String {
 }
 
 #[derive(Debug, Error)]
-#[error("failed to render")]
+#[error("{message}", message = self.message())]
 pub struct Error {
     string: String,
+    messages: Vec<String>,
 }
 
 impl Error {
-    pub const fn new(string: String) -> Self {
-        Self { string }
+    pub fn message(&self) -> String {
+        self.messages.join(SEPARATOR)
+    }
+}
+
+impl Error {
+    pub const fn new(string: String, messages: Vec<String>) -> Self {
+        Self { string, messages }
+    }
+
+    pub const fn source(&self) -> &str {
+        self.string.as_str()
+    }
+
+    pub fn into_source(self) -> String {
+        self.string
+    }
+
+    pub fn get(self) -> (String, Vec<String>) {
+        (self.string, self.messages)
     }
 }
 
@@ -151,22 +173,28 @@ fn world<S: AsRef<str>>(source: S, display: Display, context: Context<'_>) -> Ma
     string.push_str(text_size().as_str());
 
     if let Some(preamble) = context.preamble() {
+        string.push(NEW_LINE);
+
         string.push_str(preamble.as_str());
-    };
+    }
 
     push_math(trimmed, display, string.by_mut());
-
-    let packages = context.packages();
 
     let detached = Source::detached(string);
 
     MathWorld::builder()
         .source(detached)
-        .maybe_packages(packages)
+        .maybe_packages(context.packages())
         .build()
 }
 
-// TODO: refactor!
+pub fn diagnostic_message<D: IntoIterator<Item = SourceDiagnostic>>(diagnostics: D) -> Vec<String> {
+    diagnostics
+        .into_iter()
+        .map(|diagnostic| diagnostic.message.to_string())
+        .collect()
+}
+
 pub fn compile<S: AsRef<str>>(
     source: S,
     display: Display,
@@ -178,7 +206,7 @@ pub fn compile<S: AsRef<str>>(
 
     let document: PagedDocument = typst::compile(world.by_ref())
         .output
-        .map_err(|errors| Error::new(string.to_owned()))?; // TODO: report errors
+        .map_err(|diagnostics| Error::new(string.to_owned(), diagnostic_message(diagnostics)))?;
 
     let Some(page) = document.pages().first() else {
         return Ok(Output::new()); // no pages, return empty output
@@ -186,20 +214,75 @@ pub fn compile<S: AsRef<str>>(
 
     let frame = page.frame.by_ref();
 
+    let svg = render_svg(document.by_ref(), frame, display);
+
+    let html = match display {
+        Display::Inline => {
+            let descent = compute_descent(frame);
+
+            inline_html(svg, descent)
+        }
+        Display::Block => block_html(svg),
+    };
+
+    Ok(html)
+}
+
+fn compute_descent(frame: &Frame) -> f64 {
     let y = frame.size().y;
 
     let baseline = frame
         .items()
-        .find_map(|(point, item)| match item {
-            FrameItem::Group(group) => Some(point.y + group.frame.baseline()),
-            FrameItem::Text(_) => Some(point.y),
-            _ => None,
-        })
+        .find_map(|(point, item)| try_baseline(point, item))
         .unwrap_or(y);
 
-    let descent = em(y - baseline);
+    em(y - baseline)
+}
 
-    let text_size = Abs::pt(SIZE);
+fn try_baseline(point: &Point, item: &FrameItem) -> Option<Abs> {
+    match item {
+        FrameItem::Group(group) => Some(point.y + group.frame.baseline()),
+        FrameItem::Text(_) => Some(point.y),
+        _ => None,
+    }
+}
+
+fn inline_html<S: AsRef<str>>(svg: S, descent: f64) -> String {
+    let mut html = String::new();
+
+    html.push_str(OPEN_INLINE);
+
+    let inline = inline_style(descent);
+
+    html.push_str(inline.as_str());
+
+    html.push_str(CONTINUE_INLINE);
+
+    html.push_str(svg.as_ref());
+
+    html.push_str(CLOSE_INLINE);
+
+    html
+}
+
+fn block_html<S: AsRef<str>>(svg: S) -> String {
+    let mut string = String::new();
+
+    string.push_str(OPEN_BLOCK);
+
+    string.push_str(svg.as_ref());
+
+    string.push_str(CLOSE_BLOCK);
+
+    string
+}
+
+fn render_svg(document: &PagedDocument, frame: &Frame, display: Display) -> String {
+    render_svg_with(document, frame, display, SIZE)
+}
+
+fn render_svg_with(document: &PagedDocument, frame: &Frame, display: Display, size: f64) -> String {
+    let text_size = Abs::pt(size);
 
     let pretty = false; // no pretty printing
 
@@ -220,7 +303,7 @@ pub fn compile<S: AsRef<str>>(
 
     let resolver = LateLinkResolver::new(None, introspector);
 
-    let typst_svg = svg_in_html(
+    let svg = svg_in_html(
         frame,
         text_size,
         pretty,
@@ -230,18 +313,7 @@ pub fn compile<S: AsRef<str>>(
         resolver.track(),
     );
 
-    let svg = typst_svg.replace(DEFAULT_COLOR, CURRENT_COLOR);
-
-    let html = match display {
-        Display::Inline => {
-            let style = inline_style(descent);
-
-            format!("{OPEN_INLINE}{style}{CONTINUE_INLINE}{svg}{CLOSE_INLINE}")
-        }
-        Display::Block => format!("{OPEN_BLOCK}{svg}{CLOSE_BLOCK}"),
-    };
-
-    Ok(html)
+    svg.replace(DEFAULT_COLOR, CURRENT_COLOR)
 }
 
 const PRECISION: usize = 3;

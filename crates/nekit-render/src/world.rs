@@ -11,7 +11,7 @@ use typst::{
 };
 use typst_assets::fonts;
 
-use crate::{by::By, context::PathRef};
+use crate::{by::By, context::Packages};
 
 struct Fonts {
     book: LazyHash<FontBook>,
@@ -55,7 +55,7 @@ fn library() -> LazyHash<Library> {
 #[derive(Builder)]
 pub struct MathWorld<'m> {
     source: Source,
-    packages: Option<PathRef<'m>>,
+    packages: Option<Packages<'m>>,
 }
 
 pub type Data = Vec<u8>;
@@ -74,7 +74,7 @@ impl MathWorld<'_> {
         self.source.by_ref()
     }
 
-    fn packages(&self) -> Option<PathRef<'_>> {
+    fn packages(&self) -> Option<Packages<'_>> {
         self.packages
     }
 
@@ -88,10 +88,9 @@ impl MathWorld<'_> {
 
         let join = Self::format_join(spec);
 
-        // packages not configured => not found
         let root = self.packages().ok_or_else(not_found)?.join(join);
 
-        // same goes for non-directories
+        // non-directories => packages not found
         if !root.is_dir() {
             return Err(not_found());
         }
