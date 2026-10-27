@@ -60,3 +60,49 @@
     inherits: true;
     initial-value: 0%;
 }
+
+@layer components {
+    .post {
+        @apply flex flex-col gap-6 leading-8;
+        & h2 {
+            @apply mt-8 text-3xl font-bold tracking-tight;
+        }
+        & h3 {
+            @apply mt-6 text-2xl font-bold;
+        }
+        & a {
+            @apply text-light-accent dark:text-accent underline;
+        }
+        & code {
+            @apply text-light-accent dark:text-accent;
+        }
+        & pre {
+            @apply overflow-x-auto p-4 border-2 border-light-muted dark:border-muted rounded-lg;
+        }
+        & blockquote {
+            @apply pl-[2ch] border-l-2 border-light-muted dark:border-muted text-light-muted dark:text-muted;
+        }
+        & ul {
+            @apply list-['-_'] pl-[2ch];
+        }
+        & ol {
+            @apply list-decimal pl-[3ch];
+        }
+        & hr {
+            @apply border-light-muted dark:border-muted;
+        }
+        & table {
+            @apply w-full;
+        }
+        & th,
+        & td {
+            @apply px-[1ch] py-1 text-left;
+        }
+        & .math {
+            @apply text-2xl;
+        }
+        & .math-block {
+            @apply overflow-x-auto;
+        }
+    }
+}

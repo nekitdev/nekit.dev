@@ -1,17 +1,13 @@
-use pulldown_cmark::{Event, Options, Parser as MarkdownParser, html};
-use thiserror::Error;
+use pulldown_cmark::{
+    Event, MetadataBlockKind, Options, Parser as MarkdownParser, Tag, TagEnd, html,
+};
 
 use crate::{
     by::By,
     context::Context,
     math::{self, Display, Error as MathError},
+    meta::{Error as MetaError, Meta},
 };
-
-#[derive(Debug, Error)]
-#[error(transparent)]
-pub enum Error {
-    Math(#[from] MathError),
-}
 
 pub fn default_options() -> Options {
     Options::ENABLE_TABLES
@@ -37,20 +33,75 @@ pub fn parse(string: &str) -> Parser<'_> {
     Parser::new_with_broken_link_callback(string, options, broken_link_callback)
 }
 
-pub fn render(string: &str, context: Context<'_>) -> Result<String, Error> {
+fn is_metadata(event: Event<'_>) -> bool {
+    matches!(
+        event,
+        Event::Start(Tag::MetadataBlock(MetadataBlockKind::PlusesStyle))
+    )
+}
+
+fn is_metadata_end(end: TagEnd) -> bool {
+    matches!(end, TagEnd::MetadataBlock(MetadataBlockKind::PlusesStyle))
+}
+
+pub fn metadata<S: AsRef<str>>(source: S) -> Option<String> {
+    let mut events = parse(source.as_ref());
+
+    let first = events.next()?;
+
+    if !is_metadata(first) {
+        return None;
+    }
+
+    let mut metadata = String::new();
+
+    for event in events {
+        match event {
+            Event::Text(text) => metadata.push_str(text.as_ref()),
+            Event::End(end) if is_metadata_end(end) => break,
+            _ => {}
+        }
+    }
+
+    Some(metadata)
+}
+
+pub fn meta<S: AsRef<str>>(source: S) -> Result<Option<Meta>, MetaError> {
+    let Some(metadata) = metadata(source) else {
+        return Ok(None);
+    };
+
+    let meta = Meta::parse(metadata)?;
+
+    Ok(Some(meta))
+}
+
+pub fn handle_math<'e>(event: Event<'e>, context: Context<'_>) -> Result<Event<'e>, MathError> {
+    match event {
+        Event::InlineMath(math) => math::render(math, Display::Inline, context)
+            .map(|output| Event::InlineHtml(output.into())),
+        Event::DisplayMath(math) => math::render(math, Display::Block, context)
+            .map(|output| Event::InlineHtml(output.into())),
+        other => Ok(other),
+    }
+}
+
+pub fn heuristic(length: usize) -> usize {
+    length // TODO: improve!
+}
+
+pub fn render<S: AsRef<str>>(source: S, context: Context<'_>) -> Result<String, MathError> {
+    let string = source.as_ref();
+
     let result: Result<Vec<_>, _> = parse(string)
-        .map(|event| match event {
-            Event::InlineMath(math) => math::render(math, Display::Inline, context)
-                .map(|output| Event::InlineHtml(output.into())),
-            Event::DisplayMath(math) => math::render(math, Display::Block, context)
-                .map(|output| Event::InlineHtml(output.into())),
-            other => Ok(other),
-        })
+        .map(|event| handle_math(event, context))
         .collect();
 
     let events = result?;
 
-    let mut output = String::with_capacity(string.len()); // TODO: some heuristic?
+    let capacity = heuristic(string.len());
+
+    let mut output = String::with_capacity(capacity);
 
     html::push_html(output.by_mut(), events.into_iter());
 

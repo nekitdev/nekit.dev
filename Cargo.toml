@@ -67,6 +67,10 @@ default-features = false
 version = "0.13.5"
 default-features = false
 
+[workspace.dependencies.pulldown-cmark-escape]
+version = "0.11.0"
+default-features = false
+
 [workspace.dependencies.refining]
 version = "0.3.0"
 default-features = false
@@ -97,6 +101,10 @@ default-features = false
 
 [workspace.dependencies.tower-http]
 version = "0.7.1"
+default-features = false
+
+[workspace.dependencies.trait-aliases]
+version = "0.4.0"
 default-features = false
 
 [workspace.dependencies.typst]
