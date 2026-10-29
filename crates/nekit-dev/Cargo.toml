@@ -85,6 +85,7 @@ features = [
     "Element",
     "EventTarget",
     "KeyboardEvent",
+    "Storage",
     "Window",
 ]
 

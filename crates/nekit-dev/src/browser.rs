@@ -6,9 +6,12 @@ use gloo_events::EventListener;
 use wasm_bindgen::JsCast;
 use web_sys::{Document, Element, Event, EventTarget, HtmlElement, KeyboardEvent, window};
 
-use crate::keys::{
-    Direction::{self, Backward, Forward},
-    Int, Key, copy,
+use crate::{
+    keys::{
+        Direction::{self, Backward, Forward},
+        Int, Key, copy,
+    },
+    theme::Theme,
 };
 
 // typing in those never trigger shortcuts
@@ -20,6 +23,11 @@ pub const LINKS: &str = "main a[href]";
 pub const KEY_DOWN: &str = "keydown";
 
 pub const ZERO: Int = 0;
+
+// local storage key
+pub const THEME: &str = "theme";
+
+pub const DATA_THEME: &str = "data-theme";
 
 pub fn try_keyboard_event(event: &Event) -> Option<&KeyboardEvent> {
     event.dyn_ref()
@@ -105,4 +113,50 @@ pub fn move_focus(document: &Document, direction: Direction) -> Option<()> {
     let link: HtmlElement = links.item(next)?.dyn_into().ok()?;
 
     link.focus().ok()
+}
+
+pub fn load_theme_string() -> Option<String> {
+    // uh... yeah ~ nekit
+    let theme = window()?
+        .local_storage()
+        .ok()
+        .flatten()?
+        .get_item(THEME)
+        .ok()
+        .flatten()?;
+
+    Some(theme)
+}
+
+pub fn load_theme() -> Theme {
+    load_theme_string().map(Theme::parse).unwrap_or_default()
+}
+
+pub fn apply_theme(theme: Theme) -> Option<()> {
+    let window = window()?;
+
+    let root = window.document()?.document_element()?;
+
+    match theme.attribute() {
+        Some(value) => {
+            root.set_attribute(DATA_THEME, value).ok()?;
+
+            window
+                .local_storage()
+                .ok()
+                .flatten()?
+                .set_item(THEME, value)
+                .ok()
+        }
+        None => {
+            root.remove_attribute(DATA_THEME).ok()?;
+
+            window
+                .local_storage()
+                .ok()
+                .flatten()?
+                .remove_item(THEME)
+                .ok()
+        }
+    }
 }

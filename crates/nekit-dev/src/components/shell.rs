@@ -5,6 +5,7 @@ use crate::{
     hydrated::provide_hydrated,
     keys::provide_help,
     routes::Route,
+    theme::provide_themes,
 };
 
 #[component]
@@ -12,6 +13,8 @@ pub fn Shell() -> Element {
     provide_hydrated();
 
     provide_help();
+
+    provide_themes();
 
     let route = use_route::<Route>();
 

@@ -3,6 +3,36 @@
 @source "./src/**/*.{rs,html,css}";
 @source "index.html";
 
+/* override `dark` variant */
+
+@custom-variant dark {
+    &:where([data-theme="dark"], [data-theme="dark"] *) {
+        @slot;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        &:where(:root:not([data-theme]), :root:not([data-theme]) *) {
+            @slot;
+        }
+    }
+}
+
+/* everything follows the scheme */
+
+:root {
+    color-scheme: light dark;
+}
+
+:root[data-theme="dark"] {
+    color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+    color-scheme: light;
+}
+
+/* colors and spinner */
+
 @theme {
     --color-back: #111111;
     --color-main: #cccccc;
@@ -39,6 +69,8 @@
     }
 }
 
+/* battery color utilities */
+
 @utility battery-light {
     color: color-mix(
         in oklch,
@@ -55,11 +87,15 @@
     );
 }
 
+/* battery level property */
+
 @property --level {
     syntax: "<percentage>";
     inherits: true;
     initial-value: 0%;
 }
+
+/* post styles */
 
 @layer components {
     .post {

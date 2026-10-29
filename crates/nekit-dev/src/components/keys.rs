@@ -7,8 +7,9 @@ use futures_util::StreamExt;
 use crate::browser::listen;
 
 use crate::{
-    keys::{HELP, Key, NEXT, PREVIOUS, use_help},
+    keys::{HELP, Key, NEXT, PREVIOUS, THEME, use_help},
     routes::Tab,
+    theme::use_themes,
 };
 
 pub const ESC: &str = "esc";
@@ -38,6 +39,8 @@ pub fn HelpPanel() -> Element {
                 dd { "switch tab" }
                 dt { class: "text-light-accent dark:text-accent", {ENTER} }
                 dd { "open" }
+                dt { class: "text-light-accent dark:text-accent", {THEME} }
+                dd { "switch theme" }
                 dt { class: "text-light-accent dark:text-accent", {HELP} }
                 dd { "toggle help" }
                 dt { class: "text-light-accent dark:text-accent", {ESC} }
@@ -71,6 +74,8 @@ pub fn unbounded_keys() -> (UnboundedSender<Key>, UnboundedReceiver<Key>) {
 pub fn Shortcuts() -> Element {
     let mut help = use_help();
 
+    let mut themes = use_themes();
+
     let navigator = use_navigator();
 
     use_future(move || async move {
@@ -95,6 +100,7 @@ pub fn Shortcuts() -> Element {
                 }
                 Key::Help => help.toggle(),
                 Key::Hide => help.set(false),
+                Key::Theme => themes.cycle(),
             }
         }
     });

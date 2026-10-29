@@ -3,6 +3,7 @@ use dioxus::prelude::*;
 use crate::{
     components::{
         battery::Battery, clock::Clock, keys::HelpToggle, shared::COLUMN, spinner::Spinner,
+        theme::ThemeSwitch,
     },
     hydrated::use_hydrated,
     times,
@@ -30,6 +31,13 @@ pub fn Status() -> Element {
                         "]"
                     }
                     span { class: "text-light-main dark:text-main", "nekit.dev" }
+                    if hydrated.get() {
+                        span {
+                            "["
+                            ThemeSwitch {}
+                            "]"
+                        }
+                    }
                     Clock {}
                     span {
                         "["

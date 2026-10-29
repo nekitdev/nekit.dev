@@ -2,9 +2,14 @@ use dioxus::prelude::*;
 
 use crate::{routes::Info, urls};
 
+pub const THEME: Asset = asset!(
+    "/assets/theme.js",
+    JsAssetOptions::new().with_minify(true).with_preload(true)
+);
+
 pub const STYLE: Asset = asset!(
     "/assets/tailwind.css",
-    CssAssetOptions::new().with_preload(true).with_minify(true)
+    CssAssetOptions::new().with_minify(true).with_preload(true)
 );
 
 pub const ICON_PNG: &str = "/images/icon.png";
@@ -41,6 +46,8 @@ pub fn Head(info: Info) -> Element {
         document::Meta { name: "description", content: description }
 
         document::Title { {title} }
+
+        document::Script { src: THEME }
 
         document::Stylesheet { href: STYLE }
 

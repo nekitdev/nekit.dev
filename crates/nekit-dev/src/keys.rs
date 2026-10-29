@@ -6,9 +6,11 @@ use crate::routes::Tab;
 
 pub const NEXT_PREFIXED: &str = "KeyJ";
 pub const PREVIOUS_PREFIXED: &str = "KeyK";
+pub const THEME_PREFIXED: &str = "KeyT";
 
 pub const NEXT: &str = "j";
 pub const PREVIOUS: &str = "k";
+pub const THEME: &str = "t";
 
 pub const HELP: &str = "?";
 pub const HIDE: &str = "Escape";
@@ -25,6 +27,7 @@ pub enum Key {
     Tab(Tab),
     Help,
     Hide,
+    Theme,
 }
 
 pub const SUB: usize = 1;
@@ -54,6 +57,7 @@ impl Key {
         let parsed = match code.as_ref() {
             NEXT_PREFIXED => Self::Next,
             PREVIOUS_PREFIXED => Self::Previous,
+            THEME_PREFIXED => Self::Theme,
             other => {
                 let tab = Self::parse_tab(other)?;
 

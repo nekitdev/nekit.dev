@@ -14,4 +14,5 @@ pub mod spinner;
 pub mod status;
 pub mod system;
 pub mod tabs;
+pub mod theme;
 pub mod usage;
