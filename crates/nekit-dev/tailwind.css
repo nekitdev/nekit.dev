@@ -128,11 +128,35 @@
             @apply border-light-muted dark:border-muted;
         }
         & table {
-            @apply w-full;
-        }
-        & th,
-        & td {
-            @apply px-[1ch] py-1 text-left;
+            /* align and separate borders */
+            @apply overflow-x-auto w-fit max-w-full block mx-auto border-separate border-spacing-0;
+
+            & th,
+            & td {
+                @apply px-[1ch] py-1 text-left border-light-muted dark:border-muted border-r-2 border-b-2;
+            }
+
+            /* solves borders doubling up */
+            & tr > :first-child {
+                @apply border-l-2;
+            }
+            & > :first-child > tr:first-child > * {
+                @apply border-t-2;
+            }
+
+            /* rounds all corners of the table */
+            & > :first-child > tr:first-child > :first-child {
+                @apply rounded-tl-lg;
+            }
+            & > :first-child > tr:first-child > :last-child {
+                @apply rounded-tr-lg;
+            }
+            & > :last-child > tr:last-child > :first-child {
+                @apply rounded-bl-lg;
+            }
+            & > :last-child > tr:last-child > :last-child {
+                @apply rounded-br-lg;
+            }
         }
         & .math-inline {
             @apply text-[1.25em];
