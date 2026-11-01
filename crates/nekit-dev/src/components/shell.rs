@@ -16,14 +16,12 @@ pub fn Shell() -> Element {
 
     provide_themes();
 
-    let route = use_route::<Route>();
-
-    let info = route.info();
+    let route: Route = use_route();
 
     let active = route.tab();
 
     rsx! {
-        Head { info }
+        Head {}
 
         div { class: "min-h-screen flex flex-col",
             Tabs { active }

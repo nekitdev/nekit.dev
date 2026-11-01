@@ -7,6 +7,7 @@ pub mod hydrated;
 pub mod keys;
 pub mod redirects;
 pub mod routes;
+pub mod statics;
 pub mod theme;
 pub mod times;
 pub mod urls;

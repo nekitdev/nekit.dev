@@ -1,16 +1,26 @@
 use dioxus::prelude::*;
 
 use nekit_blog::{post::Post as BlogPost, slug::Slug};
+use non_empty_str::{NonEmptyStr, NonEmptyString, const_non_empty_str};
 
-use crate::{blog::read_post, components::shared::COLUMN, views::not_found::NotFound};
+use crate::{
+    blog::read_post,
+    components::{
+        meta::{Meta, RouteMeta},
+        shared::COLUMN,
+    },
+    routes::{Info, Route},
+    views::not_found::NotFound,
+};
 
 pub const BLOG: &str = "blog";
 
-pub const FAILED: &str = "Failed to fetch the post... ;~;";
-
-pub const FETCHING: &str = "Fetching...";
-
 pub const UPDATED: &str = "updated";
+
+pub const FAILED: &NonEmptyStr = const_non_empty_str!("Failed to fetch the post... ;~;");
+pub const FETCHING: &NonEmptyStr = const_non_empty_str!("Fetching...");
+
+pub const KIND: &NonEmptyStr = const_non_empty_str!("article");
 
 pub fn segments(slug: Slug) -> Vec<String> {
     vec![BLOG.to_owned(), slug.get().into_string()]
@@ -29,34 +39,34 @@ pub fn Post(slug: Slug) -> Element {
                 NotFound { segments: segments(slug.clone()) }
             },
             Some(Err(_)) => rsx! {
-                main { class: "{COLUMN} grow px-[4ch] pt-18 pb-24",
-                    p { class: "text-light-muted dark:text-muted", {FAILED} }
-                }
+                Message { string: FAILED.to_owned() }
             },
             None => rsx! {
-                main { class: "{COLUMN} grow px-[4ch] pt-18 pb-24",
-                    p { class: "text-light-muted dark:text-muted", {FETCHING} }
-                }
+                Message { string: FETCHING.to_owned() }
             },
         }
     }
 }
 
 #[component]
-pub fn PostHead(title: String, description: String) -> Element {
-    // override the title and description of the page
+pub fn Message(string: NonEmptyString) -> Element {
+    let kind = KIND.to_owned();
+
     rsx! {
-        document::Title { {title.clone()} }
+        RouteMeta { kind }
 
-        document::Meta { name: "description", content: description.clone() }
-
-        document::Meta { name: "og:title", content: title }
-        document::Meta { name: "og:description", content: description }
+        main { class: "{COLUMN} grow px-[4ch] pt-18 pb-24",
+            p { class: "text-light-muted dark:text-muted", "{string}" }
+        }
     }
 }
 
 #[component]
 pub fn Contents(post: BlogPost) -> Element {
+    let route: Route = use_route();
+
+    // summary information
+
     let summary = post.summary();
 
     let title = summary.title();
@@ -71,8 +81,18 @@ pub fn Contents(post: BlogPost) -> Element {
 
     let content = post.content();
 
+    // for metadata
+
+    let info = Info {
+        title: title.to_owned(),
+        description: description.to_owned(),
+        url: route.url(),
+    };
+
+    let kind = KIND.to_owned();
+
     rsx! {
-        PostHead { title: "{title}", description: "{description}" }
+        Meta { info, kind }
 
         main { class: "{COLUMN} grow px-[4ch] pt-18 pb-24 flex flex-col gap-12",
             header { class: "flex flex-col gap-2",

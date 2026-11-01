@@ -16,7 +16,7 @@ pub fn ThemeSwitch() -> Element {
             r#type: "button",
             aria_label: "{THEME}: {name}",
             onclick: move |_| themes.cycle(),
-            span { class: "text-light-accent dark:text-accent", {name} }
+            span { class: "text-light-accent dark:text-accent", "{name}" }
         }
     }
 }

@@ -1,18 +1,20 @@
 use dioxus::{fullstack::*, prelude::*};
 
 use crate::{
-    components::shared::COLUMN,
+    components::{meta::RouteMeta, shared::COLUMN},
     routes::{Route, SLASH},
     urls,
 };
 
-pub const NOT_FOUND: &str = "/images/not-found.png";
+pub const NOT_FOUND: &str = "images/not-found.png";
 
 pub const MESSAGE: &str = "Not Found";
 
 pub const NOTHING: &str = "Nothing here.";
 
 pub const CODE: u16 = 404;
+
+pub const DIGITS: usize = 4;
 
 pub fn use_not_found_status() {
     use_hook(|| {
@@ -23,7 +25,7 @@ pub fn use_not_found_status() {
 }
 
 pub fn diagnostic_code(code: u16) -> String {
-    format!("error[E{code:04}]")
+    format!("error[E{code:0DIGITS$}]")
 }
 
 #[component]
@@ -35,6 +37,8 @@ pub fn NotFound(segments: Vec<String>) -> Element {
     let not_found = urls::static_route(NOT_FOUND);
 
     rsx! {
+        RouteMeta {}
+
         main { class: "{COLUMN} grow px-[4ch] py-24 flex flex-col gap-12",
             div { class: "flex flex-col gap-2",
                 div { class: "text-light-muted dark:text-muted", "{CODE}" }
@@ -82,7 +86,7 @@ pub fn NotFound(segments: Vec<String>) -> Element {
                 }
                 img {
                     class: "w-[22ch] shrink-0 aspect-square object-contain",
-                    src: not_found,
+                    src: "{not_found}",
                     alt: "Confused Neko",
                 }
             }

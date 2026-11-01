@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 
 use crate::{
     blog::read,
-    components::{posts::Posts, shared::COLUMN},
+    components::{meta::RouteMeta, posts::Posts, shared::COLUMN},
 };
 
 pub const BLOG: &str = "blog";
@@ -16,6 +16,8 @@ pub fn Blog() -> Element {
     let resource = use_server_future(read)?;
 
     rsx! {
+        RouteMeta {}
+
         main { class: "{COLUMN} grow px-[4ch] pt-18 pb-24 flex flex-col gap-18",
             div { class: "flex flex-col gap-2",
                 div { class: "text-light-muted dark:text-muted", {BLOG} }
@@ -34,7 +36,7 @@ pub fn Blog() -> Element {
                 },
                 None => rsx! {
                     p { class: "text-light-muted dark:text-muted", {FETCHING} }
-                }
+                },
             }
         }
     }

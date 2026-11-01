@@ -1,13 +1,18 @@
 use dioxus::prelude::*;
 
+use non_empty_str::{NonEmptyStr, const_non_empty_str};
+
 #[cfg(feature = "web")]
 use crate::browser::{apply_theme, load_theme};
 
-pub const SYSTEM: &str = "system";
-pub const DARK: &str = "dark";
-pub const LIGHT: &str = "light";
+use crate::statics::StaticNonEmptyStr;
 
-pub type StaticStr = &'static str;
+pub const SYSTEM: &NonEmptyStr = const_non_empty_str!("system");
+pub const DARK: &NonEmptyStr = const_non_empty_str!("dark");
+pub const LIGHT: &NonEmptyStr = const_non_empty_str!("light");
+
+pub const MATCH_DARK: &str = DARK.as_str();
+pub const MATCH_LIGHT: &str = LIGHT.as_str();
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
 pub enum Theme {
@@ -26,7 +31,7 @@ impl Theme {
         }
     }
 
-    pub const fn name(self) -> StaticStr {
+    pub const fn name(self) -> StaticNonEmptyStr {
         match self {
             Self::System => SYSTEM,
             Self::Dark => DARK,
@@ -34,7 +39,7 @@ impl Theme {
         }
     }
 
-    pub const fn attribute(self) -> Option<StaticStr> {
+    pub const fn attribute(self) -> Option<StaticNonEmptyStr> {
         match self {
             Self::System => None,
             Self::Dark => Some(DARK),
@@ -44,8 +49,8 @@ impl Theme {
 
     pub fn parse<S: AsRef<str>>(string: S) -> Self {
         match string.as_ref() {
-            DARK => Self::Dark,
-            LIGHT => Self::Light,
+            MATCH_DARK => Self::Dark,
+            MATCH_LIGHT => Self::Light,
             _ => Self::System,
         }
     }

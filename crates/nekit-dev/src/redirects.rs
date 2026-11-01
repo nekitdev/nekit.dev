@@ -7,8 +7,6 @@ pub const CHAT: &str = "https://discord.com/invite/KtJkbut";
 
 pub const DISCORD: &str = "https://discord.com/users/292448864944783360";
 
-pub const DOCS: &str = "https://docs.rs";
-
 pub const GITHUB: &str = "https://github.com/nekitdev";
 pub const BLUESKY: &str = "https://bsky.app/profile/nekit.dev";
 pub const YOUTUBE: &str = "https://youtube.com/nekitdev";
@@ -32,13 +30,6 @@ pub async fn redirect_resume(language: String) -> Result<Redirect> {
     let resume = static_route(format!("resume/{language}.pdf"));
 
     Ok(Redirect::to(resume.as_str()))
-}
-
-#[get("/docs/{name}")]
-pub async fn redirect_docs(name: String) -> Result<Redirect> {
-    let docs = format!("{DOCS}/{name}");
-
-    Ok(Redirect::to(docs.as_str()))
 }
 
 #[get("/email/{name}")]

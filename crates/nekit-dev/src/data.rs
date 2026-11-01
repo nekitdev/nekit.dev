@@ -1,5 +1,7 @@
 use non_empty_str::{NonEmptyStr, NonEmptyString, const_non_empty_str, non_empty_string};
 
+use crate::statics::StaticNonEmptyStr;
+
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Link {
     pub name: NonEmptyString,
@@ -131,8 +133,6 @@ pub const OMEGA: char = 'ω';
 pub const PROGRESS: &NonEmptyStr = const_non_empty_str!("work in progress");
 pub const UNSTABLE: &NonEmptyStr = const_non_empty_str!("unstable");
 pub const STABLE: &NonEmptyStr = const_non_empty_str!("stable");
-
-pub type StaticNonEmptyStr = &'static NonEmptyStr;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum Status {

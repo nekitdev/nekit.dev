@@ -1,10 +1,12 @@
-pub const ROOT: &str = "https://nekit.dev";
-pub const STATIC: &str = "https://serve.nekit.dev/static";
+use non_empty_str::{NonEmptyStr, NonEmptyString, const_non_empty_str};
+
+pub const ROOT: &NonEmptyStr = const_non_empty_str!("https://nekit.dev");
+pub const STATIC: &NonEmptyStr = const_non_empty_str!("https://serve.nekit.dev/static");
 
 pub const SLASH: char = '/';
 pub const EMPTY: &str = "";
 
-pub fn route_with<R: AsRef<str>>(mut output: String, route: R) -> String {
+pub fn route_with<R: AsRef<str>>(mut output: NonEmptyString, route: R) -> NonEmptyString {
     let string = route.as_ref();
 
     if !string.starts_with(SLASH) {
@@ -16,14 +18,14 @@ pub fn route_with<R: AsRef<str>>(mut output: String, route: R) -> String {
     output
 }
 
-pub fn route<R: AsRef<str>>(route: R) -> String {
+pub fn route<R: AsRef<str>>(route: R) -> NonEmptyString {
     route_with(ROOT.to_owned(), route)
 }
 
-pub fn static_route<R: AsRef<str>>(route: R) -> String {
+pub fn static_route<R: AsRef<str>>(route: R) -> NonEmptyString {
     route_with(STATIC.to_owned(), route)
 }
 
-pub fn root() -> String {
+pub fn root() -> NonEmptyString {
     route(EMPTY)
 }

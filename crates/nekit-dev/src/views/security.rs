@@ -2,7 +2,7 @@ use std::fmt;
 
 use dioxus::prelude::*;
 
-use crate::components::{heading::Heading, shared::COLUMN};
+use crate::components::{heading::Heading, meta::RouteMeta, shared::COLUMN};
 
 pub const SECURITY_POLICY: &str = "Security Policy";
 
@@ -69,6 +69,8 @@ pub fn Security() -> Element {
     let (finger, print) = fingerprint(ID);
 
     rsx! {
+        RouteMeta {}
+
         main { class: "{COLUMN} grow px-[4ch] pt-18 pb-24 flex flex-col gap-12",
             div { class: "flex flex-col gap-2",
                 div { class: "text-light-muted dark:text-muted", {COMMENT} }

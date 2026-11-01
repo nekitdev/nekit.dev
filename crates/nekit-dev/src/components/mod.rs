@@ -6,6 +6,7 @@ pub mod fetch;
 pub mod head;
 pub mod heading;
 pub mod keys;
+pub mod meta;
 pub mod posts;
 pub mod projects;
 pub mod shared;

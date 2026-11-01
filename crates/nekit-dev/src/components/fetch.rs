@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 
 use crate::{data::Fact, times, urls};
 
-pub const NEKO: &str = "/images/neko.png";
+pub const NEKO: &str = "images/neko.png";
 
 #[component]
 pub fn Fetch() -> Element {
@@ -16,7 +16,7 @@ pub fn Fetch() -> Element {
             aria_label: "About",
             img {
                 class: "w-[22ch] aspect-square object-contain",
-                src: neko,
+                src: "{neko}",
                 alt: "Neko",
             }
             div { class: "flex flex-col gap-1 min-w-0",

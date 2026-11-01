@@ -5,8 +5,8 @@ pub const DEFAULT_BLOG: &str = "/blog/current";
 
 pub fn blog() -> PathBuf {
     if let Some(blog) = env::var_os(BLOG) {
-        PathBuf::from(blog)
+        blog.into()
     } else {
-        PathBuf::from(DEFAULT_BLOG)
+        DEFAULT_BLOG.into()
     }
 }

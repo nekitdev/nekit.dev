@@ -42,14 +42,11 @@ pub fn Entry(summary: Summary) -> Element {
 
     rsx! {
         li { class: "grid grid-cols-1 sm:grid-cols-[max-content_1fr] gap-x-[clamp(2ch,4vw,8ch)] gap-y-1",
-            time {
-                class: "text-light-muted dark:text-muted",
-                datetime: "{date}",
-                "{date}"
-            }
+            time { class: "text-light-muted dark:text-muted", datetime: "{date}", "{date}" }
             article { class: "flex flex-col gap-1 min-w-0",
                 h3 {
-                    Link { class: "font-bold text-light-accent dark:text-accent hover:underline",
+                    Link {
+                        class: "font-bold text-light-accent dark:text-accent hover:underline",
                         to: Route::Post { slug },
                         "{title}"
                     }
@@ -58,14 +55,10 @@ pub fn Entry(summary: Summary) -> Element {
                 if additional(updated.is_some(), tags.is_empty()) {
                     div { class: "flex flex-wrap gap-x-[2ch]",
                         if let Some(update) = updated {
-                            span {
-                                class: "text-light-muted dark:text-muted",
+                            span { class: "text-light-muted dark:text-muted",
                                 "{UPDATED}"
                                 " "
-                                time {
-                                    datetime: "{update}",
-                                    "{update}"
-                                }
+                                time { datetime: "{update}", "{update}" }
                             }
                         }
                         for tag in tags {
