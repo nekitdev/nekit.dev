@@ -225,7 +225,9 @@ pub fn compile<S: AsRef<str>>(
         Display::Block => block_html(svg),
     };
 
-    Ok(html)
+    let math = math_html(html, string);
+
+    Ok(math)
 }
 
 fn compute_descent(frame: &Frame) -> f64 {
@@ -247,20 +249,38 @@ fn try_baseline(point: &Point, item: &FrameItem) -> Option<Abs> {
     }
 }
 
+fn math_html<H: AsRef<str>, S: AsRef<str>>(html: H, source: S) -> String {
+    let mut string = String::new();
+
+    string.push_str(MATH);
+
+    string.push_str(html.as_ref());
+
+    string.push_str(SOURCE);
+
+    string.push_str(source.as_ref());
+
+    string.push_str(CLOSE);
+
+    string.push_str(CLOSE);
+
+    string
+}
+
 fn inline_html<S: AsRef<str>>(svg: S, descent: f64) -> String {
     let mut html = String::new();
 
-    html.push_str(OPEN_INLINE);
+    html.push_str(INLINE);
 
     let inline = inline_style(descent);
 
     html.push_str(inline.as_str());
 
-    html.push_str(CONTINUE_INLINE);
+    html.push_str(CONTINUE);
 
     html.push_str(svg.as_ref());
 
-    html.push_str(CLOSE_INLINE);
+    html.push_str(CLOSE);
 
     html
 }
@@ -268,11 +288,11 @@ fn inline_html<S: AsRef<str>>(svg: S, descent: f64) -> String {
 fn block_html<S: AsRef<str>>(svg: S) -> String {
     let mut string = String::new();
 
-    string.push_str(OPEN_BLOCK);
+    string.push_str(BLOCK);
 
     string.push_str(svg.as_ref());
 
-    string.push_str(CLOSE_BLOCK);
+    string.push_str(CLOSE);
 
     string
 }
@@ -322,17 +342,18 @@ fn inline_style(descent: f64) -> String {
     format!("display: inline-block; vertical-align: -{descent:.PRECISION$}em")
 }
 
-// TODO: aria-label?
-const OPEN_INLINE: &str = r#"<span class="math math-inline" role="img" style=""#;
-const CONTINUE_INLINE: &str = r#"">"#;
-const CLOSE_INLINE: &str = "</span>";
+const MATH: &str = r#"<span class="math">"#;
 
-// TODO: aria-label?
-const OPEN_BLOCK: &str = r#"<span class="math math-block" role="img" style="
+const SOURCE: &str = r#"<span class="math-source">"#;
+
+const INLINE: &str = r#"<span class="math-inline" aria-hidden="true" style=""#;
+const CONTINUE: &str = r#"">"#;
+
+const BLOCK: &str = r#"<span class="math-block" aria-hidden="true" style="
   display: block; text-align: center; margin: 1em 0; overflow-x: auto
 ">"#;
 
-const CLOSE_BLOCK: &str = "</span>";
+const CLOSE: &str = "</span>";
 
 fn em_with(length: Abs, size: f64) -> f64 {
     length.to_pt() / size

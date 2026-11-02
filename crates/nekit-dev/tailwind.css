@@ -158,11 +158,18 @@
                 @apply rounded-br-lg;
             }
         }
-        & .math-inline {
-            @apply text-[1.25em];
-        }
-        & .math-block {
-            @apply overflow-x-auto text-[1.5em];
+        & .math {
+            @apply relative;
+
+            & .math-inline {
+                @apply text-[1.25em];
+            }
+            & .math-block {
+                @apply overflow-x-auto text-[1.5em];
+            }
+            & .math-source {
+                @apply sr-only;
+            }
         }
     }
 }
