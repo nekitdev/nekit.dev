@@ -3,11 +3,10 @@ use dioxus::{fullstack::Redirect, prelude::*};
 #[allow(unused_imports)]
 use crate::urls::static_route;
 
-pub const CHAT: &str = "https://discord.com/invite/KtJkbut";
-
-pub const DISCORD: &str = "https://discord.com/users/292448864944783360";
+pub const DISCORD: &str = "https://discord.com/invite/KtJkbut";
 
 pub const GITHUB: &str = "https://github.com/nekitdev";
+pub const MATRIX: &str = "https://matrix.to/#/@nekit:nekit.dev";
 pub const BLUESKY: &str = "https://bsky.app/profile/nekit.dev";
 pub const YOUTUBE: &str = "https://youtube.com/nekitdev";
 pub const REDDIT: &str = "https://reddit.com/u/nekitdev";
@@ -39,11 +38,6 @@ pub async fn redirect_email(name: String) -> Result<Redirect> {
     Ok(Redirect::to(email.as_str()))
 }
 
-#[get("/chat")]
-pub async fn redirect_chat() -> Result<Redirect> {
-    Ok(Redirect::to(CHAT))
-}
-
 #[get("/discord")]
 pub async fn redirect_discord() -> Result<Redirect> {
     Ok(Redirect::to(DISCORD))
@@ -52,6 +46,11 @@ pub async fn redirect_discord() -> Result<Redirect> {
 #[get("/github")]
 pub async fn redirect_github() -> Result<Redirect> {
     Ok(Redirect::to(GITHUB))
+}
+
+#[get("/matrix")]
+pub async fn redirect_matrix() -> Result<Redirect> {
+    Ok(Redirect::to(MATRIX))
 }
 
 #[get("/bluesky")]

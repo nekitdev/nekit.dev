@@ -34,6 +34,10 @@
 /* colors and spinner */
 
 @theme {
+    --color-rust: #dea584;
+    --color-nix: #7e7eff;
+    --color-python: #3572a5;
+
     --color-back: #111111;
     --color-main: #cccccc;
     --color-muted: #888888;

@@ -47,8 +47,8 @@ impl Link {
         )
     }
 
-    pub fn chat() -> Self {
-        Self::new(non_empty_string!("chat"), non_empty_string!("/chat"))
+    pub fn matrix() -> Self {
+        Self::new(non_empty_string!("matrix"), non_empty_string!("/matrix"))
     }
 
     pub fn github() -> Self {
@@ -103,8 +103,8 @@ impl Group {
             vec![
                 Link::telegram(),
                 Link::discord(),
+                Link::matrix(),
                 Link::email(),
-                Link::chat(),
             ],
         )
     }

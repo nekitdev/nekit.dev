@@ -30,18 +30,26 @@ pub fn Fetch() -> Element {
                         dt { class: "text-light-accent dark:text-accent", "{fact.title}" }
                         dd { "{fact.value}" }
                     }
+                    dt { class: "text-light-accent dark:text-accent", "Languages" }
+                    dd {
+                        span { class: "text-rust", "Rust" }
+                        ", "
+                        span { class: "text-nix", "Nix" }
+                        ", "
+                        span { class: "text-python", "Python" }
+                    }
                     dt { class: "text-light-accent dark:text-accent", "Resume" }
                     dd {
                         a {
                             class: "text-light-other dark:text-other hover:underline",
                             href: "/resume/en",
-                            "en"
+                            "English"
                         }
-                        "/"
+                        " / "
                         a {
                             class: "text-light-other dark:text-other hover:underline",
                             href: "/resume/ru",
-                            "ru"
+                            "Russian"
                         }
                     }
                 }
