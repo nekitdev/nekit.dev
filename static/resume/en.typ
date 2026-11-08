@@ -4,7 +4,7 @@
   author: (
     firstname: "Nikita",
     lastname: "Tikhonov",
-    birth: "13/01/2005",
+    birth: "2005-01-13",
     email: "nekit@nekit.dev",
     phone: "+7 (926) 126-22-06",
     homepage: "https://nekit.dev/",

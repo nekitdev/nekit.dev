@@ -12,8 +12,6 @@ use crate::{
     host,
 };
 
-pub const INTERVAL: Duration = Duration::from_secs(2);
-
 pub const HOST: &str = "host";
 
 pub const FETCHING: &str = "Fetching...";
@@ -44,27 +42,25 @@ pub fn Host() -> Element {
 
     let option = current();
 
-    let name = option
-        .as_ref()
-        .and_then(|host| host.name())
-        .unwrap_or(FALLBACK);
-
     rsx! {
         RouteMeta {}
 
         main { class: "{COLUMN} grow px-[4ch] pt-18 pb-24 flex flex-col gap-18",
             div { class: "flex flex-col gap-2",
                 div { class: "text-light-muted dark:text-muted", {HOST} }
-                h1 { class: "text-4xl leading-12 font-bold tracking-tight", "{name}" }
+                h1 { class: "text-4xl leading-12 font-bold tracking-tight",
+                    if let Some(ref host) = option {
+                        "{host.display_name()}"
+                    } else {
+                        "{FALLBACK}"
+                    }
+                }
             }
-            match option {
-                Some(host) => rsx! {
-                    System { host: host.clone() }
-                    Usage { host }
-                },
-                None => rsx! {
-                    p { class: "text-light-muted dark:text-muted", {FETCHING} }
-                },
+            if let Some(host) = option {
+                System { host: host.clone() }
+                Usage { host }
+            } else {
+                p { class: "text-light-muted dark:text-muted", {FETCHING} }
             }
         }
     }

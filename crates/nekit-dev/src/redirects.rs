@@ -6,15 +6,24 @@ use crate::urls::static_route;
 pub const DISCORD: &str = "https://discord.com/invite/KtJkbut";
 
 pub const GITHUB: &str = "https://github.com/nekitdev";
+
+// NOTE: `%23` is an encoded `#`, since fragments can't contain raw `#` per the URL spec
+
+pub const SUPPORT: &str = "https://matrix.to/#/%23support:nekit.dev";
+pub const SPACE: &str = "https://matrix.to/#/%23nekit:nekit.dev";
+
 pub const MATRIX: &str = "https://matrix.to/#/@nekit:nekit.dev";
+
+pub const TWITTER: &str = "https://twitter.com/nekitdev";
+
 pub const BLUESKY: &str = "https://bsky.app/profile/nekit.dev";
 pub const YOUTUBE: &str = "https://youtube.com/nekitdev";
 pub const REDDIT: &str = "https://reddit.com/u/nekitdev";
 pub const CHANNEL: &str = "https://t.me/nekitworks";
 pub const TELEGRAM: &str = "https://t.me/nekitdev";
 
-pub const DUALIZZZM: &str = "https://dualizzzm.design";
-pub const LYRICHAR: &str = "https://lyrichar.app";
+pub const LIZA: &str = "https://dualizzzm.design/";
+pub const LYRICHAR: &str = "https://lyrichar.app/";
 pub const JIYU: &str = "https://jiyu.sh/";
 
 #[get("/keys/{name}")]
@@ -48,6 +57,21 @@ pub async fn redirect_github() -> Result<Redirect> {
     Ok(Redirect::to(GITHUB))
 }
 
+#[get("/space")]
+pub async fn redirect_space() -> Result<Redirect> {
+    Ok(Redirect::to(SPACE))
+}
+
+#[get("/chat")]
+pub async fn redirect_chat() -> Result<Redirect> {
+    Ok(Redirect::to(SUPPORT)) // TODO: migrate already! >~>
+}
+
+#[get("/support")]
+pub async fn redirect_support() -> Result<Redirect> {
+    Ok(Redirect::to(SUPPORT))
+}
+
 #[get("/matrix")]
 pub async fn redirect_matrix() -> Result<Redirect> {
     Ok(Redirect::to(MATRIX))
@@ -56,6 +80,11 @@ pub async fn redirect_matrix() -> Result<Redirect> {
 #[get("/bluesky")]
 pub async fn redirect_bluesky() -> Result<Redirect> {
     Ok(Redirect::to(BLUESKY))
+}
+
+#[get("/twitter")]
+pub async fn redirect_twitter() -> Result<Redirect> {
+    Ok(Redirect::to(TWITTER))
 }
 
 #[get("/youtube")]
@@ -78,9 +107,9 @@ pub async fn redirect_telegram() -> Result<Redirect> {
     Ok(Redirect::to(TELEGRAM))
 }
 
-#[get("/dualizzzm")]
-pub async fn redirect_dualizzzm() -> Result<Redirect> {
-    Ok(Redirect::to(DUALIZZZM))
+#[get("/liza")]
+pub async fn redirect_liza() -> Result<Redirect> {
+    Ok(Redirect::to(LIZA))
 }
 
 #[get("/lyrichar")]

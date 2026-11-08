@@ -66,6 +66,10 @@ features = ["component", "system"]
 workspace = true
 features = ["std"]
 
+[dependencies.tracing]
+workspace = true
+features = ["std"]
+
 [dependencies.tokio]
 workspace = true
 optional = true

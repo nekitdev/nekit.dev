@@ -10,8 +10,11 @@ pub const SYSTEM: &str = "system";
 
 #[component]
 pub fn System(host: Host) -> Element {
-    let name = host.name().unwrap_or(NOT_AVAILABLE);
-    let system = host.system().unwrap_or(NOT_AVAILABLE);
+    let name = host.display_name();
+    let system = host.display_system();
+    let cores = host.display_cores();
+    let uptime = host.display_uptime();
+    let load = host.display_load();
 
     rsx! {
         section { aria_labelledby: SYSTEM,
@@ -23,11 +26,11 @@ pub fn System(host: Host) -> Element {
                 dt { class: "text-light-accent dark:text-accent", "name" }
                 dd { "{name}" }
                 dt { class: "text-light-accent dark:text-accent", "cores" }
-                dd { "{host.cores()}" }
+                dd { "{cores}" }
                 dt { class: "text-light-accent dark:text-accent", "uptime" }
-                dd { "{host.uptime()}" }
+                dd { "{uptime}" }
                 dt { class: "text-light-accent dark:text-accent", "load" }
-                dd { "{host.load()}" }
+                dd { "{load}" }
             }
         }
     }

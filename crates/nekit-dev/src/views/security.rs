@@ -11,7 +11,7 @@ pub const NAME: &str = "Nikita Tikhonov";
 pub const COMMENT: &str = "security";
 
 pub const UID: &str = "uid";
-pub const FINGERPRINT: &str = "fingerprint";
+pub const FP: &str = "fp"; // fingerprint
 
 pub const ID: &str = "EEBD6848A583A1B4F6B73B60D177918FC00BB74F";
 pub const PUBLIC_KEY: &str = r"-----BEGIN PGP PUBLIC KEY BLOCK-----
@@ -174,7 +174,7 @@ pub fn Security() -> Element {
                 dl { class: "grid grid-cols-[max-content_1fr] gap-x-[3ch]",
                     dt { class: "text-light-accent dark:text-accent", {UID} }
                     dd { class: "wrap-anywhere", {uid} }
-                    dt { class: "text-light-accent dark:text-accent", {FINGERPRINT} }
+                    dt { class: "text-light-accent dark:text-accent", {FP} }
                     dd { class: "flex flex-wrap gap-x-[2ch]",
                         span { class: "wrap-anywhere", {finger} }
                         span { class: "wrap-anywhere", {print} }

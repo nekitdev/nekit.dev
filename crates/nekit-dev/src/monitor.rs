@@ -2,14 +2,18 @@ use std::{sync::LazyLock, thread, time::Duration};
 
 use bytesize::ByteSize as Bytes;
 use sysinfo::{
-    Component, Components, CpuRefreshKind, MINIMUM_CPU_UPDATE_INTERVAL, MemoryRefreshKind,
+    Component, Components, CpuRefreshKind, LoadAvg, MINIMUM_CPU_UPDATE_INTERVAL, MemoryRefreshKind,
     RefreshKind, System,
 };
 use tokio::sync::watch;
 
-use crate::host::{Host, Load, Name, Percent, Temperature, Uptime, Usage, uptime_span};
+use crate::host::{
+    DURATION, Float, Host, Load, NEGATIVE_LOAD, Name, PERCENT, Percent, SpecificLoad, Temperature,
+    Uptime, Usage, WRONG_USAGE, uptime_span,
+};
 
 const READ: &str = "failed to read host info";
+const COMPONENTS: &str = "failed to read host components";
 const SPAWN: &str = "failed to spawn host monitor thread";
 
 const NAME: &str = "monitor";
@@ -37,27 +41,46 @@ fn temperature(component: &Component) -> Option<Temperature> {
 }
 
 struct Monitor {
+    host: Host,
     system: System,
     components: Components,
 }
 
 fn refresh_kind() -> RefreshKind {
-    let cpu = CpuRefreshKind::nothing().with_cpu_usage();
+    let cpu = CpuRefreshKind::nothing().with_usage();
 
     let memory = MemoryRefreshKind::nothing().with_ram().with_swap();
 
     RefreshKind::nothing().with_cpu(cpu).with_memory(memory)
 }
 
-fn name(string: String) -> Option<Name> {
-    Name::new(string).ok()
+fn load(average: LoadAvg) -> Option<Load> {
+    let one = SpecificLoad::new(average.one)?;
+    let five = SpecificLoad::new(average.five)?;
+    let fifteen = SpecificLoad::new(average.fifteen)?;
+
+    let load = Load::new(one, five, fifteen);
+
+    Some(load)
 }
+
+fn uptime(duration: Duration) -> Option<Uptime> {
+    let span = uptime_span(duration)?;
+
+    let uptime = Uptime::new(span);
+
+    Some(uptime)
+}
+
+pub const TEMPERATURE: &str = "temperature not found";
 
 impl Monitor {
     fn new() -> Self {
+        let host = Host::new();
+
         let specifics = refresh_kind();
 
-        let mut system = System::new_with_specifics(specifics);
+        let mut system = System::new_with_specifics(specifics).expect(READ);
 
         // cpu usage is computed as difference between measurements,
         // so measure baseline via waiting to avoid returning zeroes
@@ -65,13 +88,13 @@ impl Monitor {
 
         system.refresh_specifics(specifics);
 
-        let components = Components::new_with_refreshed_list();
+        let components = Components::new_with_refreshed_list().expect(COMPONENTS);
 
-        Self { system, components }
-    }
-
-    fn temperature(&self) -> Option<Temperature> {
-        self.components.list().iter().find_map(temperature)
+        Self {
+            host,
+            system,
+            components,
+        }
     }
 
     fn refresh(&mut self) {
@@ -88,60 +111,107 @@ impl Monitor {
         self.read()
     }
 
-    fn read(&self) -> Host {
-        self.try_read().expect(READ)
-    }
+    // BEWARE OF THE LONGEST FUNCTION!
+    fn read(&mut self) -> Host {
+        let host = &mut self.host;
 
-    fn try_read(&self) -> Option<Host> {
-        let average = System::load_average();
+        // load
 
-        let one = Percent::new(average.one)?;
-        let five = Percent::new(average.five)?;
-        let fifteen = Percent::new(average.fifteen)?;
+        match System::load_average() {
+            Ok(average) => {
+                let result = load(average).ok_or(NEGATIVE_LOAD);
 
-        let load = Load::new(one, five, fifteen);
+                host.load.record(result);
+            }
+            Err(error) => {
+                host.load.record_error(error);
+            }
+        }
 
-        let system = System::long_os_version().and_then(name);
+        // system
 
-        let name = System::host_name().and_then(name);
+        match System::long_os_version() {
+            Ok(string) => {
+                let result = Name::new(string);
 
-        let duration = Duration::from_secs(System::uptime());
+                host.system.record(result);
+            }
+            Err(error) => {
+                host.system.record_error(error);
+            }
+        }
 
-        let span = uptime_span(duration)?;
+        // name
 
-        let uptime = Uptime::new(span);
+        match System::host_name() {
+            Ok(string) => {
+                let result = Name::new(string);
+
+                host.name.record(result);
+            }
+            Err(error) => {
+                host.name.record_error(error);
+            }
+        }
+
+        // uptime
+
+        match System::uptime() {
+            Ok(seconds) => {
+                let duration = Duration::from_secs(seconds);
+
+                let result = uptime(duration).ok_or(DURATION);
+
+                host.uptime.record(result);
+            }
+            Err(error) => {
+                host.uptime.record_error(error);
+            }
+        }
+
+        // cores
 
         let cores = self.system.cpus().len();
 
-        let usage = self.system.global_cpu_usage() as f64;
+        host.cores.record_value(cores);
 
-        let cpu = Percent::new(usage)?;
+        // usage
+
+        let usage = self.system.global_cpu_usage() as Float;
+
+        let result = Percent::new(usage).ok_or(PERCENT);
+
+        host.cpu.record(result);
+
+        // memory
 
         let used_memory = Bytes::b(self.system.used_memory());
         let total_memory = Bytes::b(self.system.total_memory());
 
-        let memory = Usage::new(used_memory, total_memory)?;
+        let result = Usage::new(used_memory, total_memory).ok_or(WRONG_USAGE);
+
+        host.memory.record(result);
+
+        // swap
 
         let used_swap = Bytes::b(self.system.used_swap());
         let total_swap = Bytes::b(self.system.total_swap());
 
-        let swap = Usage::new(used_swap, total_swap)?;
+        let result = Usage::new(used_swap, total_swap).ok_or(WRONG_USAGE);
 
-        let temperature = self.temperature();
+        host.swap.record(result);
 
-        let host = Host {
-            name,
-            system,
-            uptime,
-            load,
-            cores,
-            cpu,
-            memory,
-            swap,
-            temperature,
-        };
+        // temperature
 
-        Some(host)
+        let result = self
+            .components
+            .iter()
+            .find_map(temperature)
+            .ok_or(TEMPERATURE);
+
+        host.temperature.record(result);
+
+        host.clone()
     }
 }
 

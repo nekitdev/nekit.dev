@@ -1,10 +1,34 @@
+use dioxus::prelude::*;
+
 use jiff::{
     Timestamp, Zoned, civil,
     tz::{Offset, TimeZone},
 };
+use serde::{Deserialize, Serialize};
+
+#[get("/date-time")]
+pub async fn date_time() -> Result<DateTime> {
+    let value = zoned();
+
+    let date_time = DateTime::new(value.date(), value.time());
+
+    Ok(date_time)
+}
 
 pub type Date = civil::Date;
 pub type Time = civil::Time;
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+pub struct DateTime {
+    pub date: Date,
+    pub time: Time,
+}
+
+impl DateTime {
+    pub const fn new(date: Date, time: Time) -> Self {
+        Self { date, time }
+    }
+}
 
 /// 13th January, 2005 is my birthday! ~ nekit
 pub const BIRTHDAY: Date = Date::constant(2005, 1, 13);

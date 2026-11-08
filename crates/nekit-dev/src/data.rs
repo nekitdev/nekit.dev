@@ -13,12 +13,24 @@ impl Link {
         Self { name, path }
     }
 
+    pub fn github() -> Self {
+        Self::new(non_empty_string!("github"), non_empty_string!("/github"))
+    }
+
     pub fn channel() -> Self {
         Self::new(non_empty_string!("channel"), non_empty_string!("/channel"))
     }
 
+    pub fn discord() -> Self {
+        Self::new(non_empty_string!("discord"), non_empty_string!("/discord"))
+    }
+
     pub fn bluesky() -> Self {
         Self::new(non_empty_string!("bluesky"), non_empty_string!("/bluesky"))
+    }
+
+    pub fn twitter() -> Self {
+        Self::new(non_empty_string!("twitter"), non_empty_string!("/twitter"))
     }
 
     pub fn reddit() -> Self {
@@ -36,8 +48,12 @@ impl Link {
         )
     }
 
-    pub fn discord() -> Self {
-        Self::new(non_empty_string!("discord"), non_empty_string!("/discord"))
+    pub fn matrix() -> Self {
+        Self::new(non_empty_string!("matrix"), non_empty_string!("/matrix"))
+    }
+
+    pub fn space() -> Self {
+        Self::new(non_empty_string!("space"), non_empty_string!("/space"))
     }
 
     pub fn email() -> Self {
@@ -47,19 +63,12 @@ impl Link {
         )
     }
 
-    pub fn matrix() -> Self {
-        Self::new(non_empty_string!("matrix"), non_empty_string!("/matrix"))
+    pub fn support() -> Self {
+        Self::new(non_empty_string!("support"), non_empty_string!("/support"))
     }
 
-    pub fn github() -> Self {
-        Self::new(non_empty_string!("github"), non_empty_string!("/github"))
-    }
-
-    pub fn dualizzzm() -> Self {
-        Self::new(
-            non_empty_string!("dualizzzm"),
-            non_empty_string!("/dualizzzm"),
-        )
+    pub fn liza() -> Self {
+        Self::new(non_empty_string!("liza <3"), non_empty_string!("/liza"))
     }
 
     pub fn lyrichar() -> Self {
@@ -89,8 +98,12 @@ impl Group {
         Self::new(
             non_empty_string!("social"),
             vec![
+                Link::github(),
+                Link::space(),
+                Link::discord(),
                 Link::channel(),
                 Link::bluesky(),
+                Link::twitter(),
                 Link::reddit(),
                 Link::youtube(),
             ],
@@ -102,27 +115,26 @@ impl Group {
             non_empty_string!("contact"),
             vec![
                 Link::telegram(),
-                Link::discord(),
                 Link::matrix(),
                 Link::email(),
+                Link::support(),
             ],
         )
     }
 
-    pub fn code() -> Self {
+    pub fn sites() -> Self {
         Self::new(
-            non_empty_string!("code"),
-            vec![
-                Link::github(),
-                Link::dualizzzm(),
-                Link::lyrichar(),
-                Link::jiyu(),
-            ],
+            non_empty_string!("sites"),
+            vec![Link::lyrichar(), Link::jiyu()],
         )
+    }
+
+    pub fn wife() -> Self {
+        Self::new(non_empty_string!("wife"), vec![Link::liza()])
     }
 
     pub fn all() -> Vec<Self> {
-        vec![Self::social(), Self::contact(), Self::code()]
+        vec![Self::social(), Self::contact(), Self::sites(), Self::wife()]
     }
 }
 
@@ -211,12 +223,30 @@ impl Project {
         )
     }
 
+    pub fn non_empty_slice() -> Self {
+        Self::new(
+            Stable,
+            non_empty_string!("non-empty-slice"),
+            non_empty_string!("Non-empty slices."),
+            non_empty_string!("https://github.com/nekitdev/non-empty-slice"),
+        )
+    }
+
     pub fn otp_std() -> Self {
         Self::new(
             Unstable,
             non_empty_string!("otp-std"),
             non_empty_string!("Generating and checking one-time passwords."),
             non_empty_string!("https://github.com/nekitdev/otp-std"),
+        )
+    }
+
+    pub fn pkce_std() -> Self {
+        Self::new(
+            Unstable,
+            non_empty_string!("pkce-std"),
+            non_empty_string!("Handling Proof Key for Code Exchange."),
+            non_empty_string!("https://github.com/nekitdev/pkce-std"),
         )
     }
 
@@ -247,6 +277,15 @@ impl Project {
         )
     }
 
+    pub fn qstd() -> Self {
+        Self::new(
+            Progress,
+            non_empty_string!("qstd"),
+            non_empty_string!("Compile-time-checked quantum programming in Rust."),
+            non_empty_string!("https://github.com/qstd-rs/qstd"),
+        )
+    }
+
     pub fn lyrichar() -> Self {
         Self::new(
             Progress,
@@ -270,10 +309,13 @@ impl Project {
             Self::changelogging(),
             Self::trait_aliases(),
             Self::non_empty_str(),
+            Self::non_empty_slice(),
             Self::otp_std(),
+            Self::pkce_std(),
             Self::ownership(),
             Self::refining(),
             Self::jiyu(),
+            Self::qstd(),
             Self::lyrichar(),
             Self::graphs(),
         ]

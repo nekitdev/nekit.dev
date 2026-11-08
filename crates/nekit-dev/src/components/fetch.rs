@@ -4,6 +4,19 @@ use crate::{data::Fact, times, urls};
 
 pub const NEKO: &str = "images/neko.png";
 
+macro_rules! language {
+    ($name: literal) => {
+        concat!(
+            "https://github.com/nekitdev?tab=repositories&language=",
+            $name
+        )
+    };
+}
+
+pub const RUST: &str = language!("rust");
+pub const NIX: &str = language!("nix");
+pub const PYTHON: &str = language!("python");
+
 #[component]
 pub fn Fetch() -> Element {
     let age = times::age();
@@ -32,11 +45,11 @@ pub fn Fetch() -> Element {
                     }
                     dt { class: "text-light-accent dark:text-accent", "Languages" }
                     dd {
-                        span { class: "text-rust", "Rust" }
+                        a { class: "text-rust hover:underline", href: RUST, "Rust" }
                         ", "
-                        span { class: "text-nix", "Nix" }
+                        a { class: "text-nix hover:underline", href: NIX, "Nix" }
                         ", "
-                        span { class: "text-python", "Python" }
+                        a { class: "text-python hover:underline", href: PYTHON, "Python" }
                     }
                     dt { class: "text-light-accent dark:text-accent", "Resume" }
                     dd {
