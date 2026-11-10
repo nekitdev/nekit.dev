@@ -12,7 +12,7 @@ jobs:
   build:
     strategy:
       matrix:
-        service: [dev, battery, serve]
+        service: [dev, battery, me, serve]
         arch: [amd64, arm64]
         include:
           - arch: amd64
@@ -58,7 +58,7 @@ jobs:
 
     strategy:
       matrix:
-        image: [nekit-dev, nekit-battery, nekit-serve]
+        image: [nekit-dev, nekit-battery, nekit-me, nekit-serve]
 
     permissions:
       packages: write

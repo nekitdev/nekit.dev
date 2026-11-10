@@ -79,8 +79,16 @@ default-features = false
 version = "0.13.5"
 default-features = false
 
+[workspace.dependencies.rmcp]
+version = "3.9.0"
+default-features = false
+
 [workspace.dependencies.serde]
 version = "1.0.229"
+default-features = false
+
+[workspace.dependencies.schemars]
+version = "1.2.3"
 default-features = false
 
 [workspace.dependencies.sysinfo]
@@ -149,6 +157,11 @@ path = "crates/nekit-blog"
 version = "0.1.0"
 default-features = false
 path = "crates/nekit-dev"
+
+[workspace.dependencies.nekit-me]
+version = "0.1.0"
+default-features = false
+path = "crates/nekit-me"
 
 [workspace.dependencies.nekit-render]
 version = "0.1.0"

@@ -1,0 +1,50 @@
+[package]
+name = "nekit-me"
+version.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+edition.workspace = true
+description = "Various reports."
+readme = "README.md"
+repository.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies.anyhow]
+workspace = true
+features = ["std"]
+
+[dependencies.axum]
+workspace = true
+features = ["default", "macros"]
+
+[dependencies.clap]
+workspace = true
+features = ["default", "derive", "env"]
+
+[dependencies.jiff]
+workspace = true
+features = ["default"]
+
+[dependencies.pid1]
+workspace = true
+
+[dependencies.rmcp]
+workspace = true
+features = ["macros", "server", "transport-streamable-http-server"]
+
+[dependencies.serde]
+workspace = true
+features = ["std", "derive"]
+
+[dependencies.schemars]
+workspace = true
+features = ["std", "derive"]
+
+[dependencies.thiserror]
+workspace = true
+features = ["std"]
+
+[dependencies.tokio]
+workspace = true
+features = ["full"]

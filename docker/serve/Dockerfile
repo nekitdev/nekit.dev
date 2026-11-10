@@ -30,6 +30,6 @@ COPY --from=builder /app/target/release/nekit-serve .
 # copy the static directory to be served
 COPY --from=builder /app/static ./static
 
-EXPOSE 6913
+EXPOSE 6969
 
 ENTRYPOINT ["./nekit-serve"]
