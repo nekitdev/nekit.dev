@@ -1,11 +1,10 @@
 FROM rust:slim AS chef
 
-# install `cargo-chef` and `cargo-binstall` for caching dependencies and installing binaries
+# install `cargo-chef` for caching dependencies
 RUN cargo install cargo-chef
-RUN cargo install cargo-binstall
 
 # install `dioxus-cli` for building later
-RUN cargo binstall dioxus-cli --no-confirm
+RUN cargo install dioxus-cli
 
 WORKDIR /app
 
