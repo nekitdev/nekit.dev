@@ -30,7 +30,7 @@ impl Me {
 
     #[tool(
         name = "time",
-        description = "Returns nekit's current date in time (UTC+3). \
+        description = "Returns nekit's current date and time (UTC+3). \
             Use it when you need to know what time or day it is for him.",
         annotations(read_only_hint = true, open_world_hint = false)
     )]
@@ -40,6 +40,12 @@ impl Me {
 
     #[tool(
         name = "health",
+        description = "Returns nekit's latest health stats: `rate` is his average heart rate \
+            in beats per minute over the last hour (`0` if there were no samples; \
+            check `samples` before reporting it), \
+            `samples` is how many measurements that average is based on, \
+            and `steps` is his step count for today, resetting at midnight UTC+3. \
+            Data is pushed and updated hourly.",
         annotations(read_only_hint = true, open_world_hint = false)
     )]
     pub async fn health(&self) -> Json<Health> {
